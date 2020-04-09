@@ -1,0 +1,8 @@
+! Warning : Dockerfile must call npm start redefined by package.json as ng serve --host 0.0.0.0 --port 4300 !
+! ng serve ... called directly by Dockerfile is not working !
+
+go on Angular project folder with cd command
+docker build -t natura .
+docker run -d -p 4300:4300 --name dev natura
+open chrome in 192.168.99.100:4300
+! Warning: it might take few minutes to be able to see the app !
