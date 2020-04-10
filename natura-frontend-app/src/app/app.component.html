@@ -1,35 +1,28 @@
-
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>MonPremierProjet</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <header>
-    <mat-toolbar color="primary">
-      <button href="#" mat-button>
-        <mat-icon>filter_vintage</mat-icon>
-        Natura
-      </button>
-      <button href="#" mat-button>Fleurs</button>
-      <button href="#" mat-button>Insectes</button>
-      <span class="fill-remaining-space"></span>
-      
-      <button href="#" mat-button>
-        <mat-icon>account_circle</mat-icon>
-        Mon Compte
-      </button>
-      <button href="#" mat-button>
-        Sign Out
-        <mat-icon>exit_to_app</mat-icon>
-      </button>
-      
-    </mat-toolbar>
-  </header>
-  <router-outlet></router-outlet>
-</body>
-</html>
+<header>
+  <mat-toolbar color="primary">
+    <button href="#" mat-button>
+      <mat-icon>filter_vintage</mat-icon>
+      Natura
+    </button>
+    <button href="#" mat-button>Fleurs</button>
+    <button href="#" mat-button>Insectes</button>
+    <span class="fill-remaining-space"></span>
+    
+    <button href="#" mat-button>
+      <mat-icon>account_circle</mat-icon>
+      Mon Compte
+    </button>
+    <button href="#" mat-button>
+      Sign Out
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    
+  </mat-toolbar>
+</header>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
