@@ -11,14 +11,23 @@
 <body>
   <header>
     <mat-toolbar color="primary">
-      <button href="#" mat-button>Natura</button>
+      <button href="#" mat-button>
+        <mat-icon>filter_vintage</mat-icon>
+        Natura
+      </button>
       <button href="#" mat-button>Fleurs</button>
       <button href="#" mat-button>Insectes</button>
       <span class="fill-remaining-space"></span>
-      <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon">account_circle</mat-icon>
-      <button href="#" mat-button>Mon Compte</button>
-      <button href="#" mat-button>Sign Out</button>
-      <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon">exit_to_app</mat-icon>
+      
+      <button href="#" mat-button>
+        <mat-icon>account_circle</mat-icon>
+        Mon Compte
+      </button>
+      <button href="#" mat-button>
+        Sign Out
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+      
     </mat-toolbar>
   </header>
   <router-outlet></router-outlet>
