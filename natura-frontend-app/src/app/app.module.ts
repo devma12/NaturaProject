@@ -1,16 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppMaterialModule } from './shared/material.module';
-import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
+import { AppMaterialModule } from './shared/material.module';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { AuthGuard } from './services/auth-guard.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   providers: [
     AuthService,
