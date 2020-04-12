@@ -9,9 +9,15 @@ export class AuthService {
     constructor(private router: Router) { }
 
     authenticate(email: string, password: string) {
-        // To do : authenticate
+        // To do : authenticate + redirect on previous page
         this.isAuth = true;
         this.router.navigate(['/home']);
+    }
+
+    signout() {
+        // To do : authenticate
+        this.isAuth = false;
+        this.router.navigate(['/login']);
     }
 
 }
