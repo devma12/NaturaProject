@@ -1,0 +1,39 @@
+<div class="container-wrapper">
+    <div class="div-center">
+      <mat-card fxLayout="column" fxLayoutAlign="space-around center">
+        <mat-card-header fxLayout="row" fxLayoutAlign="center">
+          <mat-card-title>Créer un compte</mat-card-title>
+        </mat-card-header>
+        <form class="login-form" [formGroup]="registerForm" (ngSubmit)="onSubmitForm()">
+          <mat-card-content>
+            <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" [formControl]="email" [errorStateMatcher]="matcher"
+                      placeholder="Ex. nom@exemple.com">
+              <mat-hint></mat-hint>
+              <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+              Entrez une adresse email valide !
+              </mat-error>
+              <mat-error *ngIf="email.hasError('required')">
+              L'email est <strong>obligatoire</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Pseudo</mat-label>
+                <input matInput placeholder="Pseudo" formControlName="username">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Mot de passe</mat-label>
+              <input matInput placeholder="Mot de passe" type="password" formControlName="password">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+              <button mat-raised-button color="accent" type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+          </mat-card-actions>
+        </form>
+        <mat-card-footer>
+            Vous avez déjà un compte ? <a routerLink="/login" routerLinkActive="active">Connectez-vous</a>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
