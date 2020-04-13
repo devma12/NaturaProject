@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { CustomErrorStateMatcher } from '../matchers/error-state.matcher';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +17,14 @@ export class LoginComponent implements OnInit {
   email: FormControl;
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authService: AuthService) {
     this.matcher = new CustomErrorStateMatcher();
    }
 
   ngOnInit(): void {
+    this.authService.redirectUrl = this.route.snapshot.queryParams['redirectUrl'] || '/home';
     this.initForm();
   }
 
@@ -37,7 +40,7 @@ export class LoginComponent implements OnInit {
 
   onSubmitForm() {
     const formValue = this.loginForm.value;
-    this.authService.authenticate(formValue['email'], formValue['password']).then(
+    this.authService.login(formValue['email'], formValue['password']).then(
       value => {
         console.log('authenticated !');
       }, error => {

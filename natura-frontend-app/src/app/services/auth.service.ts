@@ -8,34 +8,37 @@ export class AuthService {
 
     isAuth: boolean = false;
     user: User;
+    redirectUrl: string;
     
     constructor(private router: Router,
                 private userService: UserService) { 
         this.user = null;
     }
 
-    authenticate(email: string, password: string): Promise<User | void> {
+    login(email: string, password: string): Promise<User | void> {
         // To do later : redirect on previous page
         
         return this.userService.login(email, password).toPromise().then(
             value => {
-                this.user = value;
-                this.isAuth = true;
-                this.router.navigate(['/home']);
+                this.authenticate(value);
             }
         );
     }
 
     register(email: string, username: string, password: string): Promise<User | void> {
-        // To do : redirect on previous page
         
         return this.userService.register(email, username, password).toPromise().then(
             value => {
-                this.user = value;
-                this.isAuth = true;
-                this.router.navigate(['/home']);
+                this.authenticate(value);
             }
         );
+    }
+
+    private authenticate(value: User) {
+        this.user = value;
+        this.isAuth = true;
+        this.router.navigate([this.redirectUrl]);
+        this.redirectUrl = null;
     }
 
     signout() {
