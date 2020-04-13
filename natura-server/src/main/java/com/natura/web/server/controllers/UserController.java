@@ -1,50 +1,52 @@
 package com.natura.web.server.controllers;
 
 import com.natura.web.server.entities.User;
+import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path="/natura/user")
 public class UserController {
+
+    @Autowired
+    private UserService userService;
+
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path="/create")
-    public @ResponseBody User addNewUser (@RequestParam String email, @RequestParam String password) {
+    @PostMapping(path="/register")
+    public @ResponseBody User register(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
 
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        user = userRepository.save(user);
-        return user;
+        try {
+            return userService.register(email, username, password);
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
     }
 
     @PostMapping(path="/login")
-    public @ResponseBody User login(@RequestParam String email, @RequestParam String password) throws Exception {
+    public @ResponseBody User login(@RequestParam String email, @RequestParam String password) {
 
-        User user = userRepository.findByEmail(email);
-        if (user == null)
-            throw new Exception("Invalid email address");
-
-        boolean validPwd = password == user.getPassword();
-        if (validPwd) {
-            return user;
-        } else {
-            throw new Exception("Invalid password");
+        try {
+            return userService.login(email, password);
+        } catch (ServerException e) {
+            throw e.responseStatus();
         }
-
     }
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<User> getAllUsers() {
 
         return userRepository.findAll();
+    }
+
+    @GetMapping(path="/{id}")
+    public @ResponseBody User getUser(@PathVariable Integer id) {
+
+        return userRepository.findById(id).orElse(null);
     }
 }
