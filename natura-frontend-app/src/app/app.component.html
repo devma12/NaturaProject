@@ -5,16 +5,16 @@
       <mat-icon>filter_vintage</mat-icon>
       Natura
     </button>
-    <button *ngIf="authService.isAuth" href="#" mat-button>Fleurs</button>
-    <button *ngIf="authService.isAuth" href="#" mat-button>Insectes</button>
+    <button *ngIf="authService.isAuth" href="#" mat-button>Flowers</button>
+    <button *ngIf="authService.isAuth" href="#" mat-button>Pollinating Insects</button>
     <span class="fill-remaining-space"></span>
     
     <button *ngIf="authService.isAuth" href="#" mat-button>
       <mat-icon>account_circle</mat-icon>
-      Mon Compte
+      {{ authService.user.username }}
     </button>
     <button *ngIf="authService.isAuth" (click)="logout()" mat-button>
-      Se déconnecter
+      Sign out
       <mat-icon>exit_to_app</mat-icon>
     </button>
     
