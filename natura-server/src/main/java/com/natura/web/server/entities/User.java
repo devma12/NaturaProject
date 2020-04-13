@@ -1,21 +1,22 @@
 package com.natura.web.server.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
+    @Column(name="email", unique=true, nullable = false)
     private String email;
 
+    @Column(unique=true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     public Integer getId() {

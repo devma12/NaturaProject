@@ -2,13 +2,11 @@ package com.natura.web.server.services;
 
 import com.natura.web.server.entities.User;
 import com.natura.web.server.exceptions.InvalidDataException;
-import com.natura.web.server.exceptions.MandatoryDataAccountException;
+import com.natura.web.server.exceptions.UserAccountException;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
 public class UserService {
@@ -19,11 +17,23 @@ public class UserService {
     public User register(String email, String username, String password) throws ServerException {
 
         if (email == null)
-            throw new MandatoryDataAccountException("Email");
+            throw new UserAccountException.MandatoryUserDetailException("Email");
         if (username == null)
-            throw new MandatoryDataAccountException("Username");
+            throw new UserAccountException.MandatoryUserDetailException("Username");
         if (password == null)
-            throw new MandatoryDataAccountException("Password");
+            throw new UserAccountException.MandatoryUserDetailException("Password");
+
+        // Verify there is no existing account with same email address
+        User found = userRepository.findByEmail(email);
+        if (found != null) {
+            throw new UserAccountException.DuplicateAccountException("email: " + email);
+        }
+
+        // Verify there is no existing account with same username
+        found = userRepository.findByUsername(username);
+        if (found != null) {
+            throw new UserAccountException.DuplicateAccountException("username: " + username);
+        }
 
         User user = new User();
         user.setEmail(email);
