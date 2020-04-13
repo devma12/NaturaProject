@@ -38,7 +38,13 @@ export class RegisterComponent implements OnInit {
 
   onSubmitForm() {
     const formValue = this.registerForm.value;
-    this.authService.authenticate(formValue['email'], formValue['password']);
+    this.authService.register(formValue['email'], formValue['username'], formValue['password']).then(
+      value => {
+        console.log('registered !');
+      }, error => {
+        console.error('Failed to register !');
+      }
+    );
   }
 
 }

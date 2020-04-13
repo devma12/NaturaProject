@@ -37,7 +37,13 @@ export class LoginComponent implements OnInit {
 
   onSubmitForm() {
     const formValue = this.loginForm.value;
-    this.authService.authenticate(formValue['email'], formValue['password']);
+    this.authService.authenticate(formValue['email'], formValue['password']).then(
+      value => {
+        console.log('authenticated !');
+      }, error => {
+        console.error('Failed to authenticate !');
+      }
+    );
   }
 
 }

@@ -12,6 +12,8 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { AppMaterialModule } from './shared/material.module';
 import { RegisterComponent } from './register/register.component';
+import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -29,11 +31,13 @@ import { RegisterComponent } from './register/register.component';
     AppMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,
-    AuthGuard
+    AuthGuard,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })
