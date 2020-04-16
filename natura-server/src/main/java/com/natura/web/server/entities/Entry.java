@@ -3,7 +3,10 @@ package com.natura.web.server.entities;
 import javax.persistence.*;
 
 @Entity
-public class Entry extends ValidableItem {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="DISCRIMINATOR", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue("ENTRY")
+public abstract class Entry extends ValidableItem {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
