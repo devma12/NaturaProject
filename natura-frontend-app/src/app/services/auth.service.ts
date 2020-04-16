@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { UserService } from './user.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
 
     isAuth: boolean = false;
-    user: User;
+    user: BehaviorSubject<User>;
     redirectUrl: string;
     
     constructor(private router: Router,
                 private userService: UserService) { 
-        this.user = null;
+        this.user = new BehaviorSubject<User>(null);
     }
 
     login(email: string, password: string): Promise<User | void> {
@@ -35,14 +36,14 @@ export class AuthService {
     }
 
     private authenticate(value: User) {
-        this.user = value;
+        this.user.next(value);
         this.isAuth = true;
         this.router.navigate([this.redirectUrl]);
         this.redirectUrl = null;
     }
 
     signout() {
-        // To do : authenticate
+        this.user.next(null);
         this.isAuth = false;
         this.router.navigate(['/login']);
     }
