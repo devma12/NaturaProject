@@ -7,17 +7,17 @@
     </button>
     <button *ngIf="authService.isAuth" href="#" mat-button>Flowers</button>
     <button *ngIf="authService.isAuth" href="#" mat-button>Pollinating Insects</button>
+    <button *ngIf="authService.isAuth" href="#" mat-button>Species</button>
     <span class="fill-remaining-space"></span>
     
     <button *ngIf="authService.isAuth" href="#" mat-button>
       <mat-icon>account_circle</mat-icon>
-      {{ authService.user.username }}
+      {{ username }}
     </button>
     <button *ngIf="authService.isAuth" (click)="logout()" mat-button>
       Sign out
       <mat-icon>exit_to_app</mat-icon>
     </button>
-    
   </mat-toolbar>
 </header>
 <div class="container">

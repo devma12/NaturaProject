@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  username: string;
 
-  ngOnInit(): void {
+  constructor (public authService: AuthService) {
+    this.username = '';
+  }
+
+  ngOnInit() {
+    this.authService.user.subscribe(value => {
+        if (value) {
+          this.username = value.username;
+        } else {
+          this.username = '';
+        }
+      });
   }
 
 }
