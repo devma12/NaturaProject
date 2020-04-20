@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping(path="/{id}")
-    public @ResponseBody User getUser(@PathVariable Integer id) {
+    public @ResponseBody User getUser(@PathVariable Long id) {
 
         return userRepository.findById(id).orElse(null);
     }

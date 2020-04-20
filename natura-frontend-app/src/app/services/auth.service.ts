@@ -14,6 +14,7 @@ export class AuthService {
     constructor(private router: Router,
                 private userService: UserService) { 
         this.user = new BehaviorSubject<User>(null);
+        this.redirectUrl = '';
     }
 
     login(email: string, password: string): Promise<User | void> {

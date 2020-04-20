@@ -1,6 +1,7 @@
 package com.natura.web.server.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {

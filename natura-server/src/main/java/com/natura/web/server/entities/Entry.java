@@ -14,9 +14,9 @@ public abstract class Entry extends ValidableItem {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    User createdBy;
+    private User createdBy;
 
     public Entry() {
         super();
@@ -36,6 +36,14 @@ public abstract class Entry extends ValidableItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
 }

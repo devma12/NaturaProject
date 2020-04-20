@@ -6,7 +6,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /** global container styles **/
 
 .container-wrapper {
-    max-height: calc(100vh - 65px);
+    max-height: calc(100vh - 90px);
+    margin-top: 25px;
  }
 
 .full-width {
