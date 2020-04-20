@@ -1,6 +1,6 @@
 {
     "/natura-api/*": {
-      "target": "http://192.168.99.100:8081",
+      "target": "http://localhost:8081",
       "secure": false,
       "changeOrigin": true
     }
