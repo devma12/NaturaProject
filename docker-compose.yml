@@ -1,0 +1,42 @@
+version: '3'
+services:
+  db-mysql:
+    image: mysql:latest
+    networks:
+      - natura-network
+    environment:
+      MYSQL_DATABASE: db_natura
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: naturauser
+      MYSQL_PASSWORD: natura
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    restart: always
+
+  spring-server:
+    image: natura-server:latest
+    networks:
+      - natura-network
+    depends_on:
+      - db-mysql
+    ports:
+      - 8081:8081
+    expose:
+      - 8081
+    restart: always
+
+  angular-app:
+    image: natura:latest
+    ports:
+      - 4300:4300
+    expose:
+      - 4300
+volumes:
+  db-data:
+ # ./db/docker-entrypoint-initdb.d:
+
+networks:
+  natura-network:

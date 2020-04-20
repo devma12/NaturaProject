@@ -1,4 +1,3 @@
-node_modules
 .gitignore
 dist
-docker-help.txt
+# node_modules
