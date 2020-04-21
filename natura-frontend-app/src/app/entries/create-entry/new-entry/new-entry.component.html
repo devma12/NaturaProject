@@ -1,20 +1,19 @@
 <div class="container-wrapper">
     <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="createEntry()" fxLayout="column" fxLayoutAlign="space-around center">
-        <h1>New flower entry</h1>
+        <h1>New {{ type }} entry</h1>
         <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
             <input matInput type="text" formControlName="name" placeholder="name">
         </mat-form-field>
         <mat-form-field>
-            <ngx-mat-file-input formControlName="file" accept="image/*" placeholder="Choose a picture" color="accent">
-            </ngx-mat-file-input>
+            <ngx-mat-file-input formControlName="file" accept="image/*" (change)="onFileSelected($event)"
+            placeholder="Choose a picture" color="accent"></ngx-mat-file-input>
             <mat-icon matSuffix>attach_file</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Suggested species</mat-label>
             <mat-select>
-                <mat-option value="Roses">Roses</mat-option>
-                <mat-option value="Orchids">Orchids</mat-option>
+                <mat-option *ngFor="let spec of species" [value]="spec"> {{ spec.commonName }} </mat-option>
             </mat-select>
         </mat-form-field>
         <button mat-raised-button type="submit" color="accent" [disabled]="entryForm.invalid">Create</button>

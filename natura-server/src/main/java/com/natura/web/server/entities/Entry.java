@@ -18,8 +18,17 @@ public abstract class Entry extends ValidableItem {
     @JoinColumn(name = "user_id")
     private User createdBy;
 
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    Image image;
+
     public Entry() {
         super();
+    }
+
+    public Entry(String name) {
+        this();
+        this.name = name;
     }
 
     public Long getId() {
@@ -44,6 +53,14 @@ public abstract class Entry extends ValidableItem {
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
 }

@@ -8,4 +8,8 @@ import javax.persistence.Entity;
 public class Insect extends Entry {
 
     public Insect() { super(); }
+
+    public Insect(String name) {
+        super(name);
+    }
 }

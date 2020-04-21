@@ -1,5 +1,7 @@
 package com.natura.web.server.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ public class Criteria {
 
     private String value;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "criteria")
     Set<Species> species;
 

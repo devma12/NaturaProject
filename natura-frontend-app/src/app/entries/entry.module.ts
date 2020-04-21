@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { NewFlowerComponent } from './flower/new-flower/new-flower.component';
+import { NewEntryComponent } from './create-entry/new-entry/new-entry.component';
 import { FlowerService } from '../services/flower.service';
 import { AuthService } from '../services/auth.service';
+import { CreateEntryComponent } from './create-entry/create-entry.component';
+import { SpeciesService } from '../services/species.service';
+import { InsectService } from '../services/insect.service';
 
 @NgModule({
     declarations: [
-    NewFlowerComponent
+    NewEntryComponent,
+    CreateEntryComponent
     ],
     imports: [
         SharedModule
@@ -15,7 +19,9 @@ import { AuthService } from '../services/auth.service';
     ],
     providers: [
         AuthService,
-        FlowerService
+        FlowerService,
+        SpeciesService,
+        InsectService
     ]
   })
   export class EntryModule { }

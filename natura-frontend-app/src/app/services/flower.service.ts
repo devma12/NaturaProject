@@ -11,9 +11,10 @@ export class FlowerService {
  
   constructor(private http: HttpClient) { }
 
-  create(flower: Flower, user: User): Observable<Flower> {
-    return this.http.post<Flower>(this.flowerUrl + '/new', flower, {
+  create(imageData: FormData, name: string, user: User): Observable<Flower> {
+    return this.http.post<Flower>(this.flowerUrl + '/new', imageData, {
         params: {
+            'name': name,
             'createdBy': user.id.toString()
         }
     });
