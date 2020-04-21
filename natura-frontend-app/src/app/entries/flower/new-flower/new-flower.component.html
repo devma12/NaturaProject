@@ -5,6 +5,11 @@
             <mat-label>Name</mat-label>
             <input matInput type="text" formControlName="name" placeholder="name">
         </mat-form-field>
+        <mat-form-field>
+            <ngx-mat-file-input formControlName="file" accept="image/*" placeholder="Choose a picture" color="accent">
+            </ngx-mat-file-input>
+            <mat-icon matSuffix>attach_file</mat-icon>
+        </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Suggested species</mat-label>
             <mat-select>

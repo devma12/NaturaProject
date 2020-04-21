@@ -27,8 +27,13 @@ export class NewFlowerComponent implements OnInit {
 
     this.entryForm = this.formBuilder.group({
       name: ['', Validators.required],
+      file: ['', Validators.required],
       species: ['']
     });
+
+  }
+
+  onFileSelected(event: any) {
 
   }
 
