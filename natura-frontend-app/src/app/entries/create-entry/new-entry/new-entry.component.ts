@@ -36,6 +36,8 @@ export class NewEntryComponent implements OnInit {
     this.entryForm = this.formBuilder.group({
       name: ['', Validators.required],
       file: ['', Validators.required],
+      description: [''],
+      location: [''],
       species: ['']
     });
 
