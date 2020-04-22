@@ -48,38 +48,16 @@ export class NewEntryComponent implements OnInit {
   }
 
   createEntry() {
-    // Get given name
     const formValue = this.entryForm.value;
-    const name: string = formValue['name'];
 
     const infos = {
       selectedFile: this.selectedFile,
-      name: name
+      name: formValue['name'],
+      description: formValue['description'],
+      location: formValue['location'],
+      species: formValue['species']
     }
     this.entry.emit(infos);
   }
-
-  // createEntry() {
-  //   // Create Form Data to send picture
-  //   const uploadImageData = new FormData();
-  //   uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-
-  //   // Get given name
-  //   const formValue = this.entryForm.value;
-  //   const name: string = formValue['name'];
-
-  //   // Get logged user to be set as creator
-  //   const user = this.authService.user.getValue();
-
-  //   // Create new flower entry
-  //   this.flowerService.create(uploadImageData, name, user).subscribe(
-  //     data => {
-  //       this.router.navigate(['/home']);
-  //     },
-  //     error => {
-  //       console.log('Failed to create new Flower entry.');
-  //     }
-  //   );
-  // }
 
 }

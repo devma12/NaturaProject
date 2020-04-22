@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Flower } from '../models/entries/flower.model';
 import { User } from '../models/user.model';
+import { Species } from '../models/species.model';
 
 @Injectable()
 export class FlowerService {
@@ -11,12 +12,7 @@ export class FlowerService {
  
   constructor(private http: HttpClient) { }
 
-  create(imageData: FormData, name: string, user: User): Observable<Flower> {
-    return this.http.post<Flower>(this.flowerUrl + '/new', imageData, {
-        params: {
-            'name': name,
-            'createdBy': user.id.toString()
-        }
-    });
+  create(entryData: FormData): Observable<Flower> {
+    return this.http.post<Flower>(this.flowerUrl + '/new', entryData);
   }
 }

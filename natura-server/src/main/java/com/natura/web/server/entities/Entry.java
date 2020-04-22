@@ -22,6 +22,11 @@ public abstract class Entry extends ValidableItem {
     @JoinColumn(name = "image_id")
     Image image;
 
+    @Column(columnDefinition="TEXT")
+    private String description;
+
+    private String location;
+
     public Entry() {
         super();
     }
@@ -29,6 +34,13 @@ public abstract class Entry extends ValidableItem {
     public Entry(String name) {
         this();
         this.name = name;
+    }
+
+    public Entry(String name, String description, String location) {
+        this();
+        this.name = name;
+        this.description =description;
+        this.location = location;
     }
 
     public Long getId() {
@@ -61,6 +73,22 @@ public abstract class Entry extends ValidableItem {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
 }

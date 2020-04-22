@@ -1,6 +1,6 @@
 <div class="container-wrapper">
     <div fxLayout="column">
-        <h1 fxFlexAlign="center">New {{ type }} entry</h1>
+        <h1 fxFlexAlign="center" class="text-color-primary-800 text-uppercase">New {{ type }} entry</h1>
         <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="createEntry()">
             <div fxLayout="column">
                 <div fxLayout="row">
@@ -23,12 +23,17 @@
                         <h2>Optional information</h2>
                         <mat-form-field appearance="fill">
                             <mat-label>Description / Comment</mat-label>
-                            <textarea matInput formControlName="description"
-                                placeholder="you can enter any comment"></textarea>
+                            <textarea matInput #description formControlName="description"
+                                placeholder="you can enter any comment" maxlength="10000" rows="4">
+                            </textarea>
+                            <mat-hint align="start">Max. 10 000 characters</mat-hint>
+                            <mat-hint align="end">{{description.value.length}} / 10 000</mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>Location</mat-label>
-                            <input matInput type="text" formControlName="location" placeholder="City, region, address">
+                            <input matInput #location type="text" formControlName="location" placeholder="City, region, address" maxlength="255">
+                            <mat-hint align="start">Max. 255 characters</mat-hint>
+                            <mat-hint align="end">{{location.value.length}} / 255</mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>Suggested species</mat-label>

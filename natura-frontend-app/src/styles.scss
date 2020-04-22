@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import './styles/app-material-theme';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -47,4 +49,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .m-l-1 {
     margin-left: 1rem;
+}
+
+/** Color **/
+$primary:  mat-palette($mat-deep-purple);
+$accent:  mat-palette($mat-amber);
+
+.text-color-primary-800 {
+   color: mat-color($primary, 800);
+}
+
+.text-color-primary-600 {
+    color: mat-color($primary, 600);
+ }
+
+.text-color-accent-800 {
+    color: mat-color($accent, 800);
+ }
+
+/** Text styles **/
+@include mat-base-typography($custom-typography);
+
+.text-uppercase {
+    text-transform: uppercase;
 }

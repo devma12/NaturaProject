@@ -22,11 +22,17 @@ public class InsectController {
     private EntryService entryService;
 
     @PostMapping(path="/new")
-    public Insect create(@RequestParam("imageFile") MultipartFile file, @RequestParam String name, @RequestParam String createdBy) throws IOException {
+    public @ResponseBody  Insect create(@RequestParam("imageFile") MultipartFile file,
+                         @RequestParam("name") String name,
+                         @RequestParam("description") String description,
+                         @RequestParam("location") String location,
+                         @RequestParam("species") String species,
+                         @RequestParam("createdBy") String createdBy) throws IOException {
         Long userId = Long.parseLong(createdBy);
-        Insect insect = new Insect(name);
+        Long speciesId = Long.parseLong(species);
+        Insect insect = new Insect(name, description, location);
         try {
-            return (Insect) entryService.create(insect, file, userId);
+            return (Insect) entryService.create(insect, file, userId, speciesId);
         } catch (ServerException e) {
             throw e.responseStatus();
         }

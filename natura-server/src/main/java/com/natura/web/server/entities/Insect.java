@@ -9,7 +9,7 @@ public class Insect extends Entry {
 
     public Insect() { super(); }
 
-    public Insect(String name) {
-        super(name);
+    public Insect(String name, String description, String location) {
+        super(name, description, location);
     }
 }

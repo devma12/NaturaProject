@@ -57,20 +57,35 @@ export class CreateEntryComponent implements OnInit {
   }
 
   createEntry(infos: any) {
-    // Create Form Data to send picture
+    // Create Form Data to send picture and others entry infos
     const selectedFile: File = infos['selectedFile'];
-    const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', selectedFile, selectedFile.name);
+    const entryData = new FormData();
+    entryData.append('imageFile', selectedFile, selectedFile.name);
 
-    // Get logged user to be set as creator
+    // Get entry details
+    entryData.append('name', infos['name']);
+    entryData.append('description', infos['description']);
+    entryData.append('location', infos['location']);
+
+    // Get species id
+    const species: Species = infos['species'];
+    if (species && species.id !== null && species.id !== undefined) {
+      entryData.append('species', species.id.toString());
+    } else {
+      entryData.append('species', '-1');
+    }
+
+    // Get logged user id to be set as creator
     const user: User = this.authService.user.getValue();
-
-    // Get entry name
-    const name: string = infos['name'];
+    if (user && user.id !== null && user.id !== undefined) {
+      entryData.append('createdBy', user.id.toString());
+    } else {
+      entryData.append('createdBy', '-1');
+    }
 
     // Create new entry
     if (this.isFlower) {
-      this.flowerService.create(uploadImageData, name, user).subscribe(
+      this.flowerService.create(entryData).subscribe(
         data => {
           this.router.navigate(['/home']);
         },
@@ -79,12 +94,12 @@ export class CreateEntryComponent implements OnInit {
         }
       );;
     } else {
-      this.insectService.create(uploadImageData, name, user).subscribe(
+      this.insectService.create(entryData).subscribe(
         data => {
           this.router.navigate(['/home']);
         },
         error => {
-          console.log('Failed to create new Flower entry.');
+          console.log('Failed to create new Insect entry.');
         }
       );;
     }

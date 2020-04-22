@@ -24,7 +24,7 @@ public class EntryService {
     @Autowired
     private ImageService imageService;
 
-    public Entry create(Entry entry, MultipartFile file, Long userId) throws DataNotFoundException, IOException {
+    public Entry create(Entry entry, MultipartFile file, Long userId, Long speciesId) throws DataNotFoundException, IOException {
 
         // Check user exists
         User createdBy = userRepository.findById(userId).orElse(null);
@@ -36,7 +36,11 @@ public class EntryService {
             entry.setImage(image);
 
             // Save new entry
-            return entryRepository.save(entry);
+            Entry saved = entryRepository.save(entry);
+
+            // TODO: create identification if any
+
+            return saved;
         } else {
             throw new DataNotFoundException(User.class, "id", userId);
         }

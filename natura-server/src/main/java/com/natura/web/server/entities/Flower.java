@@ -9,7 +9,7 @@ public class Flower extends Entry {
 
     public Flower() { super(); }
 
-    public Flower(String name) {
-        super(name);
+    public Flower(String name, String description, String location) {
+        super(name, description, location);
     }
 }
