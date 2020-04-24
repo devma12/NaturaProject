@@ -10,14 +10,39 @@ export class AuthService {
     isAuth: boolean = false;
     user: BehaviorSubject<User>;
     redirectUrl: string;
-    
+
     constructor(private router: Router,
         private userService: UserService) {
         this.user = new BehaviorSubject<User>(null);
+
+        window.addEventListener('storage', (event) => {
+
+            const credentials = sessionStorage.getItem('JWT_TOKEN');
+
+            if (event.key === 'REQUESTING_TOKEN' && credentials) {
+                console.log('share token');
+                localStorage.setItem('SHARING_TOKEN', credentials);
+                localStorage.removeItem('SHARING_TOKEN');
+            }
+
+            if (event.key === 'SHARING_TOKEN' && !credentials) {
+                sessionStorage.setItem('JWT_TOKEN', event.newValue);
+                console.log('get requested token');
+                this.getAuthentication();
+            }
+        });
+
+        const token = sessionStorage.getItem('JWT_TOKEN');
+        console.log(`token: ${token}`);
+        if (!token) {
+            console.log('request token');
+            localStorage.setItem('REQUESTING_TOKEN', '');
+            localStorage.removeItem('REQUESTING_TOKEN');
+        }
     }
 
     getToken(): string {
-        const token = sessionStorage.getItem('token');
+        const token = sessionStorage.getItem('JWT_TOKEN');
         console.log(`token: ${token}`);
         return token;
     }
@@ -52,7 +77,7 @@ export class AuthService {
     }
 
     private authenticate(value: User) {
-        sessionStorage.setItem('token', value.token);
+        sessionStorage.setItem('JWT_TOKEN', value.token);
         this.user.next(value);
         this.isAuth = true;
         this.router.navigate([this.redirectUrl]);
@@ -65,7 +90,7 @@ export class AuthService {
                 this.user.next(null);
                 this.isAuth = false;
                 this.router.navigate(['/login']);
-                sessionStorage.setItem('token', null);
+                sessionStorage.setItem('JWT_TOKEN', null);
             },
             error => {
                 console.error('Failed to logout');
