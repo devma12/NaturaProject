@@ -1,23 +1,16 @@
 package com.natura.web.server.security;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 import java.util.*;
-import java.util.function.Function;
 
 public class AppUserDetails extends User {
 
     private String email;
-
-    public AppUserDetails(String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-        this.email = email;
-    }
 
     public AppUserDetails(String username, String email, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
@@ -56,7 +49,6 @@ public class AppUserDetails extends User {
         }
 
         public AppUserBuilder email(String email) {
-            Assert.notNull(email, "username cannot be null");
             this.email = email;
             return this;
         }
@@ -117,7 +109,7 @@ public class AppUserDetails extends User {
                 this.authorities = new ArrayList<>();
 
             if (password == null)
-                password ="";
+                this.password("");
 
             return new AppUserDetails(this.username, this.email, this.password,
                     !this.disabled, !this.accountExpired, !this.credentialsExpired, !this.accountLocked,

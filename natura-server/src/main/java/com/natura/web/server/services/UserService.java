@@ -11,7 +11,6 @@ import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -69,6 +68,8 @@ public class UserService {
 
         // authenticate
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+
+        // get user with new generated token
         user = returnJwtWithUserDetailsFromAuthentication(auth);
 
         return user;
@@ -77,17 +78,19 @@ public class UserService {
     public User login(String email, String password) throws ServerException {
 
         try {
+            // authenticate
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            // get user with new generated token
             return returnJwtWithUserDetailsFromAuthentication(auth);
         } catch (DisabledException e) {
             throw new InvalidDataException("username");
         } catch (BadCredentialsException e) {
             throw new InvalidDataException("credentials");
         }
-
     }
 
-    public User returnJwtWithUserDetailsFromAuthentication(Authentication auth) {
+    public User returnJwtWithUserDetailsFromAuthentication(Authentication auth)
+            throws UserAccountException.AuthenticationException, InvalidDataException {
         // Get user
         User user = getUserFromAuthentication(auth, true);
 
@@ -103,7 +106,9 @@ public class UserService {
         return user;
     }
 
-    public User getAuthenticatedUserDetails(Authentication auth) {
+    public User getAuthenticatedUserDetails(Authentication auth)
+            throws UserAccountException.AuthenticationException, InvalidDataException {
+
         User user = getUserFromAuthentication(auth, false);
 
         String token = ((WebTokenAuthenticationDetails)auth.getDetails()).getTokenValue();
@@ -112,30 +117,39 @@ public class UserService {
         return user;
     }
 
-    private User getUserFromAuthentication(Authentication auth, boolean withPassword) {
-        if (auth.getPrincipal() instanceof UserDetails) {
+    private User getUserFromAuthentication(Authentication auth, boolean withPassword)
+            throws UserAccountException.AuthenticationException, InvalidDataException {
+
+        if (auth.getPrincipal() != null && auth.getPrincipal() instanceof UserDetails) {
             UserDetails details = (UserDetails) auth.getPrincipal();
             User user = new User(details.getUsername());
             this.getInternalUserData(user, withPassword);
             return user;
         } else {
-            throw new InsufficientAuthenticationException("invalid authentication");
+            throw new UserAccountException.AuthenticationException("Invalid authentication");
         }
     }
 
-    private void getInternalUserData(User user, boolean withPassword) {
+    private void getInternalUserData(User user, boolean withPassword)
+            throws InvalidDataException {
+
         User storedUser = userRepository.findByUsername(user.getUsername());
         if (storedUser != null) {
             user.setId(storedUser.getId());
             user.setEmail(storedUser.getEmail());
             if (withPassword)
                 user.setPassword(storedUser.getPassword());
+        } else {
+            throw new InvalidDataException("user with username " + user.getUsername());
         }
     }
 
     public boolean validateUserToken(String jwtToken) {
+
         String username = jwtTokenUtil.getUsernameFromJWT(jwtToken);
+
         User user = userRepository.findByUsername(username);
+
         if (user != null) {
             if (user.getToken() != null && user.getToken().equals(jwtToken)) {
                 return true;
@@ -147,23 +161,25 @@ public class UserService {
         }
     }
 
-    public boolean logout(HttpServletRequest request, HttpServletResponse response) {
+    public User logout(HttpServletRequest request, HttpServletResponse response)
+            throws UserAccountException.AuthenticationException, InvalidDataException {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logged = getUserFromAuthentication(auth, true);
 
-        // default spring logout
+        // default spring logout call
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
 
         // reset token in db
         logged.setToken(null);
-        userRepository.save(logged);
-
-        return true;
+        return userRepository.save(logged);
     }
 
-    public User authenticate() {
+    public User authenticate()
+            throws UserAccountException.AuthenticationException, InvalidDataException {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return getAuthenticatedUserDetails(auth);
     }

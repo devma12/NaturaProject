@@ -32,19 +32,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/natura-api/user/register").permitAll()
-                .antMatchers("/natura-api/user/login").permitAll()
-                .antMatchers("/natura-api/user/logout").permitAll()
-                .antMatchers("/natura-api/user/authenticate").permitAll()
-                .anyRequest().fullyAuthenticated()
+                    .antMatchers("/natura-api/user/register").permitAll()
+                    .antMatchers("/natura-api/user/login").permitAll()
+                    .antMatchers("/natura-api/user/logout").permitAll()
+                    .antMatchers("/natura-api/user/authenticate").permitAll()
+                    .anyRequest().fullyAuthenticated()
                 .and()
-                .httpBasic()
+                    .httpBasic()
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint)
+                    .exceptionHandling()
+                    .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -5,11 +5,11 @@ import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.UserRepository;
 import com.natura.web.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,13 +46,26 @@ public class UserController {
 
     @GetMapping(path="/authenticate")
     public @ResponseBody User authenticate() {
-        return userService.authenticate();
+
+        try {
+            return userService.authenticate();
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
     }
 
     @PostMapping("/logout")
-    public @ResponseBody boolean logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) {
 
-            return userService.logout(request, response);
+        try {
+            User user = userService.logout(request, response);
+            if (user != null)
+                return ResponseEntity.ok().build();
+            else
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred when trying to log out.");
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
     }
 
     @GetMapping(path="/all")

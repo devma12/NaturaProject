@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from './user.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,6 @@ export class AuthService {
     constructor(private router: Router,
         private userService: UserService) {
         this.user = new BehaviorSubject<User>(null);
-        localStorage.setItem('token', null);
     }
 
     getToken(): string {
@@ -24,7 +23,6 @@ export class AuthService {
     }
 
     login(username: string, password: string): Promise<User | void> {
-        // To do later : redirect on previous page
         
         return this.userService.login(username, password).toPromise().then(
             value => {

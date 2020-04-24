@@ -11,6 +11,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -31,24 +32,30 @@ public class JwtTokenUtil {
 	protected final Log logger = LogFactory.getLog(getClass());
     
     public String generateToken(Authentication authentication) {
+        if (authentication == null)
+            throw new InsufficientAuthenticationException("Null authentication.");
 
-    	AppUserDetails userPrincipal = (AppUserDetails) authentication.getPrincipal();
+        if (authentication.getPrincipal() != null && authentication.getPrincipal() instanceof AppUserDetails) {
+            AppUserDetails userPrincipal = (AppUserDetails) authentication.getPrincipal();
 
-    	Claims claims = generateClaimsForUser(userPrincipal);
-        
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expiration);
+            Claims claims = generateClaimsForUser(userPrincipal);
 
-        return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
-                .setClaims(claims)
-                .setIssuedAt(new Date())
-                .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, secret)
-                .compact();
+            Date now = new Date();
+            Date expiryDate = new Date(now.getTime() + expiration);
+
+            return Jwts.builder()
+                    .setSubject(userPrincipal.getUsername())
+                    .setClaims(claims)
+                    .setIssuedAt(new Date())
+                    .setExpiration(expiryDate)
+                    .signWith(SignatureAlgorithm.HS512, secret)
+                    .compact();
+        } else {
+            throw new InsufficientAuthenticationException("Principal does not instance of AppUserDetails.");
+        }
     }
     
-    private  Claims generateClaimsForUser(AppUserDetails user) {
+    private Claims generateClaimsForUser(AppUserDetails user) {
     	
     	Map<String, Object> info =  new HashMap<String, Object>();
     	info.put("mail", user.getEmail());
@@ -60,7 +67,10 @@ public class JwtTokenUtil {
     }
     
     public Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
     }
     
     public String getUsernameFromJWT(String token) {
