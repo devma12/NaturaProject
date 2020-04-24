@@ -10,17 +10,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
-  matcher :CustomErrorStateMatcher;
 
   loginForm: FormGroup;
-  email: FormControl;
 
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authService: AuthService) {
-    this.matcher = new CustomErrorStateMatcher();
    }
 
   ngOnInit(): void {
@@ -31,16 +27,14 @@ export class LoginComponent implements OnInit {
   initForm() {
 
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
-
-    this.email = this.loginForm.controls['email'] as FormControl;
   }
 
   onSubmitForm() {
     const formValue = this.loginForm.value;
-    this.authService.login(formValue['email'], formValue['password']).then(
+    this.authService.login(formValue['username'], formValue['password']).then(
       value => {
         console.log('authenticated !');
       }, error => {

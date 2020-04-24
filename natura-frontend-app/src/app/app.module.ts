@@ -13,7 +13,8 @@ import { AuthService } from './services/auth.service';
 import { AppMaterialModule } from './shared/material.module';
 import { RegisterComponent } from './register/register.component';
 import { UserService } from './services/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 
 @NgModule({
@@ -38,6 +39,11 @@ import { HttpClientModule } from '@angular/common/http';
     AuthService,
     AuthGuard,
     UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

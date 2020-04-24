@@ -12,14 +12,21 @@ export class AuthService {
     redirectUrl: string;
     
     constructor(private router: Router,
-                private userService: UserService) { 
+        private userService: UserService) {
         this.user = new BehaviorSubject<User>(null);
+        localStorage.setItem('token', null);
     }
 
-    login(email: string, password: string): Promise<User | void> {
+    getToken(): string {
+        const token = sessionStorage.getItem('token');
+        console.log(`token: ${token}`);
+        return token;
+    }
+
+    login(username: string, password: string): Promise<User | void> {
         // To do later : redirect on previous page
         
-        return this.userService.login(email, password).toPromise().then(
+        return this.userService.login(username, password).toPromise().then(
             value => {
                 this.authenticate(value);
             }
@@ -35,7 +42,19 @@ export class AuthService {
         );
     }
 
+    getAuthentication() {
+        this.userService.getAuthentication().subscribe(
+            value => {
+                this.authenticate(value);
+            },
+            error => {
+                console.error('Failed to get authentication, token may be invalid.');
+            }
+        );
+    }
+
     private authenticate(value: User) {
+        sessionStorage.setItem('token', value.token);
         this.user.next(value);
         this.isAuth = true;
         this.router.navigate([this.redirectUrl]);
@@ -43,9 +62,18 @@ export class AuthService {
     }
 
     signout() {
-        this.user.next(null);
-        this.isAuth = false;
-        this.router.navigate(['/login']);
+        this.userService.logout().subscribe(
+            value => {
+                this.user.next(null);
+                this.isAuth = false;
+                this.router.navigate(['/login']);
+                sessionStorage.setItem('token', null);
+            },
+            error => {
+                console.error('Failed to logout');
+            }
+        );
+
     }
 
 }

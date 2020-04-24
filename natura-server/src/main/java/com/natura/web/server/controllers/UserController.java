@@ -5,8 +5,14 @@ import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.UserRepository;
 import com.natura.web.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(path="/natura-api/user")
@@ -29,13 +35,24 @@ public class UserController {
     }
 
     @PostMapping(path="/login")
-    public @ResponseBody User login(@RequestParam String email, @RequestParam String password) {
+    public @ResponseBody User login(@RequestParam String username, @RequestParam String password) {
 
         try {
-            return userService.login(email, password);
+            return userService.login(username, password);
         } catch (ServerException e) {
             throw e.responseStatus();
         }
+    }
+
+    @GetMapping(path="/authenticate")
+    public @ResponseBody User authenticate() {
+        return userService.authenticate();
+    }
+
+    @PostMapping("/logout")
+    public @ResponseBody boolean logout(HttpServletRequest request, HttpServletResponse response) {
+
+            return userService.logout(request, response);
     }
 
     @GetMapping(path="/all")

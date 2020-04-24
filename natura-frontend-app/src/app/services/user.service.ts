@@ -6,7 +6,7 @@ import { User } from '../models/user.model';
 @Injectable()
 export class UserService {
 
-    private userUrl = '/natura-api/user';
+  private userUrl = '/natura-api/user';
  
   constructor(private http: HttpClient) { }
 
@@ -20,13 +20,21 @@ export class UserService {
     });
   }
 
-  login (email:string, pwd: string): Observable<User> {
+  login (username: string, pwd: string): Observable<User> {
     return this.http.post<User>(this.userUrl + '/login', null, {
         params: {
-            'email': email,
+            'username': username,
             'password': pwd
         }
     });
   }
+
+  getAuthentication(): Observable<User> {
+    return this.http.get<User>(this.userUrl + '/authenticate');
+  }
+
+  logout() {
+    return this.http.post<User>(this.userUrl + '/logout', null);
+}
 
 }
