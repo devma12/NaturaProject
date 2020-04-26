@@ -7,18 +7,9 @@
       <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
         <mat-card-content>
           <mat-form-field class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" [formControl]="email" [errorStateMatcher]="matcher"
-                    placeholder="Ex. name@example.com">
-            <mat-hint></mat-hint>
-            <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
-            Please enter a valid email address !
-            </mat-error>
-            <mat-error *ngIf="email.hasError('required')">
-            Email is <strong>required</strong>
-            </mat-error>
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username">
           </mat-form-field>
-  
           <mat-form-field class="full-width">
             <mat-label>Password</mat-label>
             <input matInput placeholder="Password" type="password" formControlName="password">
