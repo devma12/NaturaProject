@@ -17,12 +17,12 @@ public class ImageController {
     private ImageService imageService;
 
     @PostMapping(path="/upload")
-    public Image uploadImage(@RequestBody MultipartFile file) throws IOException {
+    public @ResponseBody Image uploadImage(@RequestBody MultipartFile file) throws IOException {
         return imageService.upload(file);
     }
 
     @GetMapping(path="/get/{id}")
-    public Image download(@PathVariable("id") String imageId) {
+    public @ResponseBody Image download(@PathVariable("id") String imageId) {
         Long id = Long.parseLong(imageId);
         return imageService.download(id);
     }

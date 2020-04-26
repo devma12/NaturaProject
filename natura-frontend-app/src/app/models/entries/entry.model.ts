@@ -7,12 +7,13 @@ export abstract class Entry extends ValidableItem {
     public name: string;
     public createdBy: User;
 
-    constructor(id: number = -1,
-                name: string,
-                createdBy: User) {
+    constructor( name: string,
+                createdBy: User = null,
+                id: number = -1) {
         super();
         this.id = id;
         this.name = name;
-        this.createdBy = createdBy;
+        if (createdBy)
+            this.createdBy = createdBy;
     }
 }

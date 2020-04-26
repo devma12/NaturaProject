@@ -1,10 +1,17 @@
 package com.natura.web.server.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Species extends ValidableItem {
+
+    public static enum Type {
+        FLOWER,
+        INSECT;
+    }
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -16,6 +23,10 @@ public class Species extends ValidableItem {
     @Column(name="scientific_name", unique=true, nullable = false)
     private String scientificName;
 
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "species_criteria",
@@ -57,6 +68,14 @@ public class Species extends ValidableItem {
 
     public void setCriteria(Set<Criteria> criteria) {
         this.criteria = criteria;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
 }

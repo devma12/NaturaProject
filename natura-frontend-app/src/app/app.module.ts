@@ -1,9 +1,5 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -14,7 +10,8 @@ import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import { AppMaterialModule } from './shared/material.module';
+import { SharedModule } from './shared/shared.module';
+import { EntryModule } from './entries/entry.module';
 
 
 @NgModule({
@@ -26,14 +23,9 @@ import { AppMaterialModule } from './shared/material.module';
     RegisterComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    AppMaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FlexLayoutModule,
-    HttpClientModule
+    SharedModule,
+    EntryModule
   ],
   providers: [
     AuthService,
