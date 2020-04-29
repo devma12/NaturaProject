@@ -7,7 +7,7 @@ import { FlowerService } from 'src/app/services/flower.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';
 import { InsectService } from 'src/app/services/insect.service';
-import { Observable } from 'rxjs';
+import { EntryUtils } from '../entry.utils';
 
 @Component({
   selector: 'app-create-entry',
@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 export class CreateEntryComponent implements OnInit {
 
   isLoading: boolean;
+  type: SpeciesType;
   isFlower: boolean;
 
   species: Species[];
@@ -31,20 +32,15 @@ export class CreateEntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let type: SpeciesType;
-    const url: UrlSegment = this.route.snapshot.url[this.route.snapshot.url.length - 1];
-    console.log(url.toString());
-    if (url.toString() === 'flower') {
-      this.isFlower = true;
-      type = SpeciesType.Flower;
-    } else if (url.toString() === 'insect') {
-      this.isFlower = false;
-      type = SpeciesType.Insect;
-    } else {
+    try {
+      this.type = EntryUtils.getEntryTypeFromRoute(this.route);
+    } catch (e) {
       this.router.navigate(['/not-found']);
     }
 
-    this.speciesService.getByType(type).subscribe(
+    this.isFlower = (this.type === SpeciesType.Flower);
+
+    this.speciesService.getByType(this.type).subscribe(
       data => {
         this.species = data;
         this.isLoading = false;
@@ -84,7 +80,7 @@ export class CreateEntryComponent implements OnInit {
     }
 
     // Create new entry
-    if (this.isFlower) {
+    if (this.type === SpeciesType.Flower) {
       this.flowerService.create(entryData).subscribe(
         data => {
           this.router.navigate(['/home']);
@@ -93,7 +89,7 @@ export class CreateEntryComponent implements OnInit {
           console.log('Failed to create new Flower entry.');
         }
       );;
-    } else {
+    } else if (this.type === SpeciesType.Insect) {
       this.insectService.create(entryData).subscribe(
         data => {
           this.router.navigate(['/home']);
@@ -101,7 +97,7 @@ export class CreateEntryComponent implements OnInit {
         error => {
           console.log('Failed to create new Insect entry.');
         }
-      );;
+      );
     }
   }
 

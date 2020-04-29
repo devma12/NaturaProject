@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FlowerService } from 'src/app/services/flower.service';
-import { Flower } from 'src/app/models/entries/flower.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { Species } from 'src/app/models/species.model';
@@ -22,10 +21,7 @@ export class NewEntryComponent implements OnInit {
 
   selectedFile: File;
 
-  constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private authService: AuthService,
-              private flowerService: FlowerService) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForm();

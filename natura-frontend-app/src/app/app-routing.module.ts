@@ -6,6 +6,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { CreateEntryComponent } from './entries/create-entry/create-entry.component';
+import { EntriesListComponent } from './entries/entries-list/entries-list.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,12 @@ const routes: Routes = [
           children: [
             { path: 'flower', component: CreateEntryComponent },
             { path: 'insect', component: CreateEntryComponent }
+          ]
+        },
+        { path: 'list', 
+          children: [
+            { path: 'flower', component: EntriesListComponent },
+            { path: 'insect', component: EntriesListComponent }
           ]
         },
       ]

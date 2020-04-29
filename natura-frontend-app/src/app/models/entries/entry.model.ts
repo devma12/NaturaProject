@@ -1,11 +1,13 @@
 import { User } from '../user.model';
 import { ValidableItem } from '../validable-item.model';
+import { Image } from '../image.model';
 
 export abstract class Entry extends ValidableItem {
 
     public id: number;
     public name: string;
     public createdBy: User;
+    public image: Image;
 
     constructor( name: string,
                 createdBy: User = null,

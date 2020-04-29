@@ -1,0 +1,16 @@
+.entry-card {
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+}
+
+.image {
+    background-size: cover;
+    max-height: calc(100% - 10px);
+    max-width: calc(100% - 20px);
+    margin: 0 10px 10px 10px;
+}
+
+mat-card-content {
+    min-width: 200px;
+    height: 250px;
+}

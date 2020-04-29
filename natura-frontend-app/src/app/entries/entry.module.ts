@@ -6,11 +6,15 @@ import { AuthService } from '../services/auth.service';
 import { CreateEntryComponent } from './create-entry/create-entry.component';
 import { SpeciesService } from '../services/species.service';
 import { InsectService } from '../services/insect.service';
+import { EntriesListComponent } from './entries-list/entries-list.component';
+import { EntryCardComponent } from './entry-card/entry-card.component';
 
 @NgModule({
     declarations: [
     NewEntryComponent,
-    CreateEntryComponent
+    CreateEntryComponent,
+    EntriesListComponent,
+    EntryCardComponent
     ],
     imports: [
         SharedModule

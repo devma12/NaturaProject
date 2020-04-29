@@ -1,0 +1,17 @@
+<div class="entry-card">
+    <mat-card fxLayout="column" fxLayoutAlign="space-around center">
+        <mat-card-header fxFlex="20" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-card-title>{{ entry.name }}</mat-card-title>
+        </mat-card-header>
+        <!-- <img [src]="picture" mat-card-image fxFlex="20" alt="Entry picture"> -->
+        <mat-card-content fxFlex="50" fxLayout="column" fxLayoutAlign="center">
+            <img [src]="picture" alt="Entry picture" class="image">
+        </mat-card-content>
+        <mat-card-footer fxFlex="30">
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+                <a mat-raised-button color="accent">View</a>
+                <a mat-raised-button color="accent">Identify</a>
+            </mat-card-actions>
+        </mat-card-footer>
+    </mat-card>
+</div>
