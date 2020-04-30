@@ -1,6 +1,5 @@
 package com.natura.web.server.controllers;
 
-import com.natura.web.server.entities.Flower;
 import com.natura.web.server.entities.Insect;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.InsectRepository;
@@ -30,6 +29,7 @@ public class InsectController {
                          @RequestParam("location") String location,
                          @RequestParam("species") String species,
                          @RequestParam("createdBy") String createdBy) throws IOException {
+
         Long userId = Long.parseLong(createdBy);
         Long speciesId = Long.parseLong(species);
         Insect insect = new Insect(name, description, location);
@@ -43,7 +43,7 @@ public class InsectController {
     @GetMapping(path="/all")
     public @ResponseBody
     List<Insect> getAllInsects() {
-        List<Insect> insects = (List<Insect>) this.insectRepository.findAll();
-        return insects;
+
+        return (List<Insect>) this.insectRepository.findAll();
     }
 }

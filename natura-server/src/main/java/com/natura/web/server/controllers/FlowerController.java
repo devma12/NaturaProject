@@ -1,9 +1,7 @@
 package com.natura.web.server.controllers;
 
 import com.natura.web.server.entities.Flower;
-import com.natura.web.server.entities.User;
 import com.natura.web.server.exceptions.ServerException;
-import com.natura.web.server.repo.EntryRepository;
 import com.natura.web.server.repo.FlowerRepository;
 import com.natura.web.server.services.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +29,7 @@ public class FlowerController {
                                        @RequestParam("location") String location,
                                        @RequestParam("species") String species,
                                        @RequestParam("createdBy") String createdBy) throws IOException {
+
         Long userId = Long.parseLong(createdBy);
         Long speciesId = Long.parseLong(species);
         Flower flower = new Flower(name, description, location);
@@ -44,7 +42,7 @@ public class FlowerController {
 
     @GetMapping(path="/all")
     public @ResponseBody List<Flower> getAllFlowers() {
-        List<Flower> flowers = (List<Flower>) this.flowerRepository.findAll();
-        return flowers;
+
+       return (List<Flower>) this.flowerRepository.findAll();
     }
 }

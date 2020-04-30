@@ -18,11 +18,13 @@ public class ImageController {
 
     @PostMapping(path="/upload")
     public @ResponseBody Image uploadImage(@RequestBody MultipartFile file) throws IOException {
+
         return imageService.upload(file);
     }
 
     @GetMapping(path="/get/{id}")
     public @ResponseBody Image download(@PathVariable("id") String imageId) {
+
         Long id = Long.parseLong(imageId);
         return imageService.download(id);
     }
