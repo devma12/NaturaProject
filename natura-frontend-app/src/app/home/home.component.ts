@@ -16,12 +16,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.authService.user.subscribe(value => {
-        if (value) {
-          this.username = value.username;
-        } else {
-          this.username = '';
-        }
-      });
+      if (value) {
+        this.username = value.username;
+      } else {
+        this.username = '';
+      }
+    });
   }
 
 }

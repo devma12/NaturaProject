@@ -1,6 +1,6 @@
+import { Image } from '../image.model';
 import { User } from '../user.model';
 import { ValidableItem } from '../validable-item.model';
-import { Image } from '../image.model';
 
 export abstract class Entry extends ValidableItem {
 

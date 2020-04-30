@@ -4,4 +4,6 @@ export class Image {
     public name: string;
     public type: string;
     public data: any[];
+
+    constructor() {}
 }

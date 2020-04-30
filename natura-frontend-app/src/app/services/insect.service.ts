@@ -1,7 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Insect } from '../models/entries/insect.model';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class InsectService {

@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
-import { SpeciesType } from 'src/app/models/type.enum';
-import { SpeciesService } from 'src/app/services/species.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Species } from 'src/app/models/species.model';
-import { FlowerService } from 'src/app/services/flower.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { SpeciesType } from 'src/app/models/type.enum';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { FlowerService } from 'src/app/services/flower.service';
 import { InsectService } from 'src/app/services/insect.service';
+import { SpeciesService } from 'src/app/services/species.service';
 import { EntryUtils } from '../entry.utils';
 
 @Component({
   selector: 'app-create-entry',
   templateUrl: './create-entry.component.html',
-  styleUrls: ['./create-entry.component.css']
+  styleUrls: ['./create-entry.component.scss']
 })
 export class CreateEntryComponent implements OnInit {
 
@@ -29,6 +29,7 @@ export class CreateEntryComponent implements OnInit {
               private flowerService: FlowerService,
               private insectService: InsectService) {
     this.isLoading = true;
+    this.species = [];
   }
 
   ngOnInit(): void {
@@ -46,7 +47,7 @@ export class CreateEntryComponent implements OnInit {
         this.isLoading = false;
       }, 
       error => {
-        console.error('Failed to load species by type !');
+        console.error(`Failed to load species by type ${this.type} !`);
       }
     );
 
@@ -88,7 +89,7 @@ export class CreateEntryComponent implements OnInit {
         error => {
           console.log('Failed to create new Flower entry.');
         }
-      );;
+      );
     } else if (this.type === SpeciesType.Insect) {
       this.insectService.create(entryData).subscribe(
         data => {

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authService: AuthService) {
-   }
+  }
 
   ngOnInit(): void {
     this.authService.redirectUrl = this.route.snapshot.queryParams['redirectUrl'] || '/home';
@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   }
 
   initForm() {
-
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

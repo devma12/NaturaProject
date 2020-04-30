@@ -1,5 +1,5 @@
-import { ValidableItem } from './validable-item.model';
 import { SpeciesType } from './type.enum';
+import { ValidableItem } from './validable-item.model';
 
 export class Species extends ValidableItem {
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Entry } from 'src/app/models/entries/entry.model';
+import { SpeciesType } from 'src/app/models/type.enum';
 import { FlowerService } from 'src/app/services/flower.service';
 import { InsectService } from 'src/app/services/insect.service';
-import { Entry } from 'src/app/models/entries/entry.model';
 import { EntryUtils } from '../entry.utils';
-import { SpeciesType } from 'src/app/models/type.enum';
 
 @Component({
   selector: 'app-entries-list',
@@ -14,7 +14,6 @@ import { SpeciesType } from 'src/app/models/type.enum';
 export class EntriesListComponent implements OnInit {
 
   isLoading: boolean;
-  isFlower: boolean;
 
   entries: Entry[];
 
@@ -27,6 +26,7 @@ export class EntriesListComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
     let type: SpeciesType;
     try {
       type = EntryUtils.getEntryTypeFromRoute(this.route);
@@ -41,7 +41,7 @@ export class EntriesListComponent implements OnInit {
           this.isLoading = false;
         }, 
         error => {
-          console.error('Failed to load entries !');
+          console.error('Failed to load flowers !');
         }
       );
     } else if (type === SpeciesType.Insect) {
@@ -51,7 +51,7 @@ export class EntriesListComponent implements OnInit {
           this.isLoading = false;
         }, 
         error => {
-          console.error('Failed to load entries !');
+          console.error('Failed to load pollinating insects !');
         }
       );
     } else {

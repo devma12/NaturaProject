@@ -31,7 +31,8 @@
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>Location</mat-label>
-                            <input matInput #location type="text" formControlName="location" placeholder="City, region, address" maxlength="255">
+                            <input matInput #location type="text" formControlName="location"
+                                placeholder="City, region, address" maxlength="255">
                             <mat-hint align="start">Max. 255 characters</mat-hint>
                             <mat-hint align="end">{{location.value.length}} / 255</mat-hint>
                         </mat-form-field>
