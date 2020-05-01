@@ -22,7 +22,7 @@
 
 # To create Docker image for Java Spring Boot project:
 
-	update application.properties (replace localhost:3306 with MySQL service name db-mysql) 
+	 # update application.properties (replace localhost:3306 with MySQL service name db-mysql) -> not needed anymore. It is managed with spring profiles.
 	
 	go on Java project folder with cd command
 	
@@ -35,7 +35,6 @@
 	go on NaturaProject root project folder with cd command
 	
 	if it is not done yet
-		update application.properties (replace localhost:3306 with MySQL service name db-mysql) 
 		update proxy.conf.json (replace localhost with Docker IP address 192.168.99.100)
 
 	docker-compose up -d
