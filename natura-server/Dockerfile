@@ -9,7 +9,7 @@ RUN mvn -e -B dependency:resolve
 
 COPY src ./src
 
-RUN mvn -e -B package -DskipTests
+RUN mvn -e -B package
 
 # use jre image for next stage if jre official image exist
 FROM openjdk:14-jdk-alpine
@@ -20,4 +20,4 @@ ARG JAR_FILE=/usr/src/server-app/target/*.jar
 
 COPY --from=builder ${JAR_FILE} backend-app-server.jar
 
-ENTRYPOINT ["java","-jar","backend-app-server.jar"]
+ENTRYPOINT ["java","-jar","backend-app-server.jar","--spring.profiles.active=prod"]
