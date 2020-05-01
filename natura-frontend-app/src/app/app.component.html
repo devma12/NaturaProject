@@ -1,23 +1,22 @@
 <header>
   <mat-toolbar color="primary">
-    <button href="#" mat-button>
+    <a routerLink="/home" mat-button>
       <!-- <span><img src="./assets/logo.png"></span> -->
       <mat-icon>filter_vintage</mat-icon>
       Natura
-    </button>
-    <button *ngIf="authService.isAuth" href="#" mat-button>Flowers</button>
-    <button *ngIf="authService.isAuth" href="#" mat-button>Pollinating Insects</button>
+    </a>
+    <a *ngIf="authService.isAuth" routerLink="/entries/list/flower" mat-button>Flowers</a>
+    <a *ngIf="authService.isAuth" routerLink="/entries/list/insect" mat-button>Pollinating Insects</a>
+    <a *ngIf="authService.isAuth" href="#" mat-button>Species</a>
     <span class="fill-remaining-space"></span>
-    
-    <button *ngIf="authService.isAuth" href="#" mat-button>
+    <a *ngIf="authService.isAuth" href="#" mat-button>
       <mat-icon>account_circle</mat-icon>
-      {{ authService.user.username }}
-    </button>
+      {{ username }}
+    </a>
     <button *ngIf="authService.isAuth" (click)="logout()" mat-button>
       Sign out
       <mat-icon>exit_to_app</mat-icon>
     </button>
-    
   </mat-toolbar>
 </header>
 <div class="container">

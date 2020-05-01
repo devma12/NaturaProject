@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$app-primary: mat-palette($mat-deep-purple);
+$app-accent: mat-palette($mat-amber, A200, A100, A400);
+$app-warn: mat-palette($mat-deep-orange);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);
+
+.dark-theme {
+    color: $light-primary-text;
+    $dark-primary: mat-palette($mat-purple);
+    $dark-accent: mat-palette($mat-light-green, A400, A100, A700);
+    $dark-warn: mat-palette($mat-red);
+    $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+  
+    @include angular-material-theme($dark-theme);
+}
+
+// Define a custom typography config that overrides the `headline` and `title` levels.
+$custom-typography: mat-typography-config(
+  $headline: mat-typography-level(32px, 48px, 200),
+  $title: mat-typography-level(20px, 32px, 100)
+);

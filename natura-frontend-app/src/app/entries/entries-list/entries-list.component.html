@@ -1,0 +1,7 @@
+<div class="container-wrapper">
+    <mat-grid-list *ngIf="!isLoading" cols="4">
+        <mat-grid-tile *ngFor="let entry of entries">
+            <app-entry-card [entry]="entry"></app-entry-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

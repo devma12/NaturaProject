@@ -1,0 +1,43 @@
+
+##############################################################################################################
+
+# To create and run Docker image for Angular project:
+
+	update proxy.conf.json (replace localhost with Docker IP address 192.168.99.100)
+	
+	go on Angular project folder with cd command
+	
+	docker build -t natura .
+	
+	docker run -d -p 4300:4300 --name dev natura
+	
+	open chrome in 192.168.99.100:4300
+
+! Warning : Dockerfile must call npm start redefined by package.json as ng serve --host 0.0.0.0 --port 4300 !
+! ng serve ... called directly by Dockerfile is not working !
+
+! Warning: it might take few minutes to be able to see the app !
+
+##############################################################################################################
+
+# To create Docker image for Java Spring Boot project:
+
+	 # update application.properties (replace localhost:3306 with MySQL service name db-mysql) -> not needed anymore. It is managed with spring profiles.
+	
+	go on Java project folder with cd command
+	
+	docker build -t natura-server .
+
+##############################################################################################################
+
+# To run multiple services:
+
+	go on NaturaProject root project folder with cd command
+	
+	if it is not done yet
+		update proxy.conf.json (replace localhost with Docker IP address 192.168.99.100)
+
+	docker-compose up -d
+	
+	open chrome in 192.168.99.100:8081
+	open chrome in 192.168.99.100:4300

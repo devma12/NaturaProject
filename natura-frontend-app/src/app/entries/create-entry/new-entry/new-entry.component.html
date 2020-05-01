@@ -1,0 +1,53 @@
+<div class="container-wrapper">
+    <div fxLayout="column">
+        <h1 fxFlexAlign="center" class="text-color-primary-800 text-uppercase">New {{ type }} entry</h1>
+        <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="createEntry()">
+            <div fxLayout="column">
+                <div fxLayout="row">
+                    <div fxFlex="30" fxFlexOffset="10" fxFlexAlign="baseline" fxLayout="column"
+                        fxLayoutAlign="space-around">
+                        <h2>Main Details</h2>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <input matInput type="text" formControlName="name" placeholder="name">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <ngx-mat-file-input formControlName="file" accept="image/*"
+                                (change)="onFileSelected($event)" placeholder="Choose a picture" color="accent">
+                            </ngx-mat-file-input>
+                            <mat-icon matSuffix>attach_file</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="40" fxFlexOffset="10" fxFlexAlign="baseline" fxLayout="column"
+                        fxLayoutAlign="space-around">
+                        <h2>Optional information</h2>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Description / Comment</mat-label>
+                            <textarea matInput #description formControlName="description"
+                                placeholder="you can enter any comment" maxlength="10000" rows="4">
+                            </textarea>
+                            <mat-hint align="start">Max. 10 000 characters</mat-hint>
+                            <mat-hint align="end">{{description.value.length}} / 10 000</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Location</mat-label>
+                            <input matInput #location type="text" formControlName="location"
+                                placeholder="City, region, address" maxlength="255">
+                            <mat-hint align="start">Max. 255 characters</mat-hint>
+                            <mat-hint align="end">{{location.value.length}} / 255</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Suggested species</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let spec of species" [value]="spec"> {{ spec.commonName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-raised-button type="submit" color="accent" fxFlexAlign="center" fxFlexOffset="5"
+                    [disabled]="entryForm.invalid">Create</button>
+            </div>
+        </form>
+    </div>
+</div>

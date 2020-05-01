@@ -1,1 +1,33 @@
-<p>home works!</p>
+<div class="container-wrapper">
+    <div class="m-t-1" fxLayout="column" fxLayoutAlign="space-around center" >
+        <h1>Welcome {{ username }} !</h1>
+        <div class="full-width" fxLayout="row" fxLayoutWrap fxLayoutGap="10%"  fxLayoutAlign="center">
+            <mat-card fxLayout="column" fxLayoutAlign="space-around center">
+                <mat-card-header fxLayout="row" fxLayoutAlign="space-around center">
+                  <mat-card-title>Flower</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <img src="./assets/marguerite-flower.jpg" alt="Marguerite flower" width="250px" height="163px">
+                </mat-card-content>
+                <mat-card-footer>
+                    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+                        <a mat-raised-button color="accent" routerLink="/entries/new/flower">Add flower</a>
+                    </mat-card-actions>
+                </mat-card-footer>
+              </mat-card>
+              <mat-card fxLayout="column" fxLayoutAlign="space-around center">
+                <mat-card-header fxLayout="row" fxLayoutAlign="center">
+                  <mat-card-title>Pollinating Insect</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <img src="./assets/pollinating_insects.jpg" alt="Pollinating insects" width="250px" height="163px">
+                </mat-card-content>
+                <mat-card-footer>
+                    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+                        <a mat-raised-button color="accent" routerLink="/entries/new/insect">Add insect</a>
+                    </mat-card-actions>
+                </mat-card-footer>
+              </mat-card>
+        </div>
+    </div>
+</div>

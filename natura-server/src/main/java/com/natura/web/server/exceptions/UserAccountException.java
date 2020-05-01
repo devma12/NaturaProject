@@ -22,5 +22,10 @@ public class UserAccountException extends ServerException {
         }
     }
 
+    public static class AuthenticationException extends UserAccountException {
 
+        public AuthenticationException(String message) {
+            super(HttpStatus.UNAUTHORIZED,  message);
+        }
+    }
 }
