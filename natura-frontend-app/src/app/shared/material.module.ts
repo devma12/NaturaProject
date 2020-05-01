@@ -8,6 +8,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
+import {MatDividerModule} from '@angular/material/divider';
 
 // import {A11yModule} from '@angular/cdk/a11y';
 // import {ClipboardModule} from '@angular/cdk/clipboard';
@@ -26,10 +28,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 // import {MatStepperModule} from '@angular/material/stepper';
 // import {MatDatepickerModule} from '@angular/material/datepicker';
 // import {MatDialogModule} from '@angular/material/dialog';
-// import {MatDividerModule} from '@angular/material/divider';
 // import {MatExpansionModule} from '@angular/material/expansion';
-
-// import {MatListModule} from '@angular/material/list';
 // import {MatMenuModule} from '@angular/material/menu';
 // import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 // import {MatPaginatorModule} from '@angular/material/paginator';
@@ -57,6 +56,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatInputModule,
     MatSelectModule,
     MatGridListModule,
+    MatListModule,
+    MatDividerModule,
     // A11yModule,
     // ClipboardModule,
     // CdkStepperModule,
@@ -72,11 +73,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     // MatStepperModule,
     // MatDatepickerModule,
     // MatDialogModule,
-    // MatDividerModule,
     // MatExpansionModule,
-
-    
-    // MatListModule,
     // MatMenuModule,
     // MatNativeDateModule,
     // MatPaginatorModule,

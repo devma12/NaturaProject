@@ -1,0 +1,15 @@
+<div class="container-wrapper">
+    <p>view works !</p>
+    <div *ngIf="!isLoading" fxLayout="column" fxLayoutAlign="space-around center" >
+        <mat-list>
+            <app-field-list-item title="Name" [text]=""></app-field-list-item>
+            <app-field-list-item title="Created by" [text]=""></app-field-list-item>
+            <app-field-list-item title="Description" [text]=""></app-field-list-item>
+            <app-field-list-item title="Location" [text]=""></app-field-list-item>
+            <app-field-list-item title="picture">
+                <img [src]="picture" alt="Entry picture" class="image">
+            </app-field-list-item>
+        </mat-list>
+        <mat-divider [vertical]="true"></mat-divider>
+    </div>
+</div>

@@ -18,4 +18,8 @@ export class FlowerService {
     return this.http.get<Flower[]>(this.flowerUrl + '/all');
   }
 
+  getById(id: number): Observable<Flower> {
+    return this.http.get<Flower>(this.flowerUrl + '/' + id);
+  }
+
 }

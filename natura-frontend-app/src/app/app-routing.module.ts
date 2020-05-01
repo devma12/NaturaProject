@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { FieldListItemComponent } from './shared/field-list-item/field-list-item.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
             { path: 'insect', component: EntriesListComponent }
           ]
         },
+        { path: 'view/:id', component: FieldListItemComponent },
       ]
   },
   { path: '**', redirectTo: 'not-found' }

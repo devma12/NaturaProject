@@ -8,16 +8,20 @@ import { CreateEntryComponent } from './create-entry/create-entry.component';
 import { NewEntryComponent } from './create-entry/new-entry/new-entry.component';
 import { EntriesListComponent } from './entries-list/entries-list.component';
 import { EntryCardComponent } from './entry-card/entry-card.component';
+import { ViewComponent } from './view/view.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
     NewEntryComponent,
     CreateEntryComponent,
     EntriesListComponent,
-    EntryCardComponent
+    EntryCardComponent,
+    ViewComponent
     ],
     imports: [
-        SharedModule
+        SharedModule,
+        RouterModule
     ],
     exports: [
     ],

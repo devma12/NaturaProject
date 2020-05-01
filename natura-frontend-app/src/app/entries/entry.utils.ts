@@ -1,5 +1,7 @@
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { SpeciesType } from '../models/type.enum';
+import { Entry } from '../models/entries/entry.model';
+import { Image } from '../models/image.model';
 
 export class EntryUtils {
 
@@ -15,6 +17,20 @@ export class EntryUtils {
             throw new Error('unknown type');
         }
         return type;
+    }
+
+    public static getEntryPictureBase64Data(entry: Entry): any {
+        if (entry) {
+            // get image
+            console.log(entry.name);
+            let image: Image = entry.image;
+            if (image) {
+                const base64Data = image.data;
+                const type: string = image.type;
+                return `data:${type};base64,${base64Data}`;
+            }
+        }
+        return {};
     }
 
 }

@@ -45,4 +45,11 @@ public class FlowerController {
 
        return (List<Flower>) this.flowerRepository.findAll();
     }
+
+    @GetMapping(path="/{id}")
+    @ResponseBody
+    public Flower getById(@PathVariable String id) {
+        Long entryId = Long.parseLong(id);
+        return this.flowerRepository.findById(entryId).orElse(null);
+    }
 }
