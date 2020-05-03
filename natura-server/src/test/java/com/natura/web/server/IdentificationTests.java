@@ -79,7 +79,7 @@ public class IdentificationTests {
             species = new Species();
             species.setCommonName(speciesName);
             species.setScientificName("scientificName");
-            species.setType(Species.Type.FLOWER);
+            species.setType(Species.Type.Flower);
             species = speciesRepository.save(species);
         }
         this.speciesId = species.getId();

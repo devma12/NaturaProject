@@ -5,6 +5,7 @@ import { Image } from '../models/image.model';
 
 export class EntryUtils {
 
+    // not used anymore as type is defined as a parameter of the route
     public static getEntryTypeFromRoute(route: ActivatedRoute): SpeciesType {
         let type: SpeciesType;
         const url: UrlSegment = route.snapshot.url[route.snapshot.url.length - 1];
@@ -22,7 +23,6 @@ export class EntryUtils {
     public static getEntryPictureBase64Data(entry: Entry): any {
         if (entry) {
             // get image
-            console.log(entry.name);
             let image: Image = entry.image;
             if (image) {
                 const base64Data = image.data;

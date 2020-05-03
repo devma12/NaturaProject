@@ -21,8 +21,8 @@ INSERT INTO db_natura.criteria (name, value)
 	VALUES ('size', 'between 25 and 55 mm');
     
 # create one species
-INSERT INTO db_natura.species (common_name, scientific_name)
-	VALUES ('Citron', 'Gonepteryx rhamni');
+INSERT INTO db_natura.species (common_name, scientific_name, type)
+	VALUES ('Citron', 'Gonepteryx rhamni', 'Insect');
 
 #  specify one criteria to one species
 INSERT INTO db_natura.species_criteria (species_id, criteria_id)

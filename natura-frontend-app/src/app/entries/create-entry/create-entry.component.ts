@@ -33,11 +33,8 @@ export class CreateEntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    try {
-      this.type = EntryUtils.getEntryTypeFromRoute(this.route);
-    } catch (e) {
-      this.router.navigate(['/not-found']);
-    }
+
+    this.type = this.route.snapshot.params['type'];
 
     this.isFlower = (this.type === SpeciesType.Flower);
 
