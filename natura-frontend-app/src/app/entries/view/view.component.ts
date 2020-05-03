@@ -27,13 +27,7 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {
 
     const id = this.route.snapshot.params['id'];
-
-    let type: SpeciesType;
-    try {
-      type = EntryUtils.getEntryTypeFromRoute(this.route);
-    } catch (e) {
-      this.router.navigate(['/not-found']);
-    }
+    const type: SpeciesType = this.route.snapshot.params['type'];
 
     if (type === SpeciesType.Flower) {
       this.flowerService.getById(id).subscribe(

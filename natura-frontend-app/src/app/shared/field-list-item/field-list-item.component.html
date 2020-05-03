@@ -1,7 +1,9 @@
-<mat-list-item> Pepper 
-    <h4> {{ title }} </h4>
-    <div>
-        <ng-content></ng-content>
+<mat-list-item>
+    <div fxLayout="column">
+        <h4 class="mat-h2"> {{ title }} </h4>
+        <div class="content-field">
+            <ng-content></ng-content>
+        </div>
+        <p> {{text }}</p>
     </div>
-    <p> {{text }}</p>
 </mat-list-item>

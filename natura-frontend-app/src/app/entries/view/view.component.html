@@ -1,13 +1,12 @@
 <div class="container-wrapper">
-    <p>view works !</p>
-    <div *ngIf="!isLoading" fxLayout="column" fxLayoutAlign="space-around center" >
+    <div *ngIf="!isLoading && entry" fxLayout="column" fxLayoutAlign="space-around" >
         <mat-list>
-            <app-field-list-item title="Name" [text]=""></app-field-list-item>
-            <app-field-list-item title="Created by" [text]=""></app-field-list-item>
-            <app-field-list-item title="Description" [text]=""></app-field-list-item>
-            <app-field-list-item title="Location" [text]=""></app-field-list-item>
-            <app-field-list-item title="picture">
-                <img [src]="picture" alt="Entry picture" class="image">
+            <app-field-list-item title="Name" [text]="entry.name"></app-field-list-item>
+            <app-field-list-item title="Created by" [text]="entry.createdBy ? entry.createdBy.username : ''"></app-field-list-item>
+            <app-field-list-item title="Description" [text]="entry.description"></app-field-list-item>
+            <app-field-list-item title="Location" [text]="entry.location"></app-field-list-item>
+            <app-field-list-item title="Picture" class="image-field">
+                <!-- <img [src]="picture" mat-card-image alt="Entry picture" > -->
             </app-field-list-item>
         </mat-list>
         <mat-divider [vertical]="true"></mat-divider>

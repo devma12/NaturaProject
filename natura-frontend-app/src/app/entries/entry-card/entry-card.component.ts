@@ -3,6 +3,7 @@ import { Entry } from 'src/app/models/entries/entry.model';
 import { Image } from 'src/app/models/image.model';
 import { EntryUtils } from '../entry.utils';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SpeciesType } from 'src/app/models/type.enum';
 
 @Component({
   selector: 'app-entry-card',
@@ -12,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EntryCardComponent implements OnInit {
 
   @Input('entry') entry: Entry;
+  @Input('type') type: SpeciesType;
 
   picture: any = {};
 
@@ -20,10 +22,6 @@ export class EntryCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.picture = EntryUtils.getEntryPictureBase64Data(this.entry);
-  }
-
-  openView() {
-    this.router.navigate(['/entries/view', this.entry.id]);
   }
 
 }
