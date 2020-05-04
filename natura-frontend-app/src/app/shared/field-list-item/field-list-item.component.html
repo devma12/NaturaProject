@@ -1,9 +1,4 @@
-<mat-list-item>
-    <div fxLayout="column">
-        <h4 class="mat-h2"> {{ title }} </h4>
-        <div class="content-field">
-            <ng-content></ng-content>
-        </div>
-        <p> {{text }}</p>
-    </div>
-</mat-list-item>
+<div fxLayout="row" class="field-container">
+    <h3 class="field-name"> {{ title }} </h3>
+    <p class="field-text"> {{text }}</p>
+</div>

@@ -1,6 +1,14 @@
-.content-field {
-    background-size: cover;
-    max-height: 500px;
-    max-width: 500px;
-    margin: 0 10px 10px 10px;
+.field-container {
+    margin-bottom: 2rem;
 }
+
+.field-name {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 8px;
+}
+
+.field-text {
+    margin-left: 0.5rem;
+}
+

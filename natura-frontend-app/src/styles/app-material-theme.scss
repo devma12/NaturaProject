@@ -23,5 +23,4 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 $custom-typography: mat-typography-config(
   $headline: mat-typography-level(32px, 48px, 200),
   $title: mat-typography-level(20px, 32px, 100),
-  $subheading-1: mat-typography-level(15px, 24px, 400),
 );

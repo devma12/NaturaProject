@@ -4,12 +4,14 @@ import { MatToolbarModule } from  '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatTableModule} from '@angular/material/table';
 
 // import {A11yModule} from '@angular/cdk/a11y';
 // import {ClipboardModule} from '@angular/cdk/clipboard';
@@ -23,7 +25,6 @@ import {MatDividerModule} from '@angular/material/divider';
 // import {MatBadgeModule} from '@angular/material/badge';
 // import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 // import {MatButtonToggleModule} from '@angular/material/button-toggle';
-// import {MatCheckboxModule} from '@angular/material/checkbox';
 // import {MatChipsModule} from '@angular/material/chips';
 // import {MatStepperModule} from '@angular/material/stepper';
 // import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -40,7 +41,6 @@ import {MatDividerModule} from '@angular/material/divider';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 // import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import {MatSortModule} from '@angular/material/sort';
-// import {MatTableModule} from '@angular/material/table';
 // import {MatTabsModule} from '@angular/material/tabs';
 // import {MatTooltipModule} from '@angular/material/tooltip';
 // import {MatTreeModule} from '@angular/material/tree';
@@ -52,12 +52,14 @@ import {MatDividerModule} from '@angular/material/divider';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatGridListModule,
     MatListModule,
     MatDividerModule,
+    MatTableModule,
     // A11yModule,
     // ClipboardModule,
     // CdkStepperModule,
@@ -68,7 +70,6 @@ import {MatDividerModule} from '@angular/material/divider';
     // MatBadgeModule,
     // MatBottomSheetModule,
     // MatButtonToggleModule,
-    // MatCheckboxModule,
     // MatChipsModule,
     // MatStepperModule,
     // MatDatepickerModule,
@@ -86,7 +87,6 @@ import {MatDividerModule} from '@angular/material/divider';
     // MatSlideToggleModule,
     // MatSnackBarModule,
     // MatSortModule,
-    // MatTableModule,
     // MatTabsModule,
     // MatTooltipModule,
     // MatTreeModule,

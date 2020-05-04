@@ -10,6 +10,7 @@ import { EntriesListComponent } from './entries-list/entries-list.component';
 import { EntryCardComponent } from './entry-card/entry-card.component';
 import { ViewComponent } from './view/view.component';
 import { RouterModule } from '@angular/router';
+import { IdentificationService } from '../services/identification.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { RouterModule } from '@angular/router';
         AuthService,
         FlowerService,
         SpeciesService,
-        InsectService
+        InsectService,
+        IdentificationService
     ]
   })
   export class EntryModule { }
