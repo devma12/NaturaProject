@@ -31,7 +31,7 @@ export class NewEntryComponent implements OnInit {
       file: ['', Validators.required],
       description: [''],
       location: [''],
-      species: ['']
+      suggestion: ['']
     });
 
   }
@@ -43,12 +43,15 @@ export class NewEntryComponent implements OnInit {
   createEntry() {
     const formValue = this.entryForm.value;
 
+    const species: Species = this.entryForm.controls['suggestion'].value;
+    const specie = formValue['suggestion'];
+
     const infos = {
       selectedFile: this.selectedFile,
       name: formValue['name'],
       description: formValue['description'],
       location: formValue['location'],
-      species: formValue['species']
+      species: formValue['suggestion']
     }
     this.entry.emit(infos);
   }

@@ -1,5 +1,6 @@
 package com.natura.web.server.controllers;
 
+import com.natura.web.server.entities.Flower;
 import com.natura.web.server.entities.Insect;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.InsectRepository;
@@ -45,5 +46,12 @@ public class InsectController {
     List<Insect> getAllInsects() {
 
         return (List<Insect>) this.insectRepository.findAll();
+    }
+
+    @GetMapping(path="/{id}")
+    @ResponseBody
+    public Insect getById(@PathVariable String id) {
+        Long entryId = Long.parseLong(id);
+        return this.insectRepository.findById(entryId).orElse(null);
     }
 }

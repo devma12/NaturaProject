@@ -1,0 +1,37 @@
+
+
+mat-divider {
+    margin-bottom: 1.5rem;
+}
+
+.details-container {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+    max-height: 400px;
+}
+
+.image-container {
+    background-size: cover;
+    max-height: 400px;
+    max-width: 400px;
+    margin-bottom: 1rem;
+}
+
+.image {
+    background-size: cover;
+    max-height: 350px;
+    height: calc(100% - 20px);
+    width: auto;
+    margin: 10px 10px 10px 10px;
+}
+
+.identification-container {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#add-new {
+    margin-bottom: 8px;
+}

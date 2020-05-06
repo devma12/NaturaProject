@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { ViewComponent } from './entries/view/view.component';
 
 
 const routes: Routes = [
@@ -17,18 +18,9 @@ const routes: Routes = [
   { path: 'not-found', component: NotFoundComponent },
   { path: 'entries', canActivate: [AuthGuard],
       children: [
-        { path: 'new', 
-          children: [
-            { path: 'flower', component: CreateEntryComponent },
-            { path: 'insect', component: CreateEntryComponent }
-          ]
-        },
-        { path: 'list', 
-          children: [
-            { path: 'flower', component: EntriesListComponent },
-            { path: 'insect', component: EntriesListComponent }
-          ]
-        },
+        { path: 'new/:type', component: CreateEntryComponent },
+        { path: 'list/:type', component: EntriesListComponent },
+        { path: 'view/:type/:id', component: ViewComponent },
       ]
   },
   { path: '**', redirectTo: 'not-found' }

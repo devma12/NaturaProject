@@ -14,6 +14,7 @@ import { EntryUtils } from '../entry.utils';
 export class EntriesListComponent implements OnInit {
 
   isLoading: boolean;
+  type: SpeciesType;
 
   entries: Entry[];
 
@@ -27,14 +28,9 @@ export class EntriesListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let type: SpeciesType;
-    try {
-      type = EntryUtils.getEntryTypeFromRoute(this.route);
-    } catch (e) {
-      this.router.navigate(['/not-found']);
-    }
+    this.type = this.route.snapshot.params['type'];
 
-    if (type === SpeciesType.Flower) {
+    if (this.type === SpeciesType.Flower) {
       this.flowerService.getAll().subscribe(
         data => {
           this.entries = data;
@@ -44,7 +40,7 @@ export class EntriesListComponent implements OnInit {
           console.error('Failed to load flowers !');
         }
       );
-    } else if (type === SpeciesType.Insect) {
+    } else if (this.type === SpeciesType.Insect) {
       this.insectService.getAll().subscribe(
         data => {
           this.entries = data;
