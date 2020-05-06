@@ -21,11 +21,17 @@ mat-divider {
 
 .image {
     background-size: cover;
-    max-height: calc(100% - 20px);
+    max-height: 350px;
+    height: calc(100% - 20px);
+    width: auto;
     margin: 10px 10px 10px 10px;
 }
 
 .identification-container {
     margin-left: 2rem;
     margin-right: 2rem;
+}
+
+#add-new {
+    margin-bottom: 8px;
 }

@@ -14,4 +14,8 @@ export class IdentificationService {
   getByEntry(entry: Entry): Observable<Identification[]> {
     return this.http.get<Identification[]>(this.identificationUrl + '/entry/' + entry.id);
   }
+
+  identify(identificationData: FormData): Observable<Identification> {
+    return this.http.post<Identification>(this.identificationUrl + '/new', identificationData);
+  }
 }

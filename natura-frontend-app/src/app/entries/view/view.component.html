@@ -1,20 +1,26 @@
 <div class="container-wrapper" *ngIf="!isLoading && entry">
     <div fxLayout="row">
-        <div class="details-container" fxFlex="40" fxLayout="column" fxLayoutAlign="space-around">
+        <div class="details-container" fxFlex="50" fxLayout="column" fxLayoutAlign="space-around">
             <h1>Details</h1>
             <mat-divider></mat-divider>
-            <app-field-list-item title="Name" [text]="entry.name"></app-field-list-item>
-            <app-field-list-item title="Created by" [text]="entry.createdBy ? entry.createdBy.username : ''">
+            <app-field-list-item name="Name" [text]="entry.name"></app-field-list-item>
+            <app-field-list-item name="Created by" [text]="entry.createdBy ? entry.createdBy.username : ''">
             </app-field-list-item>
-            <app-field-list-item title="Description" [text]="entry.description"></app-field-list-item>
-            <app-field-list-item title="Location" [text]="entry.location"></app-field-list-item>
+            <app-field-list-item name="Description" [text]="entry.description"></app-field-list-item>
+            <app-field-list-item name="Location" [text]="entry.location"></app-field-list-item>
         </div>
         <div class="image-container">
-            <img [src]="picture" alt="Entry picture" class="image">
+            <img [src]="picture" alt="Entry picture" width="auto" height="100" class="image">
         </div>
     </div>
     <div class="identification-container" fxLayout="column" fxLayoutAlign="space-around">
-        <h1>Identifications</h1>
+        <div fxLayout="row" fxLayoutAlign="none center">
+            <h1>Identifications</h1>
+            <button mat-mini-fab color="accent" fxFlexOffset="3" 
+                id="add-new" aria-label="add new identification" (click)="openDialog()">
+                <mat-icon>add</mat-icon>
+              </button>
+        </div>
         <mat-divider></mat-divider>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="species">

@@ -1,15 +1,12 @@
 package com.natura.web.server.controllers;
 
 import com.natura.web.server.entities.Identification;
-import com.natura.web.server.entities.Species;
-import com.natura.web.server.repo.EntryRepository;
+import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.IdentificationRepository;
+import com.natura.web.server.services.IdentificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +16,10 @@ import java.util.List;
 public class IdentificationController {
 
     @Autowired
-    IdentificationRepository identificationRepository;
+    private IdentificationRepository identificationRepository;
+
+    @Autowired
+    private IdentificationService identificationService;
 
     @GetMapping(path="/entry/{id}")
     public @ResponseBody
@@ -28,5 +28,21 @@ public class IdentificationController {
         Long entryId = Long.parseLong(id);
         List<Identification> identifications = identificationRepository.findByIdEntryId(entryId);
         return identifications;
+    }
+
+    @PostMapping(path="/new")
+    public @ResponseBody
+    Identification identify(@RequestParam("entryId") String entry,
+                            @RequestParam("speciesId") String species,
+                            @RequestParam("userId") String proposer) throws IOException {
+
+        Long entryId = Long.parseLong(entry);
+        Long speciesId = Long.parseLong(species);
+        Long userId = Long.parseLong(proposer);
+        try {
+            return identificationService.identify(entryId, speciesId, userId);
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
     }
 }

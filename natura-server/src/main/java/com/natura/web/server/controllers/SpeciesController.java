@@ -14,7 +14,7 @@ import java.util.List;
 public class SpeciesController {
 
     @Autowired
-    SpeciesRepository speciesRepository;
+    private SpeciesRepository speciesRepository;
 
     @GetMapping(path="/type/{type}")
     public @ResponseBody List<Species> getByType(@PathVariable("type") Species.Type type) throws IOException {

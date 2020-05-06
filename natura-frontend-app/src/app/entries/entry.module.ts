@@ -11,6 +11,7 @@ import { EntryCardComponent } from './entry-card/entry-card.component';
 import { ViewComponent } from './view/view.component';
 import { RouterModule } from '@angular/router';
 import { IdentificationService } from '../services/identification.service';
+import { ChooseSpeciesComponent } from './view/choose-species/choose-species.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { IdentificationService } from '../services/identification.service';
     CreateEntryComponent,
     EntriesListComponent,
     EntryCardComponent,
-    ViewComponent
+    ViewComponent,
+    ChooseSpeciesComponent
     ],
     imports: [
         SharedModule,

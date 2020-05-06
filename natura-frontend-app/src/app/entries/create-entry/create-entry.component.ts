@@ -81,7 +81,7 @@ export class CreateEntryComponent implements OnInit {
     if (this.type === SpeciesType.Flower) {
       this.flowerService.create(entryData).subscribe(
         data => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/entries/view', this.type, data.id]);
         },
         error => {
           console.log('Failed to create new Flower entry.');
@@ -90,7 +90,7 @@ export class CreateEntryComponent implements OnInit {
     } else if (this.type === SpeciesType.Insect) {
       this.insectService.create(entryData).subscribe(
         data => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/entries/view', this.type, data.id]);
         },
         error => {
           console.log('Failed to create new Insect entry.');

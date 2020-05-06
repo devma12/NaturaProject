@@ -9,6 +9,11 @@
 }
 
 .field-text {
+    max-height: 100px;
     margin-left: 0.5rem;
+    text-align: justify;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 

@@ -7,12 +7,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FieldListItemComponent implements OnInit {
 
-  @Input() title: string;
+  @Input() name: string;
   @Input() text: string;
+
+  isLong: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.isLong = (this.text.length > 70);
   }
 
 }

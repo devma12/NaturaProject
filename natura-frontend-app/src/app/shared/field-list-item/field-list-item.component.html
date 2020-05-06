@@ -1,4 +1,4 @@
-<div fxLayout="row" class="field-container">
-    <h3 class="field-name"> {{ title }} </h3>
-    <p class="field-text"> {{text }}</p>
+<div class="field-container">
+    <h3 class="field-name"> {{ name }} </h3>
+    <p class="field-text" [matTooltip]="isLong ? text : null"> {{ text }}</p>
 </div>
