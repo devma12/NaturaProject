@@ -12,6 +12,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { SharedModule } from './shared/shared.module';
+import { SpeciesModule } from './species/species.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     AppRoutingModule,
     SharedModule,
-    EntryModule
+    EntryModule,
+    SpeciesModule
   ],
   providers: [
     AuthService,

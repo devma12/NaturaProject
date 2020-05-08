@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -10,7 +11,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -25,14 +28,12 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 // import {CdkTreeModule} from '@angular/cdk/tree';
 // import {MatBadgeModule} from '@angular/material/badge';
 // import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-// import {MatButtonToggleModule} from '@angular/material/button-toggle';
 // import {MatChipsModule} from '@angular/material/chips';
 // import {MatStepperModule} from '@angular/material/stepper';
 // import {MatDatepickerModule} from '@angular/material/datepicker';
 // import {MatExpansionModule} from '@angular/material/expansion';
 // import {MatMenuModule} from '@angular/material/menu';
 // import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-// import {MatPaginatorModule} from '@angular/material/paginator';
 // import {MatProgressBarModule} from '@angular/material/progress-bar';
 // import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 // import {MatRadioModule} from '@angular/material/radio';
@@ -40,7 +41,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 // import {MatSliderModule} from '@angular/material/slider';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 // import {MatSnackBarModule} from '@angular/material/snack-bar';
-// import {MatSortModule} from '@angular/material/sort';
 // import {MatTabsModule} from '@angular/material/tabs';
 // import {MatTreeModule} from '@angular/material/tree';
 
@@ -49,6 +49,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   exports: [
     MatAutocompleteModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
     MatDialogModule,
@@ -58,7 +59,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatPaginatorModule,
     MatSelectModule,
+    MatSortModule,
     MatTableModule,
     MatToolbarModule,
     MatTooltipModule,
@@ -70,14 +73,12 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     // DragDropModule,
     // MatBadgeModule,
     // MatBottomSheetModule,
-    // MatButtonToggleModule,
     // MatChipsModule,
     // MatStepperModule,
     // MatDatepickerModule,
     // MatExpansionModule,
     // MatMenuModule,
     // MatNativeDateModule,
-    // MatPaginatorModule,
     // MatProgressBarModule,
     // MatProgressSpinnerModule,
     // MatRadioModule,
@@ -86,7 +87,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     // MatSliderModule,
     // MatSlideToggleModule,
     // MatSnackBarModule,
-    // MatSortModule,
     // MatTabsModule,
     // MatTreeModule,
     // PortalModule,
