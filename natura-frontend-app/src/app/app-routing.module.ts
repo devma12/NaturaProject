@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { ViewComponent } from './entries/view/view.component';
+import { SpeciesListComponent } from './species/species-list/species-list.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,11 @@ const routes: Routes = [
         { path: 'new/:type', component: CreateEntryComponent },
         { path: 'list/:type', component: EntriesListComponent },
         { path: 'view/:type/:id', component: ViewComponent },
+      ]
+  },
+  { path: 'species', canActivate: [AuthGuard],
+      children: [
+        { path: 'list', component: SpeciesListComponent },
       ]
   },
   { path: '**', redirectTo: 'not-found' }

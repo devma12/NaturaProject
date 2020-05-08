@@ -1,0 +1,35 @@
+<header class="theme-header">
+    <h2 fxFlexOffset="1.5">Species</h2>
+</header>
+<div class="container-wrapper">
+    <div class="filters" fxLayout="row" fxLayoutAlign="none center" dir="ltr" fxLayoutGap="200px">
+        <mat-button-toggle-group fxFlexOffset="10" #group="matButtonToggleGroup" name="type" aria-label="Species Type"
+            value="all" (change)="onTypeChange(group.value)">
+            <mat-button-toggle value="all">All</mat-button-toggle>
+            <mat-button-toggle value="flower">Flowers</mat-button-toggle>
+            <mat-button-toggle value="insect">Insect</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-form-field fxFlex="25">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Type first letters of searched species">
+        </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="commonName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Common Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.commonName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="scientificName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Scientific Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.scientificName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

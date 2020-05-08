@@ -1,5 +1,5 @@
-<header>
-  <mat-toolbar color="primary">
+<header class="mat-elevation-z6">
+  <mat-toolbar color="primary" class="mat-elevation-z6">
     <a routerLink="/home" mat-button>
       <!-- <span><img src="./assets/logo.png"></span> -->
       <mat-icon>filter_vintage</mat-icon>
@@ -7,7 +7,7 @@
     </a>
     <a *ngIf="authService.isAuth" routerLink="/entries/list/Flower" mat-button>Flowers</a>
     <a *ngIf="authService.isAuth" routerLink="/entries/list/Insect" mat-button>Pollinating Insects</a>
-    <a *ngIf="authService.isAuth" href="#" mat-button>Species</a>
+    <a *ngIf="authService.isAuth" routerLink="/species/list" mat-button>Species</a>
     <span class="fill-remaining-space"></span>
     <a *ngIf="authService.isAuth" href="#" mat-button>
       <mat-icon>account_circle</mat-icon>
