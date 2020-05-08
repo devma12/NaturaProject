@@ -8,10 +8,12 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AppMaterialModule } from '../shared/material.module';
 import { FieldListItemComponent } from './field-list-item/field-list-item.component';
 import { RouterModule } from '@angular/router';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
     declarations: [
-      FieldListItemComponent
+      FieldListItemComponent,
+      SpinnerComponent
     ],
     imports: [
       AppMaterialModule
@@ -26,7 +28,8 @@ import { RouterModule } from '@angular/router';
       FlexLayoutModule,
       HttpClientModule,
       RouterModule,
-      FieldListItemComponent
+      FieldListItemComponent,
+      SpinnerComponent
     ],
     providers: []
   })

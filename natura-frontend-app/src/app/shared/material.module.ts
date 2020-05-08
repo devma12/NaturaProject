@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -35,7 +36,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 // import {MatMenuModule} from '@angular/material/menu';
 // import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 // import {MatProgressBarModule} from '@angular/material/progress-bar';
-// import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 // import {MatRadioModule} from '@angular/material/radio';
 // import {MatSidenavModule} from '@angular/material/sidenav';
 // import {MatSliderModule} from '@angular/material/slider';
@@ -60,6 +60,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatInputModule,
     MatListModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatSortModule,
     MatTableModule,
@@ -80,7 +81,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     // MatMenuModule,
     // MatNativeDateModule,
     // MatProgressBarModule,
-    // MatProgressSpinnerModule,
     // MatRadioModule,
     // MatRippleModule,
     // MatSidenavModule,

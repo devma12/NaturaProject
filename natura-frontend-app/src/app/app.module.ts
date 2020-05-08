@@ -13,6 +13,7 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { SharedModule } from './shared/shared.module';
 import { SpeciesModule } from './species/species.module';
+import { LoadingService } from './services/loading.service';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { SpeciesModule } from './species/species.module';
     AuthService,
     AuthGuard,
     UserService,
+    LoadingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
