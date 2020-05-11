@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,6 +27,7 @@ public class InsectController {
     @PostMapping(path="/new")
     public @ResponseBody  Insect create(@RequestParam("imageFile") MultipartFile file,
                          @RequestParam("name") String name,
+                         @RequestParam("date") Date date,
                          @RequestParam("description") String description,
                          @RequestParam("location") String location,
                          @RequestParam("species") String species,
@@ -33,7 +35,7 @@ public class InsectController {
 
         Long userId = Long.parseLong(createdBy);
         Long speciesId = Long.parseLong(species);
-        Insect insect = new Insect(name, description, location);
+        Insect insect = new Insect(name, date, description, location);
         try {
             return (Insect) entryService.create(insect, file, userId, speciesId);
         } catch (ServerException e) {

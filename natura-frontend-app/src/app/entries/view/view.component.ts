@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntryUtils } from '../entry.utils';
 import { SpeciesType } from 'src/app/models/type.enum';
@@ -14,15 +14,15 @@ import { ChooseSpeciesComponent } from './choose-species/choose-species.componen
 import { Species } from 'src/app/models/species.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss']
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit, OnDestroy {
 
-  isLoading: boolean;
   isRouting: boolean = true;
 
   entry: Entry;
@@ -36,13 +36,14 @@ export class ViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
+    public loadingService: LoadingService,
     private authService: AuthService,
     private flowerService: FlowerService,
     private insectService: InsectService,
     private speciesService: SpeciesService,
     private identificationService: IdentificationService) {
-    this.isLoading = true;
-  }
+      this.loadingService.startLoading();
+    }
 
   ngOnInit(): void {
 
@@ -75,7 +76,6 @@ export class ViewComponent implements OnInit {
   getEntryAndRelatedIdentifications(data: Entry) {
     this.entry = data;
     this.picture = EntryUtils.getEntryPictureBase64Data(this.entry);
-    this.isLoading = false;
     this.getIdentifications();
   }
 
@@ -84,7 +84,7 @@ export class ViewComponent implements OnInit {
       data => {
         this.identifications = data;
         this.dataSource = new MatTableDataSource<Identification>(this.identifications);
-        this.isLoading = false;
+        this.loadingService.stopLoading();
 
         const identifying = this.route.snapshot.paramMap.get('identify');
         if (this.isRouting && identifying) {
@@ -129,7 +129,7 @@ export class ViewComponent implements OnInit {
 
           this.identificationService.identify(identificationData).subscribe(
             data => {
-              this.isLoading = true;
+              this.loadingService.startLoading();
               this.getIdentifications();
             },
             error => {
@@ -143,6 +143,10 @@ export class ViewComponent implements OnInit {
       }
     );
 
+  }
+
+  ngOnDestroy(): void {
+    this.loadingService.stopLoading();
   }
 
 }

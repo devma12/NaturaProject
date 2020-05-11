@@ -1,4 +1,4 @@
-<div class="container-wrapper" *ngIf="!isLoading && entry">
+<div class="container-wrapper" *ngIf="!loadingService.loading$.value && entry">
     <div fxLayout="row">
         <div class="details-container" fxFlex="50" fxLayout="column" fxLayoutAlign="space-around">
             <h1>Details</h1>
@@ -6,6 +6,7 @@
             <app-field-list-item name="Name" [text]="entry.name"></app-field-list-item>
             <app-field-list-item name="Created by" [text]="entry.createdBy ? entry.createdBy.username : ''">
             </app-field-list-item>
+            <app-field-list-item name="Date" [text]="entry.date | date: 'dd/MM/yyyy'"></app-field-list-item>
             <app-field-list-item name="Description" [text]="entry.description"></app-field-list-item>
             <app-field-list-item name="Location" [text]="entry.location"></app-field-list-item>
         </div>

@@ -6,6 +6,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Species } from 'src/app/models/species.model';
 import { SpeciesService } from 'src/app/services/species.service';
 import { SpeciesType } from 'src/app/models/type.enum';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-species-list',
@@ -24,7 +25,10 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private speciesService: SpeciesService) { }
+  constructor(public loadingService: LoadingService,
+              private speciesService: SpeciesService) { 
+    this.loadingService.startLoading();
+  }
 
   ngOnInit(): void {
     // initialize table pagination & sorting
@@ -41,6 +45,7 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
       data => {
         this.species = data;
         this.species$.next(data);
+        this.loadingService.stopLoading();
       },
       error => {
         console.error('Failed to load species !');
@@ -67,6 +72,7 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.speciesSubscription.unsubscribe();
+    this.loadingService.stopLoading();
   }
 
 }
