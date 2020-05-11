@@ -15,7 +15,7 @@ export class FieldListItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.isLong = (this.text.length > 70);
+    this.isLong = (this.text !== null && this.text !== undefined && this.text.length > 70);
   }
 
 }
