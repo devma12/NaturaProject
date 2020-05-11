@@ -18,6 +18,8 @@ export class NewEntryComponent implements OnInit {
 
   selectedFile: File;
 
+  maxDate: Date = new Date();
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class NewEntryComponent implements OnInit {
     this.entryForm = this.formBuilder.group({
       name: ['', Validators.required],
       file: ['', Validators.required],
+      date: ['', Validators.required],
       description: [''],
       location: [''],
       suggestion: ['']
@@ -43,12 +46,10 @@ export class NewEntryComponent implements OnInit {
   createEntry() {
     const formValue = this.entryForm.value;
 
-    const species: Species = this.entryForm.controls['suggestion'].value;
-    const specie = formValue['suggestion'];
-
     const infos = {
       selectedFile: this.selectedFile,
       name: formValue['name'],
+      date: formValue['date'],
       description: formValue['description'],
       location: formValue['location'],
       species: formValue['suggestion']

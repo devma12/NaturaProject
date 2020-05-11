@@ -58,6 +58,7 @@ export class CreateEntryComponent implements OnInit {
 
     // Get entry details
     entryData.append('name', infos['name']);
+    entryData.append('date', infos['date']);
     entryData.append('description', infos['description']);
     entryData.append('location', infos['location']);
 

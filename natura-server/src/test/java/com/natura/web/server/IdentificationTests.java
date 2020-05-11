@@ -85,7 +85,7 @@ public class IdentificationTests {
         this.speciesId = species.getId();
 
         // Create an entry
-        Flower entry = new Flower("testFlower", "description", "location");
+        Flower entry = new Flower("testFlower", new Date(), "description", "location");
         entry = entryRepository.save(entry);
         this.entryId = entry.getId();
     }
@@ -105,7 +105,7 @@ public class IdentificationTests {
 
     @Test
     void createEntryWithSuggestedIdentification() throws IOException, DataNotFoundException {
-        Entry newFlower = new Flower("roseFlower", "desc", "France");
+        Entry newFlower = new Flower("roseFlower", new Date(), "desc", "France");
 
         File file = new File(getClass().getClassLoader().getResource("images/pexels-photo-133472.jpeg").getFile());
         InputStream is = new FileInputStream(file);
