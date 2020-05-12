@@ -8,6 +8,7 @@ import { FlowerService } from 'src/app/services/flower.service';
 import { InsectService } from 'src/app/services/insect.service';
 import { SpeciesService } from 'src/app/services/species.service';
 import { EntryUtils } from '../entry.utils';
+import { EntryService } from 'src/app/services/entry.service';
 
 @Component({
   selector: 'app-create-entry',
@@ -27,7 +28,8 @@ export class CreateEntryComponent implements OnInit {
               private speciesService: SpeciesService,
               private authService: AuthService,
               private flowerService: FlowerService,
-              private insectService: InsectService) {
+              private insectService: InsectService,
+              private entryService: EntryService) {
     this.isLoading = true;
     this.species = [];
   }
@@ -35,6 +37,7 @@ export class CreateEntryComponent implements OnInit {
   ngOnInit(): void {
 
     this.type = this.route.snapshot.params['type'];
+    this.entryService.setHeader(this.type);
 
     this.isFlower = (this.type === SpeciesType.Flower);
 

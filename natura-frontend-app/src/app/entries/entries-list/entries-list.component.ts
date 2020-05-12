@@ -6,6 +6,7 @@ import { FlowerService } from 'src/app/services/flower.service';
 import { InsectService } from 'src/app/services/insect.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Subscription } from 'rxjs';
+import { EntryService } from 'src/app/services/entry.service';
 
 @Component({
   selector: 'app-entries-list',
@@ -21,6 +22,7 @@ export class EntriesListComponent implements OnInit, OnDestroy {
   entries: Entry[];
 
   constructor(public loadingService: LoadingService,
+              public entryService: EntryService,
               private route: ActivatedRoute,
               private router: Router,
               private flowerService: FlowerService,
@@ -31,8 +33,10 @@ export class EntriesListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.paramSubscription = this.route.params.subscribe(params => {
-
+      
       this.type = params['type'];
+
+      this.entryService.setHeader(this.type);
 
       this.loadingService.startLoading();
 
