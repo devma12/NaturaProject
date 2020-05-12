@@ -30,4 +30,11 @@ public class SpeciesController {
         return species;
     }
 
+    @PostMapping(path="/new")
+    @ResponseBody
+    public Species create(@RequestBody Species species) {
+        Species created = speciesRepository.save(species);
+        return created;
+    }
+
 }

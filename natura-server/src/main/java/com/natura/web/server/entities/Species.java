@@ -3,10 +3,12 @@ package com.natura.web.server.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 import java.util.Set;
 
 @Entity
-public class Species extends ValidableItem {
+public class Species extends ValidableItem implements Serializable {
 
     public static enum Type {
         Flower,
@@ -14,7 +16,7 @@ public class Species extends ValidableItem {
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="common_name", unique=true, nullable = false)
@@ -26,13 +28,25 @@ public class Species extends ValidableItem {
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    @Column(name="classification_order")
+    private String order;
+
+    @Column(name="family")
+    private String family;
+
+
+    @OneToMany(mappedBy = "species", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
+    private Set<Phenology> phenologies;
+
+    private String habitatType;
+
     @ManyToMany
     @JoinTable(
             name = "species_criteria",
             joinColumns = @JoinColumn(name = "species_id"),
             inverseJoinColumns = @JoinColumn(name = "criteria_id"))
-    Set<Criteria> criteria;
+    private Set<Criteria> criteria;
 
     public Species() {
         super();
@@ -76,6 +90,38 @@ public class Species extends ValidableItem {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public Set<Phenology> getPhenologies() {
+        return phenologies;
+    }
+
+    public void setPhenologies(Set<Phenology> phenologies) {
+        this.phenologies = phenologies;
+    }
+
+    public String getHabitatType() {
+        return habitatType;
+    }
+
+    public void setHabitatType(String habitatType) {
+        this.habitatType = habitatType;
     }
 
 }
