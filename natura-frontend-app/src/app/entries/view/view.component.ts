@@ -15,6 +15,7 @@ import { Species } from 'src/app/models/species.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { EntryService } from 'src/app/services/entry.service';
 
 @Component({
   selector: 'app-view',
@@ -34,14 +35,15 @@ export class ViewComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Identification>;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog,
-    public loadingService: LoadingService,
-    private authService: AuthService,
-    private flowerService: FlowerService,
-    private insectService: InsectService,
-    private speciesService: SpeciesService,
-    private identificationService: IdentificationService) {
+              private router: Router,
+              public dialog: MatDialog,
+              public loadingService: LoadingService,
+              public entryService: EntryService,
+              private authService: AuthService,
+              private flowerService: FlowerService,
+              private insectService: InsectService,
+              private speciesService: SpeciesService,
+              private identificationService: IdentificationService) {
       this.loadingService.startLoading();
     }
 
@@ -49,6 +51,8 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     const id = this.route.snapshot.params['id'];
     this.type = this.route.snapshot.params['type'];
+
+    this.entryService.setHeader(this.type);
 
     if (this.type === SpeciesType.Flower) {
       this.flowerService.getById(id).subscribe(

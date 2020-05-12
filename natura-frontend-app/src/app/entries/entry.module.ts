@@ -12,6 +12,8 @@ import { ViewComponent } from './view/view.component';
 import { RouterModule } from '@angular/router';
 import { IdentificationService } from '../services/identification.service';
 import { ChooseSpeciesComponent } from './view/choose-species/choose-species.component';
+import { EntryComponent } from './entry/entry.component';
+import { EntryService } from '../services/entry.service';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,8 @@ import { ChooseSpeciesComponent } from './view/choose-species/choose-species.com
     EntriesListComponent,
     EntryCardComponent,
     ViewComponent,
-    ChooseSpeciesComponent
+    ChooseSpeciesComponent,
+    EntryComponent
     ],
     imports: [
         SharedModule,
@@ -33,7 +36,8 @@ import { ChooseSpeciesComponent } from './view/choose-species/choose-species.com
         FlowerService,
         SpeciesService,
         InsectService,
-        IdentificationService
+        IdentificationService,
+        EntryService
     ]
   })
   export class EntryModule { }

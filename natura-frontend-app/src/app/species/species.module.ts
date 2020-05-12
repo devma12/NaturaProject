@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { SpeciesListComponent } from './species-list/species-list.component';
 import { SpeciesService } from '../services/species.service';
+import { SpeciesComponent } from './species/species.component';
 
 @NgModule({
     declarations: [
-    SpeciesListComponent],
+    SpeciesListComponent,
+    SpeciesComponent],
     imports: [
         SharedModule,
         RouterModule
