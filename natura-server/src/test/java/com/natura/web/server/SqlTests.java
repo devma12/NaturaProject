@@ -2,9 +2,8 @@ package com.natura.web.server;
 
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.MysqldConfig;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.Charset.UTF8;
@@ -15,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+@Disabled
 public class SqlTests {
 
     String url = "jdbc:mysql://localhost:3060/db_natura?useSSL=false&serverTimezone=UTC";
