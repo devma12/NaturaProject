@@ -9,6 +9,7 @@ import { AppMaterialModule } from '../shared/material.module';
 import { FieldListItemComponent } from './field-list-item/field-list-item.component';
 import { RouterModule } from '@angular/router';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
     declarations: [
@@ -16,12 +17,14 @@ import { SpinnerComponent } from './spinner/spinner.component';
       SpinnerComponent
     ],
     imports: [
-      AppMaterialModule
+      AppMaterialModule,
+      Ng5SliderModule
     ],
     exports: [
       BrowserModule,
       BrowserAnimationsModule,
       AppMaterialModule,
+      Ng5SliderModule,
       MaterialFileInputModule,
       FormsModule,
       ReactiveFormsModule,

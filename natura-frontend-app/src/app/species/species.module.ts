@@ -7,13 +7,15 @@ import { SpeciesService } from '../services/species.service';
 import { SpeciesComponent } from './species/species.component';
 import { NewSpeciesComponent } from './new-species/new-species.component';
 import { EnumToArrayPipe } from '../pipes/enum-to-array.pipe';
+import { MonthRangeSliderComponent } from './month-range-slider/month-range-slider.component';
 
 @NgModule({
     declarations: [
     SpeciesListComponent,
     SpeciesComponent,
     NewSpeciesComponent,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    MonthRangeSliderComponent
     ],
     imports: [
         SharedModule,
@@ -23,7 +25,8 @@ import { EnumToArrayPipe } from '../pipes/enum-to-array.pipe';
     ],
     providers: [
         AuthService,
-        SpeciesService
+        SpeciesService,
+        EnumToArrayPipe
     ]
   })
   export class SpeciesModule { }

@@ -4,9 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Species } from 'src/app/models/species.model';
-import { SpeciesService } from 'src/app/services/species.service';
 import { SpeciesType } from 'src/app/models/type.enum';
 import { LoadingService } from 'src/app/services/loading.service';
+import { SpeciesService } from 'src/app/services/species.service';
 
 @Component({
   selector: 'app-species-list',

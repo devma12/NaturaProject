@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SpeciesType } from 'src/app/models/type.enum';
-import { Month } from 'src/app/models/month.enum';
-import { SpeciesService } from 'src/app/services/species.service';
-import { Species } from 'src/app/models/species.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Phenology } from 'src/app/models/phenology.model';
+import { Species } from 'src/app/models/species.model';
+import { SpeciesType } from 'src/app/models/type.enum';
+import { SpeciesService } from 'src/app/services/species.service';
 
 @Component({
   selector: 'app-new-species',
@@ -15,9 +14,10 @@ import { Phenology } from 'src/app/models/phenology.model';
 export class NewSpeciesComponent implements OnInit {
 
   public SpeciesType = SpeciesType;
-  public Month = Month;
 
   speciesForm: FormGroup;
+
+  ranges: any[] = [{start: 1, end: 1}];
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -35,11 +35,20 @@ export class NewSpeciesComponent implements OnInit {
       family: ['', Validators.required],
       scientificName: ['', Validators.required],
       commonName: ['', Validators.required],
-      start: [''],
-      end: [''],
       habitatType: ['']
     });
 
+  }
+
+  addPhenology() {
+    this.ranges.push({start:1, end:1});
+  }
+
+  removePhenology(range: any) {
+    const index: number = this.ranges.indexOf(range);
+    if (index !== -1) {
+        this.ranges.splice(index, 1);
+    } 
   }
 
   createSpecies() {
@@ -50,12 +59,12 @@ export class NewSpeciesComponent implements OnInit {
     species.family = formValue['family'];
     species.habitatType = formValue['habitatType'];
     
-    const start = formValue['start'] ? formValue['start'] : null;
-    const end = formValue['end'] ? formValue['end'] : null;
-    if (start && end) {
-      const phenology = new Phenology(start, end);
-      species.phenologies.push(phenology);
-    }
+    this.ranges.forEach(r => {
+      if (r.start && r.end && r.start !== r.end) {
+        const phenology = new Phenology(r.start, r.end);
+        species.phenologies.push(phenology);
+      }
+    });
 
     this.speciesService.create(species).subscribe(
       data => {

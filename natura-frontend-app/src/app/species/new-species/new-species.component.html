@@ -10,7 +10,8 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Select type</mat-label>
                             <mat-select formControlName="type">
-                                <mat-option *ngFor="let type of SpeciesType | keyvalue" [value]="type.key"> {{ type.value }} </mat-option>
+                                <mat-option *ngFor="let type of SpeciesType | keyvalue" [value]="type.key">
+                                    {{ type.value }} </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="fill">
@@ -23,7 +24,8 @@
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>Scientific Name</mat-label>
-                            <input matInput type="text" formControlName="scientificName" placeholder="Ex: Aglais urticae">
+                            <input matInput type="text" formControlName="scientificName"
+                                placeholder="Ex: Aglais urticae">
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>Common Name</mat-label>
@@ -33,19 +35,21 @@
                     <div fxFlex="40" fxFlexOffset="10" fxFlexAlign="baseline" fxLayout="column"
                         fxLayoutAlign="space-around">
                         <h2>Optional information</h2>
-                        <h3>Phenology</h3>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Start</mat-label>
-                            <mat-select formControlName="start">
-                                <mat-option *ngFor="let month of Month | enumToArray" [value]="month.index"> {{ month.name }} </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                            <mat-label>End</mat-label>
-                            <mat-select formControlName="end">
-                                <mat-option *ngFor="let month of Month | enumToArray" [value]="month.index"> {{ month.name }} </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        <div fxLayout="row" fxLayoutAlign="none center">
+                            <h3>Phenology</h3>
+                            <button mat-icon-button color="accent" id="add-new-phenology" aria-label="add new phenology"
+                                type="button" (click)="addPhenology()">
+                                <mat-icon>add_circle</mat-icon>
+                            </button>
+                        </div>
+                        <div fxLayout="row" *ngFor="let range of ranges">
+                            <app-month-range-slider [(start)]="range.start" [(end)]="range.end" fxFlex>
+                            </app-month-range-slider>
+                            <button mat-icon-button color="accent" aria-label="remove new phenology" type="button"
+                                (click)="removePhenology(range)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
                         <h3>Habitat</h3>
                         <mat-form-field appearance="fill">
                             <mat-label>Habitat Type</mat-label>
