@@ -17,10 +17,10 @@
     <div class="identification-container" fxLayout="column" fxLayoutAlign="space-around">
         <div fxLayout="row" fxLayoutAlign="none center">
             <h1>Identifications</h1>
-            <button mat-mini-fab color="accent" fxFlexOffset="3" 
-                id="add-new" aria-label="add new identification" (click)="openDialog()">
+            <button mat-mini-fab color="accent" fxFlexOffset="3" id="add-new-identification" aria-label="add new identification"
+                (click)="openDialog()">
                 <mat-icon>add</mat-icon>
-              </button>
+            </button>
         </div>
         <mat-divider></mat-divider>
         <table mat-table [dataSource]="dataSource">

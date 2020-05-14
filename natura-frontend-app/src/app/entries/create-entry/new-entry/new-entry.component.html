@@ -1,7 +1,7 @@
 <div class="container-wrapper">
     <div fxLayout="column">
         <h1 fxFlexAlign="center" class="text-color-primary-800 text-uppercase">New {{ type }} entry</h1>
-        <form [formGroup]="entryForm" id="entry-form" (ngSubmit)="createEntry()">
+        <form [formGroup]="entryForm" (ngSubmit)="createEntry()">
             <div fxLayout="column">
                 <div fxLayout="row">
                     <div fxFlex="30" fxFlexOffset="10" fxFlexAlign="baseline" fxLayout="column"

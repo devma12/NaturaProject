@@ -19,7 +19,7 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
   species$: Subject<Species[]> = new BehaviorSubject<Species[]>([]);
   speciesSubscription: Subscription;
 
-  displayedColumns: string[] = ['commonName', 'scientificName', 'type'];
+  displayedColumns: string[] = ['type', 'commonName', 'scientificName', 'family', 'order'];
   dataSource: MatTableDataSource<Species> = new MatTableDataSource<Species>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

@@ -5,11 +5,16 @@ import { NgModule } from '@angular/core';
 import { SpeciesListComponent } from './species-list/species-list.component';
 import { SpeciesService } from '../services/species.service';
 import { SpeciesComponent } from './species/species.component';
+import { NewSpeciesComponent } from './new-species/new-species.component';
+import { EnumToArrayPipe } from '../pipes/enum-to-array.pipe';
 
 @NgModule({
     declarations: [
     SpeciesListComponent,
-    SpeciesComponent],
+    SpeciesComponent,
+    NewSpeciesComponent,
+    EnumToArrayPipe
+    ],
     imports: [
         SharedModule,
         RouterModule

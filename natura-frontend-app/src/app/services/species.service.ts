@@ -20,4 +20,8 @@ export class SpeciesService {
     return this.http.get<Species[]>(this.speciesUrl + '/type/' + type);
   }
 
+  create(species: Species): Observable<Species> {
+    return this.http.post<Species>(this.speciesUrl + '/new', species);
+  }
+
 }
