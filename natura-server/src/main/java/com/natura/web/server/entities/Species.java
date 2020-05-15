@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,7 +38,7 @@ public class Species extends ValidableItem implements Serializable {
 
     @OneToMany(mappedBy = "species", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<Phenology> phenologies;
+    private List<Phenology> phenologies;
 
     private String habitatType;
 
@@ -108,11 +109,11 @@ public class Species extends ValidableItem implements Serializable {
         this.family = family;
     }
 
-    public Set<Phenology> getPhenologies() {
+    public List<Phenology> getPhenologies() {
         return phenologies;
     }
 
-    public void setPhenologies(Set<Phenology> phenologies) {
+    public void setPhenologies(List<Phenology> phenologies) {
         this.phenologies = phenologies;
     }
 

@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Month;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -20,18 +20,23 @@ public class SpeciesTests {
     @Autowired
     SpeciesRepository speciesRepository;
 
-    @Test
-    void createSpecies() {
+    static public Species createDefaultButterfly() {
         Species species = new Species();
         species.setCommonName("Petite tortue");
         species.setScientificName("Aglais urticae");
         species.setType(Species.Type.Insect);
         species.setOrder("Lepidoptera");
         species.setFamily("Nymphalidae");
-        Set<Phenology> phenologies = new HashSet<>();
-        phenologies.add(new Phenology(Month.MAY, Month.SEPTEMBER));
+        List<Phenology> phenologies = new ArrayList<>();
+        phenologies.add(new Phenology(Month.APRIL, Month.SEPTEMBER));
         species.setPhenologies(phenologies);
         species.setHabitatType("rural");
+        return species;
+    }
+
+    @Test
+    void createSpecies() {
+        Species species = createDefaultButterfly();
 
         Species saved = speciesRepository.save(species);
 
