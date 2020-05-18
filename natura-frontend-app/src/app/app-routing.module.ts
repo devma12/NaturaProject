@@ -11,6 +11,7 @@ import { ViewComponent } from './entries/view/view.component';
 import { SpeciesListComponent } from './species/species-list/species-list.component';
 import { SpeciesComponent } from './species/species/species.component';
 import { EntryComponent } from './entries/entry/entry.component';
+import { NewSpeciesComponent } from './species/new-species/new-species.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'species', canActivate: [AuthGuard], component: SpeciesComponent,
       children: [
         { path: 'list', component: SpeciesListComponent },
+        { path: 'new', component: NewSpeciesComponent },
       ]
   },
   { path: '**', redirectTo: 'not-found' }

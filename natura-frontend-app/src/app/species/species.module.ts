@@ -5,11 +5,18 @@ import { NgModule } from '@angular/core';
 import { SpeciesListComponent } from './species-list/species-list.component';
 import { SpeciesService } from '../services/species.service';
 import { SpeciesComponent } from './species/species.component';
+import { NewSpeciesComponent } from './new-species/new-species.component';
+import { EnumToArrayPipe } from '../pipes/enum-to-array.pipe';
+import { MonthRangeSliderComponent } from './month-range-slider/month-range-slider.component';
 
 @NgModule({
     declarations: [
     SpeciesListComponent,
-    SpeciesComponent],
+    SpeciesComponent,
+    NewSpeciesComponent,
+    EnumToArrayPipe,
+    MonthRangeSliderComponent
+    ],
     imports: [
         SharedModule,
         RouterModule
@@ -18,7 +25,8 @@ import { SpeciesComponent } from './species/species.component';
     ],
     providers: [
         AuthService,
-        SpeciesService
+        SpeciesService,
+        EnumToArrayPipe
     ]
   })
   export class SpeciesModule { }

@@ -1,0 +1,65 @@
+<div class="container-wrapper">
+    <div fxLayout="column">
+        <h1 fxFlexAlign="center" class="text-color-primary-800 text-uppercase">Propose new species</h1>
+        <form [formGroup]="speciesForm" (ngSubmit)="createSpecies()">
+            <div fxLayout="column">
+                <div fxLayout="row">
+                    <div fxFlex="30" fxFlexOffset="10" fxFlexAlign="baseline" fxLayout="column"
+                        fxLayoutAlign="space-around">
+                        <h2>Main Details</h2>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select type</mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option *ngFor="let type of SpeciesType | keyvalue" [value]="type.key">
+                                    {{ type.value }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Order</mat-label>
+                            <input matInput type="text" formControlName="order" placeholder="Ex: Lepidoptera">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Family</mat-label>
+                            <input matInput type="text" formControlName="family" placeholder="Ex: Nymphalidae">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Scientific Name</mat-label>
+                            <input matInput type="text" formControlName="scientificName"
+                                placeholder="Ex: Aglais urticae">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Common Name</mat-label>
+                            <input matInput type="text" formControlName="commonName" placeholder="Ex: Petite tortue">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="40" fxFlexOffset="10" fxFlexAlign="baseline" fxLayout="column"
+                        fxLayoutAlign="space-around">
+                        <h2>Optional information</h2>
+                        <div fxLayout="row" fxLayoutAlign="none center">
+                            <h3>Phenology</h3>
+                            <button mat-icon-button color="accent" id="add-new-phenology" aria-label="add new phenology"
+                                type="button" (click)="addPhenology()">
+                                <mat-icon>add_circle</mat-icon>
+                            </button>
+                        </div>
+                        <div fxLayout="row" *ngFor="let range of ranges">
+                            <app-month-range-slider [(start)]="range.start" [(end)]="range.end" fxFlex>
+                            </app-month-range-slider>
+                            <button mat-icon-button color="accent" aria-label="remove new phenology" type="button"
+                                (click)="removePhenology(range)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                        <h3>Habitat</h3>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Habitat Type</mat-label>
+                            <input matInput type="text" formControlName="habitatType" placeholder="Ex: rural">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-raised-button type="submit" color="accent" fxFlexAlign="center" fxFlexOffset="2"
+                    [disabled]="speciesForm.invalid">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
