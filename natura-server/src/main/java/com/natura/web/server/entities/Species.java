@@ -12,8 +12,8 @@ import java.util.Set;
 public class Species extends ValidableItem implements Serializable {
 
     public static enum Type {
-        Flower,
-        Insect;
+        FLOWER,
+        INSECT;
     }
 
     @Id

@@ -30,8 +30,7 @@ public class SpeciesController {
     }
 
     @GetMapping(path="/type/{type}")
-    @ResponseBody
-    public List<Species> getByType(@PathVariable("type") Species.Type type) throws IOException {
+    public @ResponseBody List<Species> getByType(@PathVariable("type") Species.Type type) throws IOException {
         List<Species> species = speciesRepository.findByType(type);
         return species;
     }

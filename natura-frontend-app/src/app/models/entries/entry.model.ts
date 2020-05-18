@@ -8,9 +8,6 @@ export abstract class Entry extends ValidableItem {
     public name: string;
     public createdBy: User;
     public image: Image;
-    public description: string;
-    public location: string;
-    public date: Date;
 
     constructor( name: string,
                 createdBy: User = null,
@@ -20,9 +17,5 @@ export abstract class Entry extends ValidableItem {
         this.name = name;
         if (createdBy)
             this.createdBy = createdBy;
-
-        this.description = '';
-        this.location = '';
-        this.date = null;
     }
 }

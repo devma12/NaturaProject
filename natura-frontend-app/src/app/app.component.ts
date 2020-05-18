@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from './services/auth.service';
-import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +11,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   title = 'natura-frontend-app';
 
-  loading: boolean = false;
-
   username: string;
 
   userSubscription: Subscription;
-  loadingSubscription: Subscription;
 
-  constructor (public authService: AuthService,
-               public loadingService: LoadingService) {
+  constructor (public authService: AuthService) {
     this.username = '';
   }
 
@@ -31,10 +26,6 @@ export class AppComponent implements OnInit, OnDestroy {
       } else {
         this.username = '';
       }
-    });
-
-    this.loadingSubscription = this.loadingService.loading$.subscribe((value) => {
-      this.loading = value;
     });
 
     if (this.authService.getToken()) {
@@ -48,6 +39,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
-    this.loadingSubscription.unsubscribe();
   }
 }
