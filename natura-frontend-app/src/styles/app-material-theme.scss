@@ -22,5 +22,5 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 // Define a custom typography config that overrides the `headline` and `title` levels.
 $custom-typography: mat-typography-config(
   $headline: mat-typography-level(32px, 48px, 200),
-  $title: mat-typography-level(20px, 32px, 100)
+  $title: mat-typography-level(20px, 32px, 100),
 );

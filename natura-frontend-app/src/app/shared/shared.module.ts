@@ -6,10 +6,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AppMaterialModule } from '../shared/material.module';
+import { FieldListItemComponent } from './field-list-item/field-list-item.component';
+import { RouterModule } from '@angular/router';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
-    declarations: [],
-    imports: [],
+    declarations: [
+      FieldListItemComponent,
+      SpinnerComponent
+    ],
+    imports: [
+      AppMaterialModule
+    ],
     exports: [
       BrowserModule,
       BrowserAnimationsModule,
@@ -18,7 +26,10 @@ import { AppMaterialModule } from '../shared/material.module';
       FormsModule,
       ReactiveFormsModule,
       FlexLayoutModule,
-      HttpClientModule
+      HttpClientModule,
+      RouterModule,
+      FieldListItemComponent,
+      SpinnerComponent
     ],
     providers: []
   })
