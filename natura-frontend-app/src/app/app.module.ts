@@ -12,9 +12,6 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { SharedModule } from './shared/shared.module';
-import { SpeciesModule } from './species/species.module';
-import { LoadingService } from './services/loading.service';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 @NgModule({
@@ -28,20 +25,17 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   imports: [
     AppRoutingModule,
     SharedModule,
-    EntryModule,
-    SpeciesModule
+    EntryModule
   ],
   providers: [
     AuthService,
     AuthGuard,
     UserService,
-    LoadingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    },
-    {provide: MAT_DATE_LOCALE, useValue: 'fr'}
+    }
   ],
   bootstrap: [AppComponent]
 })

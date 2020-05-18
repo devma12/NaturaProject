@@ -9,8 +9,8 @@ import java.util.Set;
 public class Species extends ValidableItem {
 
     public static enum Type {
-        Flower,
-        Insect;
+        FLOWER,
+        INSECT;
     }
 
     @Id

@@ -11,13 +11,7 @@ export class SpeciesService {
  
   constructor(private http: HttpClient) { }
 
-  
-  getAll(): Observable<Species[]> {
-    return this.http.get<Species[]>(this.speciesUrl + '/all');
-  }
-  
   getByType(type: SpeciesType): Observable<Species[]> {
     return this.http.get<Species[]>(this.speciesUrl + '/type/' + type);
   }
-
 }

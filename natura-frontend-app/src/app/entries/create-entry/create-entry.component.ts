@@ -8,7 +8,6 @@ import { FlowerService } from 'src/app/services/flower.service';
 import { InsectService } from 'src/app/services/insect.service';
 import { SpeciesService } from 'src/app/services/species.service';
 import { EntryUtils } from '../entry.utils';
-import { EntryService } from 'src/app/services/entry.service';
 
 @Component({
   selector: 'app-create-entry',
@@ -28,16 +27,17 @@ export class CreateEntryComponent implements OnInit {
               private speciesService: SpeciesService,
               private authService: AuthService,
               private flowerService: FlowerService,
-              private insectService: InsectService,
-              private entryService: EntryService) {
+              private insectService: InsectService) {
     this.isLoading = true;
     this.species = [];
   }
 
   ngOnInit(): void {
-
-    this.type = this.route.snapshot.params['type'];
-    this.entryService.setHeader(this.type);
+    try {
+      this.type = EntryUtils.getEntryTypeFromRoute(this.route);
+    } catch (e) {
+      this.router.navigate(['/not-found']);
+    }
 
     this.isFlower = (this.type === SpeciesType.Flower);
 
@@ -61,7 +61,6 @@ export class CreateEntryComponent implements OnInit {
 
     // Get entry details
     entryData.append('name', infos['name']);
-    entryData.append('date', infos['date']);
     entryData.append('description', infos['description']);
     entryData.append('location', infos['location']);
 
@@ -85,7 +84,7 @@ export class CreateEntryComponent implements OnInit {
     if (this.type === SpeciesType.Flower) {
       this.flowerService.create(entryData).subscribe(
         data => {
-          this.router.navigate(['/entries/view', this.type, data.id]);
+          this.router.navigate(['/home']);
         },
         error => {
           console.log('Failed to create new Flower entry.');
@@ -94,7 +93,7 @@ export class CreateEntryComponent implements OnInit {
     } else if (this.type === SpeciesType.Insect) {
       this.insectService.create(entryData).subscribe(
         data => {
-          this.router.navigate(['/entries/view', this.type, data.id]);
+          this.router.navigate(['/home']);
         },
         error => {
           console.log('Failed to create new Insect entry.');

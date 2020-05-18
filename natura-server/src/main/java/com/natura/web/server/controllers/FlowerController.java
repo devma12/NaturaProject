@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,7 +25,6 @@ public class FlowerController {
     @PostMapping(path="/new")
     public @ResponseBody Flower create(@RequestParam("imageFile") MultipartFile file,
                                        @RequestParam("name") String name,
-                                       @RequestParam("date") Date date,
                                        @RequestParam("description") String description,
                                        @RequestParam("location") String location,
                                        @RequestParam("species") String species,
@@ -34,7 +32,7 @@ public class FlowerController {
 
         Long userId = Long.parseLong(createdBy);
         Long speciesId = Long.parseLong(species);
-        Flower flower = new Flower(name, date, description, location);
+        Flower flower = new Flower(name, description, location);
         try {
             return (Flower) entryService.create(flower, file, userId, speciesId);
         } catch (ServerException e) {
@@ -46,12 +44,5 @@ public class FlowerController {
     public @ResponseBody List<Flower> getAllFlowers() {
 
        return (List<Flower>) this.flowerRepository.findAll();
-    }
-
-    @GetMapping(path="/{id}")
-    @ResponseBody
-    public Flower getById(@PathVariable String id) {
-        Long entryId = Long.parseLong(id);
-        return this.flowerRepository.findById(entryId).orElse(null);
     }
 }

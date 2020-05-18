@@ -14,20 +14,11 @@ import java.util.List;
 public class SpeciesController {
 
     @Autowired
-    private SpeciesRepository speciesRepository;
-
-    @GetMapping(path="/all")
-    @ResponseBody
-    public List<Species> getAllSpecies() throws IOException {
-        List<Species> species = (List<Species>) speciesRepository.findAll();
-        return species;
-    }
+    SpeciesRepository speciesRepository;
 
     @GetMapping(path="/type/{type}")
-    @ResponseBody
-    public List<Species> getByType(@PathVariable("type") Species.Type type) throws IOException {
+    public @ResponseBody List<Species> getByType(@PathVariable("type") Species.Type type) throws IOException {
         List<Species> species = speciesRepository.findByType(type);
         return species;
     }
-
 }

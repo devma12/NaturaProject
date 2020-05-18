@@ -18,8 +18,4 @@ constructor(private http: HttpClient) { }
     return this.http.get<Insect[]>(this.insectUrl + '/all');
   }
 
-  getById(id: number): Observable<Insect> {
-    return this.http.get<Insect>(this.insectUrl + '/' + id);
-  }
-
 }

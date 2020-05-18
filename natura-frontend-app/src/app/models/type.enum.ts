@@ -1,4 +1,4 @@
 export enum SpeciesType {
-    Flower = "Flower",
-    Insect = 'Insect',
+    Flower = "FLOWER",
+    Insect = 'INSECT',
 }

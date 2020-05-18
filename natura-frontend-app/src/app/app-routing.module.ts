@@ -7,10 +7,6 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './services/auth-guard.service';
-import { ViewComponent } from './entries/view/view.component';
-import { SpeciesListComponent } from './species/species-list/species-list.component';
-import { SpeciesComponent } from './species/species/species.component';
-import { EntryComponent } from './entries/entry/entry.component';
 
 
 const routes: Routes = [
@@ -19,16 +15,20 @@ const routes: Routes = [
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: '', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'not-found', component: NotFoundComponent },
-  { path: 'entries', canActivate: [AuthGuard], component: EntryComponent,
+  { path: 'entries', canActivate: [AuthGuard],
       children: [
-        { path: 'new/:type', component: CreateEntryComponent },
-        { path: 'list/:type', component: EntriesListComponent },
-        { path: 'view/:type/:id', component: ViewComponent },
-      ]
-  },
-  { path: 'species', canActivate: [AuthGuard], component: SpeciesComponent,
-      children: [
-        { path: 'list', component: SpeciesListComponent },
+        { path: 'new', 
+          children: [
+            { path: 'flower', component: CreateEntryComponent },
+            { path: 'insect', component: CreateEntryComponent }
+          ]
+        },
+        { path: 'list', 
+          children: [
+            { path: 'flower', component: EntriesListComponent },
+            { path: 'insect', component: EntriesListComponent }
+          ]
+        },
       ]
   },
   { path: '**', redirectTo: 'not-found' }

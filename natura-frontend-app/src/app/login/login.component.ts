@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    public loadingService: LoadingService) {
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -33,11 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitForm() {
-    this.loadingService.startLoading();
     const formValue = this.loginForm.value;
     this.authService.login(formValue['username'], formValue['password']).then(
       value => {
-        this.loadingService.stopLoading();
         console.log('authenticated !');
       }, error => {
         console.error('Failed to authenticate !');

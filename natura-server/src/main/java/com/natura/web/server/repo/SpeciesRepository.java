@@ -8,6 +8,4 @@ import java.util.List;
 public interface SpeciesRepository extends CrudRepository<Species, Long> {
 
     public List<Species> findByType(Species.Type type);
-
-    public Species findByCommonName(String commonName);
 }
