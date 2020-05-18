@@ -1,12 +1,13 @@
 package com.natura.web.server.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class Criteria {
+public class Criteria implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -16,9 +17,9 @@ public class Criteria {
 
     private String value;
 
-    @JsonBackReference
     @ManyToMany(mappedBy = "criteria")
-    Set<Species> species;
+    @JsonIgnore
+    private Set<Species> species;
 
     public Long getId() {
         return id;

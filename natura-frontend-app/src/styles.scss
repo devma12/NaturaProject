@@ -73,3 +73,54 @@ $accent:  mat-palette($mat-amber);
 .text-uppercase {
     text-transform: uppercase;
 }
+
+.text-underline {
+    text-decoration: underline;
+}
+
+/** Slider styles **/
+
+.custom-slider .ng5-slider .ng5-slider-bar {
+    background: mat-color($primary, 200);
+    height: 2px;
+}
+
+.custom-slider .ng5-slider .ng5-slider-selection {
+    background: mat-color($primary, 800);
+}
+  
+.custom-slider .ng5-slider .ng5-slider-pointer {
+    width: 14px;
+    height: 14px;
+    top: auto; /* to remove the default positioning */
+    bottom: -3.5px;
+    background-color: mat-color($primary, 800);
+    border-radius: 7px;
+}
+  
+.custom-slider .ng5-slider .ng5-slider-pointer:after {
+    display: none;
+}
+  
+.custom-slider .ng5-slider .ng5-slider-bubble {
+    bottom: 14px;
+    font-size: 13px;
+}
+  
+.custom-slider .ng5-slider .ng5-slider-limit {
+    font-weight: bold;
+    color: mat-color($primary, 800);
+}
+  
+.custom-slider .ng5-slider .ng5-slider-tick {
+    width: 1px;
+    height: 8px;
+    margin-left: 4px;
+    border-radius: 0;
+    background:mat-color($primary, 200);
+    top: -0.5px;
+}
+  
+.custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+    background: mat-color($primary, 800);
+}

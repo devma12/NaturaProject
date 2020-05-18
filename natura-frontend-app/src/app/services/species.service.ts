@@ -14,4 +14,9 @@ export class SpeciesService {
   getByType(type: SpeciesType): Observable<Species[]> {
     return this.http.get<Species[]>(this.speciesUrl + '/type/' + type);
   }
+
+  create(species: Species): Observable<Species> {
+    return this.http.post<Species>(this.speciesUrl + '/new', species);
+  }
+
 }

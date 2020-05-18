@@ -1,0 +1,61 @@
+<div class="container-wrapper" *ngIf="!loadingService.loading$.value && entry">
+    <div fxLayout="row">
+        <div class="details-container" fxFlex="50" fxLayout="column" fxLayoutAlign="space-around">
+            <h1>Details</h1>
+            <mat-divider></mat-divider>
+            <app-field-list-item name="Name" [text]="entry.name"></app-field-list-item>
+            <app-field-list-item name="Created by" [text]="entry.createdBy ? entry.createdBy.username : ''">
+            </app-field-list-item>
+            <app-field-list-item name="Date" [text]="entry.date | date: 'dd/MM/yyyy'"></app-field-list-item>
+            <app-field-list-item name="Description" [text]="entry.description"></app-field-list-item>
+            <app-field-list-item name="Location" [text]="entry.location"></app-field-list-item>
+        </div>
+        <div class="image-container">
+            <img [src]="picture" alt="Entry picture" width="auto" height="100" class="image">
+        </div>
+    </div>
+    <div class="identification-container" fxLayout="column" fxLayoutAlign="space-around">
+        <div fxLayout="row" fxLayoutAlign="none center">
+            <h1>Identifications</h1>
+            <button mat-mini-fab color="accent" fxFlexOffset="3" id="add-new-identification" aria-label="add new identification"
+                (click)="openDialog()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="species">
+                <th mat-header-cell *matHeaderCellDef> Species </th>
+                <td mat-cell *matCellDef="let element"> {{element.species ? element.species.commonName : ''}} </td>
+            </ng-container>
+            <ng-container matColumnDef="proposer">
+                <th mat-header-cell *matHeaderCellDef> Suggested By </th>
+                <td mat-cell *matCellDef="let element"> {{element.suggestedBy ? element.suggestedBy.username : ''}} </td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.suggestedDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="validated">
+                <th mat-header-cell *matHeaderCellDef> Validated </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox (click)="$event.preventDefault()" disableRipple="true"
+                        [checked]="element.validatedBy !== null && element.validated !== undefined" 
+                        aria-label="validationCheckbox">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="validator">
+                <th mat-header-cell *matHeaderCellDef> Validated by </th>
+                <td mat-cell *matCellDef="let element"> {{element.validatedBy}} </td>
+            </ng-container>
+            <ng-container matColumnDef="validationDate">
+                <th mat-header-cell *matHeaderCellDef> Validation Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.validatedDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
