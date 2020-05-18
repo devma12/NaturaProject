@@ -1,6 +1,7 @@
 package com.natura.web.server.entities;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -27,6 +28,8 @@ public abstract class Entry extends ValidableItem {
 
     private String location;
 
+    private Date date;
+
     public Entry() {
         super();
     }
@@ -36,9 +39,10 @@ public abstract class Entry extends ValidableItem {
         this.name = name;
     }
 
-    public Entry(String name, String description, String location) {
+    public Entry(String name, Date date, String description, String location) {
         this();
         this.name = name;
+        this.date = date;
         this.description =description;
         this.location = location;
     }
@@ -90,5 +94,9 @@ public abstract class Entry extends ValidableItem {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public Date getDate() { return date; }
+
+    public void setDate(Date date) { this.date = date; }
 
 }

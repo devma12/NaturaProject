@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: '', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'not-found', component: NotFoundComponent },
-  { path: 'entries', canActivate: [AuthGuard],
+  { path: 'entries', canActivate: [AuthGuard], component: EntryComponent,
       children: [
         { path: 'new/:type', component: CreateEntryComponent },
         { path: 'list/:type', component: EntriesListComponent },

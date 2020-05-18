@@ -1,16 +1,17 @@
 package com.natura.web.server.services;
 
-import com.natura.web.server.entities.Entry;
-import com.natura.web.server.entities.Image;
-import com.natura.web.server.entities.User;
+import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
 import com.natura.web.server.repo.EntryRepository;
+import com.natura.web.server.repo.IdentificationRepository;
+import com.natura.web.server.repo.SpeciesRepository;
 import com.natura.web.server.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Service
 public class EntryService {
@@ -20,6 +21,12 @@ public class EntryService {
 
     @Autowired
     private EntryRepository entryRepository;
+
+    @Autowired
+    private SpeciesRepository speciesRepository;
+
+    @Autowired
+    private IdentificationRepository identificationRepository;
 
     @Autowired
     private ImageService imageService;
@@ -38,7 +45,12 @@ public class EntryService {
             // Save new entry
             Entry saved = entryRepository.save(entry);
 
-            // TODO: create identification if any
+            // Create identification if any
+            Species species = speciesRepository.findById(speciesId).orElse(null);
+            if (species != null) {
+                Identification creatorProposal = new Identification(saved, species, createdBy, new Date());
+                Identification savedIdentification = identificationRepository.save(creatorProposal);
+            }
 
             return saved;
         } else {

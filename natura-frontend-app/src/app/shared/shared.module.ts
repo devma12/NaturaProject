@@ -29,7 +29,10 @@ import { Ng5SliderModule } from 'ng5-slider';
       FormsModule,
       ReactiveFormsModule,
       FlexLayoutModule,
-      HttpClientModule
+      HttpClientModule,
+      RouterModule,
+      FieldListItemComponent,
+      SpinnerComponent
     ],
     providers: []
   })

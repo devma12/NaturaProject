@@ -17,6 +17,12 @@
                             </ngx-mat-file-input>
                             <mat-icon matSuffix>attach_file</mat-icon>
                         </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Select a date</mat-label>
+                            <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="date" placeholder="when the picture has been taken">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
                     </div>
                     <div fxFlex="40" fxFlexOffset="10" fxFlexAlign="baseline" fxLayout="column"
                         fxLayoutAlign="space-around">
@@ -38,14 +44,14 @@
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>Suggested species</mat-label>
-                            <mat-select>
+                            <mat-select formControlName="suggestion">
                                 <mat-option *ngFor="let spec of species" [value]="spec"> {{ spec.commonName }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
-                <button mat-raised-button type="submit" color="accent" fxFlexAlign="center" fxFlexOffset="5"
+                <button mat-raised-button type="submit" color="accent" fxFlexAlign="center" fxFlexOffset="2"
                     [disabled]="entryForm.invalid">Create</button>
             </div>
         </form>

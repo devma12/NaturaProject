@@ -1,5 +1,7 @@
 package com.natura.web.server.entities;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -7,14 +9,18 @@ import java.util.Date;
 @Entity
 public class Identification implements Serializable {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "entry_id")
+    @EmbeddedId
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private IdentificationKey id;
+
+    @MapsId("entry_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "entry_id", nullable = false, insertable = false, updatable = false)
     private Entry entry;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "species_id")
+    @MapsId("species_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "species_id", nullable = false, insertable = false, updatable = false)
     private Species species;
 
     @ManyToOne
@@ -28,6 +34,24 @@ public class Identification implements Serializable {
     private User validatedBy;
 
     private Date validatedDate;
+
+    public Identification() { }
+
+    public Identification(Entry entry, Species species, User proposer, Date date) {
+        Assert.notNull(entry, "Entry cannot be null to define an identification.");
+        Assert.notNull(species, "Species cannot be null to define an identification.");
+
+        this.id = new IdentificationKey(entry.getId(), species.getId());
+        this.entry = entry;
+        this.species = species;
+        this.suggestedBy = proposer;
+        this.suggestedDate = date;
+
+    }
+
+    public IdentificationKey getId() { return id; }
+
+    public void setId(IdentificationKey id) { this.id = id; }
 
     public Entry getEntry() {
         return entry;
