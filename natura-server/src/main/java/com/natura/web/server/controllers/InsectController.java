@@ -1,5 +1,6 @@
 package com.natura.web.server.controllers;
 
+import com.natura.web.server.entities.Flower;
 import com.natura.web.server.entities.Insect;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.InsectRepository;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -25,6 +27,7 @@ public class InsectController {
     @PostMapping(path="/new")
     public @ResponseBody  Insect create(@RequestParam("imageFile") MultipartFile file,
                          @RequestParam("name") String name,
+                         @RequestParam("date") Date date,
                          @RequestParam("description") String description,
                          @RequestParam("location") String location,
                          @RequestParam("species") String species,
@@ -32,7 +35,7 @@ public class InsectController {
 
         Long userId = Long.parseLong(createdBy);
         Long speciesId = Long.parseLong(species);
-        Insect insect = new Insect(name, description, location);
+        Insect insect = new Insect(name, date, description, location);
         try {
             return (Insect) entryService.create(insect, file, userId, speciesId);
         } catch (ServerException e) {
@@ -45,5 +48,12 @@ public class InsectController {
     List<Insect> getAllInsects() {
 
         return (List<Insect>) this.insectRepository.findAll();
+    }
+
+    @GetMapping(path="/{id}")
+    @ResponseBody
+    public Insect getById(@PathVariable String id) {
+        Long entryId = Long.parseLong(id);
+        return this.insectRepository.findById(entryId).orElse(null);
     }
 }

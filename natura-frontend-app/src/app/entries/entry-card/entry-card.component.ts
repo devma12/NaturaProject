@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Entry } from 'src/app/models/entries/entry.model';
 import { Image } from 'src/app/models/image.model';
+import { EntryUtils } from '../entry.utils';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SpeciesType } from 'src/app/models/type.enum';
 
 @Component({
   selector: 'app-entry-card',
@@ -10,22 +13,15 @@ import { Image } from 'src/app/models/image.model';
 export class EntryCardComponent implements OnInit {
 
   @Input('entry') entry: Entry;
+  @Input('type') type: SpeciesType;
 
   picture: any = {};
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
-    if (this.entry) {
-      // get image
-      console.log(this.entry.name);
-      let image: Image = this.entry.image;
-      if (image) {
-        const base64Data = image.data;
-        const type: string = image.type;
-        this.picture = `data:${type};base64,${base64Data}`;
-      }
-    }
+    this.picture = EntryUtils.getEntryPictureBase64Data(this.entry);
   }
 
 }
