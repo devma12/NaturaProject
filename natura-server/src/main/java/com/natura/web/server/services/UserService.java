@@ -138,6 +138,9 @@ public class UserService {
             user.setEmail(storedUser.getEmail());
             if (withPassword)
                 user.setPassword(storedUser.getPassword());
+
+            user.setFlowerValidator(storedUser.isFlowerValidator());
+            user.setInsectValidator(storedUser.isInsectValidator());
         } else {
             throw new UserAccountException.InvalidAccountDataException("user with username " + user.getUsername());
         }

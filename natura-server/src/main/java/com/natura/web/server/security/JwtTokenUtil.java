@@ -13,12 +13,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil {
@@ -59,6 +60,9 @@ public class JwtTokenUtil {
     	
     	Map<String, Object> info =  new HashMap<String, Object>();
     	info.put("mail", user.getEmail());
+        info.put("authorities", user.getAuthorities().stream()
+                                        .map(GrantedAuthority::getAuthority)
+                                        .collect(Collectors.toList()));
     	
     	Claims claims = Jwts.claims().setSubject(user.getUsername());
     	claims.putAll(info);
@@ -106,6 +110,15 @@ public class JwtTokenUtil {
         AppUserDetails.AppUserBuilder builder = AppUserDetails.userBuilder();
         builder.username(username);
         builder.email((String) claims.get("mail"));
+
+        if (claims.get("authorities") != null) {
+            List<GrantedAuthority> authorities = (List<GrantedAuthority>) claims.get("authorities", List.class)
+                    .stream()
+                    .map(authority -> new SimpleGrantedAuthority(authority.toString()))
+                    .collect(Collectors.toList());
+            builder.authorities(authorities);
+        }
+
         UserDetails details = builder.build();
         return details;
 	}

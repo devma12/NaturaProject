@@ -18,12 +18,22 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique=true)
+    @Column(unique=true, columnDefinition="VARCHAR(500)")
     private String token;
 
-    public User() { }
+    @Column(name = "flower_validator")
+    private boolean flowerValidator;
+
+    @Column(name = "insect_validator")
+    private boolean insectValidator;
+
+    public User() {
+        this.flowerValidator = false;
+        this.insectValidator = false;
+    }
 
     public User(String username) {
+        this();
         this.username = username;
     }
 
@@ -65,5 +75,21 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isFlowerValidator() {
+        return flowerValidator;
+    }
+
+    public void setFlowerValidator(boolean flowerValidator) {
+        this.flowerValidator = flowerValidator;
+    }
+
+    public boolean isInsectValidator() {
+        return insectValidator;
+    }
+
+    public void setInsectValidator(boolean insectValidator) {
+        this.insectValidator = insectValidator;
     }
 }

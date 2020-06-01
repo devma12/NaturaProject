@@ -1,5 +1,5 @@
-INSERT INTO db_natura.user (username, email, password) 
-	VALUES ('marion', 'marion.delmas2@hotmail.fr','pwd') 
+INSERT INTO db_natura.user (username, email, password, flower_validator, insect_validator)
+	VALUES ('marion', 'marion.delmas2@hotmail.fr','pwd', true, true)
     ON DUPLICATE KEY UPDATE password = 'pwd';
 INSERT INTO db_natura.entry (name, discriminator, user_id) 
 	SELECT * FROM (SELECT 'butterfly', 'Insect', (SELECT id FROM db_natura.user WHERE username='marion')) AS tmp
