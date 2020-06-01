@@ -5,8 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Species } from 'src/app/models/species.model';
 import { SpeciesType } from 'src/app/models/type.enum';
-import { LoadingService } from 'src/app/services/loading.service';
 import { SpeciesService } from 'src/app/services/species.service';
+import { LoadingFromServerService } from 'src/app/services/loading-from-server.service';
 
 @Component({
   selector: 'app-species-list',
@@ -25,9 +25,9 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(public loadingService: LoadingService,
+  constructor(public loadingService: LoadingFromServerService,
               private speciesService: SpeciesService) { 
-    this.loadingService.startLoading();
+    this.loadingService.loading();
   }
 
   ngOnInit(): void {
@@ -45,10 +45,10 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
       data => {
         this.species = data;
         this.species$.next(data);
-        this.loadingService.stopLoading();
+        this.loadingService.loaded();
       },
       error => {
-        console.error('Failed to load species !');
+        this.loadingService.error('Failed to load species !');
       }
     );
   }
@@ -72,7 +72,7 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.speciesSubscription.unsubscribe();
-    this.loadingService.stopLoading();
+    this.loadingService.reset();
   }
 
 }

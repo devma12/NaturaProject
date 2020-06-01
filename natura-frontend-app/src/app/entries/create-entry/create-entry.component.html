@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading">
+<div *ngIf="loaded">
     <app-new-entry *ngIf="isFlower" type="flower" [species]="species" (entry)="createEntry($event)"></app-new-entry>
     <app-new-entry *ngIf="!isFlower" type="insect" [species]="species" (entry)="createEntry($event)"></app-new-entry>
 </div>

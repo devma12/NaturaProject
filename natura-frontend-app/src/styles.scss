@@ -7,6 +7,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 $primary:  mat-palette($mat-deep-purple);
 $accent:  mat-palette($mat-amber);
+$warn:  mat-palette($mat-deep-orange);
+$success:  mat-palette($mat-green);
 
 /** global container styles **/
 
@@ -78,6 +80,30 @@ $accent:  mat-palette($mat-amber);
 .text-color-accent-800 {
     color: mat-color($accent, 800);
  }
+
+.alert-error {
+    background: #ffffff;
+    color: mat-color($warn, 500);
+    white-space: pre-line;
+}
+
+.alert-warning {
+    background: #ffffff;
+    color: mat-color($accent, 500);
+    white-space: pre-line;
+}
+
+.alert-success {
+    background: #ffffff;
+    color: mat-color($success, 500);
+    white-space: pre-line;
+}
+
+.alert-info {
+    background: #ffffff;
+    color: mat-color($primary, 500);
+    white-space: pre-line;
+}
 
 /** Text styles **/
 @include mat-base-typography($custom-typography);

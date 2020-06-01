@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EntryUtils } from '../entry.utils';
-import { SpeciesType } from 'src/app/models/type.enum';
-import { FlowerService } from 'src/app/services/flower.service';
-import { InsectService } from 'src/app/services/insect.service';
-import { Entry } from 'src/app/models/entries/entry.model';
-import { IdentificationService } from 'src/app/services/identification.service';
-import { Identification } from 'src/app/models/identification.model';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SpeciesService } from 'src/app/services/species.service';
-import { ChooseSpeciesComponent } from './choose-species/choose-species.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Entry } from 'src/app/models/entries/entry.model';
+import { Identification } from 'src/app/models/identification.model';
 import { Species } from 'src/app/models/species.model';
+import { SpeciesType } from 'src/app/models/type.enum';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingService } from 'src/app/services/loading.service';
 import { EntryService } from 'src/app/services/entry.service';
+import { FlowerService } from 'src/app/services/flower.service';
+import { IdentificationService } from 'src/app/services/identification.service';
+import { InsectService } from 'src/app/services/insect.service';
+import { LoadingFromServerService } from 'src/app/services/loading-from-server.service';
+import { SpeciesService } from 'src/app/services/species.service';
+import { EntryUtils } from '../entry.utils';
+import { ChooseSpeciesComponent } from './choose-species/choose-species.component';
 
 @Component({
   selector: 'app-view',
@@ -37,15 +37,15 @@ export class ViewComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog,
-              public loadingService: LoadingService,
+              public loadingService: LoadingFromServerService,
               public entryService: EntryService,
               private authService: AuthService,
               private flowerService: FlowerService,
               private insectService: InsectService,
               private speciesService: SpeciesService,
               private identificationService: IdentificationService) {
-      this.loadingService.startLoading();
-    }
+    this.loadingService.loading();
+  }
 
   ngOnInit(): void {
 
@@ -60,7 +60,8 @@ export class ViewComponent implements OnInit, OnDestroy {
           this.getEntryAndRelatedIdentifications(data);
         },
         error => {
-          console.error('Failed to load flower details !');
+          this.loadingService.error('Failed to load flower details !');
+
         }
       );
     } else if (this.type === SpeciesType.Insect) {
@@ -69,7 +70,7 @@ export class ViewComponent implements OnInit, OnDestroy {
           this.getEntryAndRelatedIdentifications(data);
         },
         error => {
-          console.error('Failed to load pollinating insect details !');
+          this.loadingService.error('Failed to load pollinating insect details !');
         }
       );
     } else {
@@ -88,7 +89,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       data => {
         this.identifications = data;
         this.dataSource = new MatTableDataSource<Identification>(this.identifications);
-        this.loadingService.stopLoading();
+        this.loadingService.loaded();
 
         const identifying = this.route.snapshot.paramMap.get('identify');
         if (this.isRouting && identifying) {
@@ -97,7 +98,7 @@ export class ViewComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        console.error('Failed to load identifications !');
+        this.loadingService.error('Failed to load identifications !');
       }
     );
   }
@@ -112,7 +113,7 @@ export class ViewComponent implements OnInit, OnDestroy {
           width: '450px',
           data: data
         });
-    
+
         // when popup is closed
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
@@ -131,26 +132,26 @@ export class ViewComponent implements OnInit, OnDestroy {
             identificationData.append('userId', '-1');
           }
 
+          this.loadingService.loading();
           this.identificationService.identify(identificationData).subscribe(
             data => {
-              this.loadingService.startLoading();
               this.getIdentifications();
             },
             error => {
-              console.error('Failed to create new identification !');
+              this.loadingService.error('Failed to create new identification !');
             }
           );
 
         });
       }, error => {
-        console.error('Failed to load species !');
+        this.loadingService.error('Failed to load species !');
       }
     );
 
   }
 
   ngOnDestroy(): void {
-    this.loadingService.stopLoading();
+    this.loadingService.reset();
   }
 
 }

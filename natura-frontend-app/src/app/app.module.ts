@@ -15,6 +15,8 @@ import { SharedModule } from './shared/shared.module';
 import { SpeciesModule } from './species/species.module';
 import { LoadingService } from './services/loading.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AlertService } from './services/alert.service';
+import { LoadingFromServerService } from './services/loading-from-server.service';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     AuthGuard,
     UserService,
     LoadingService,
+    AlertService,
+    LoadingFromServerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

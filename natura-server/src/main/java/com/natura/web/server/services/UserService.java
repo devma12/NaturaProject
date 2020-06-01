@@ -1,7 +1,6 @@
 package com.natura.web.server.services;
 
 import com.natura.web.server.entities.User;
-import com.natura.web.server.exceptions.InvalidDataException;
 import com.natura.web.server.exceptions.UserAccountException;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.UserRepository;
@@ -83,14 +82,14 @@ public class UserService {
             // get user with new generated token
             return returnJwtWithUserDetailsFromAuthentication(auth);
         } catch (DisabledException e) {
-            throw new InvalidDataException("username");
+            throw new UserAccountException.InvalidAccountDataException("username");
         } catch (BadCredentialsException e) {
-            throw new InvalidDataException("credentials");
+            throw new UserAccountException.InvalidAccountDataException("credentials");
         }
     }
 
     public User returnJwtWithUserDetailsFromAuthentication(Authentication auth)
-            throws UserAccountException.AuthenticationException, InvalidDataException {
+            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
         // Get user
         User user = getUserFromAuthentication(auth, true);
 
@@ -107,7 +106,7 @@ public class UserService {
     }
 
     public User getAuthenticatedUserDetails(Authentication auth)
-            throws UserAccountException.AuthenticationException, InvalidDataException {
+            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         User user = getUserFromAuthentication(auth, false);
 
@@ -118,7 +117,7 @@ public class UserService {
     }
 
     private User getUserFromAuthentication(Authentication auth, boolean withPassword)
-            throws UserAccountException.AuthenticationException, InvalidDataException {
+            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         if (auth.getPrincipal() != null && auth.getPrincipal() instanceof UserDetails) {
             UserDetails details = (UserDetails) auth.getPrincipal();
@@ -131,7 +130,7 @@ public class UserService {
     }
 
     private void getInternalUserData(User user, boolean withPassword)
-            throws InvalidDataException {
+            throws UserAccountException.InvalidAccountDataException {
 
         User storedUser = userRepository.findByUsername(user.getUsername());
         if (storedUser != null) {
@@ -140,7 +139,7 @@ public class UserService {
             if (withPassword)
                 user.setPassword(storedUser.getPassword());
         } else {
-            throw new InvalidDataException("user with username " + user.getUsername());
+            throw new UserAccountException.InvalidAccountDataException("user with username " + user.getUsername());
         }
     }
 
@@ -162,7 +161,7 @@ public class UserService {
     }
 
     public User logout(HttpServletRequest request, HttpServletResponse response)
-            throws UserAccountException.AuthenticationException, InvalidDataException {
+            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logged = getUserFromAuthentication(auth, true);
@@ -178,7 +177,7 @@ public class UserService {
     }
 
     public User authenticate()
-            throws UserAccountException.AuthenticationException, InvalidDataException {
+            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return getAuthenticatedUserDetails(auth);
