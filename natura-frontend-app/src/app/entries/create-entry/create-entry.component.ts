@@ -1,25 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Species } from 'src/app/models/species.model';
 import { SpeciesType } from 'src/app/models/type.enum';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { EntryService } from 'src/app/services/entry.service';
 import { FlowerService } from 'src/app/services/flower.service';
 import { InsectService } from 'src/app/services/insect.service';
+import { LoadingFromServerService } from 'src/app/services/loading-from-server.service';
 import { SpeciesService } from 'src/app/services/species.service';
-import { EntryUtils } from '../entry.utils';
-import { EntryService } from 'src/app/services/entry.service';
 
 @Component({
   selector: 'app-create-entry',
   templateUrl: './create-entry.component.html',
   styleUrls: ['./create-entry.component.scss']
 })
-export class CreateEntryComponent implements OnInit {
+export class CreateEntryComponent implements OnInit, OnDestroy {
 
-  isLoading: boolean;
   type: SpeciesType;
   isFlower: boolean;
+
+  loaded: boolean;
 
   species: Species[];
 
@@ -27,15 +28,17 @@ export class CreateEntryComponent implements OnInit {
               private router: Router,
               private speciesService: SpeciesService,
               private authService: AuthService,
+              public loadingService: LoadingFromServerService,
               private flowerService: FlowerService,
               private insectService: InsectService,
               private entryService: EntryService) {
-    this.isLoading = true;
     this.species = [];
+    this.loadingService.loading();
+    this.loaded = false;
   }
 
   ngOnInit(): void {
-
+    
     this.type = this.route.snapshot.params['type'];
     this.entryService.setHeader(this.type);
 
@@ -44,16 +47,19 @@ export class CreateEntryComponent implements OnInit {
     this.speciesService.getByType(this.type).subscribe(
       data => {
         this.species = data;
-        this.isLoading = false;
+        this.loadingService.loaded();
+        this.loaded = true;
       }, 
       error => {
-        console.error(`Failed to load species by type ${this.type} !`);
+        this.loadingService.error(`Failed to load species by type ${this.type} !`);
+        this.loaded = true;
       }
     );
 
   }
 
   createEntry(infos: any) {
+    this.loadingService.loading();
     // Create Form Data to send picture and others entry infos
     const selectedFile: File = infos['selectedFile'];
     const entryData = new FormData();
@@ -85,22 +91,28 @@ export class CreateEntryComponent implements OnInit {
     if (this.type === SpeciesType.Flower) {
       this.flowerService.create(entryData).subscribe(
         data => {
+          this.loadingService.loaded();
           this.router.navigate(['/entries/view', this.type, data.id]);
         },
         error => {
-          console.log('Failed to create new Flower entry.');
+          this.loadingService.error('Failed to create new flower entry.');
         }
       );
     } else if (this.type === SpeciesType.Insect) {
       this.insectService.create(entryData).subscribe(
         data => {
+          this.loadingService.loaded();
           this.router.navigate(['/entries/view', this.type, data.id]);
         },
         error => {
-          console.log('Failed to create new Insect entry.');
+          this.loadingService.error('Failed to create new insect entry.');
         }
       );
     }
+  }
+
+  ngOnDestroy(): void {
+    this.loadingService.reset();
   }
 
 }

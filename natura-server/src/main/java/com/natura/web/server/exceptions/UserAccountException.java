@@ -28,4 +28,12 @@ public class UserAccountException extends ServerException {
             super(HttpStatus.UNAUTHORIZED,  message);
         }
     }
+
+    public static class InvalidAccountDataException extends UserAccountException {
+
+        public InvalidAccountDataException(String message) {
+            super(HttpStatus.UNAUTHORIZED, "Invalid " + message);
+        }
+
+    }
 }

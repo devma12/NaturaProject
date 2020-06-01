@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Phenology } from 'src/app/models/phenology.model';
 import { Species } from 'src/app/models/species.model';
 import { SpeciesType } from 'src/app/models/type.enum';
+import { LoadingFromServerService } from 'src/app/services/loading-from-server.service';
 import { SpeciesService } from 'src/app/services/species.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { SpeciesService } from 'src/app/services/species.service';
   templateUrl: './new-species.component.html',
   styleUrls: ['./new-species.component.scss']
 })
-export class NewSpeciesComponent implements OnInit {
+export class NewSpeciesComponent implements OnInit, OnDestroy {
 
   public SpeciesType = SpeciesType;
 
@@ -21,6 +22,7 @@ export class NewSpeciesComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
+              private loadingService: LoadingFromServerService,
               private speciesService: SpeciesService) { }
 
   ngOnInit(): void {
@@ -52,6 +54,8 @@ export class NewSpeciesComponent implements OnInit {
   }
 
   createSpecies() {
+    this.loadingService.loading();
+
     const formValue = this.speciesForm.value;
 
     const species = new Species(formValue['commonName'], formValue['scientificName'], formValue['type']);
@@ -68,14 +72,18 @@ export class NewSpeciesComponent implements OnInit {
 
     this.speciesService.create(species).subscribe(
       data => {
+        this.loadingService.loaded();
         this.router.navigate(['/species/list']);
       },
       error => {
-        console.error('Failed to create species');
+        this.loadingService.error('Failed to create species !');
       }
     );
 
+  }
 
+  ngOnDestroy(): void {
+    this.loadingService.reset();
   }
 
 }

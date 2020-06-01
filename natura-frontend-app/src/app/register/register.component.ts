@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomErrorStateMatcher } from '../matchers/error-state.matcher';
 import { AuthService } from '../services/auth.service';
+import { LoadingFromServerService } from '../services/loading-from-server.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   matcher: CustomErrorStateMatcher;
 
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    public loadingService: LoadingFromServerService) {
     this.matcher = new CustomErrorStateMatcher();
    }
 
@@ -37,14 +39,24 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmitForm() {
+    this.loadingService.loading();
     const formValue = this.registerForm.value;
     this.authService.register(formValue['email'], formValue['username'], formValue['password']).then(
       value => {
-        console.log('registered !');
+        this.loadingService.loaded();
+        console.log('Registered !');
       }, error => {
-        console.error('Failed to register !');
+        let msg = 'Failed to register !';
+        if (error.status === 401 && error.error && error.error.message) {
+          msg = msg + '\n' + error.error.message;
+        }
+        this.loadingService.error(msg);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.loadingService.reset();
   }
 
 }

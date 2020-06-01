@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Entry } from 'src/app/models/entries/entry.model';
 import { SpeciesType } from 'src/app/models/type.enum';
+import { EntryService } from 'src/app/services/entry.service';
 import { FlowerService } from 'src/app/services/flower.service';
 import { InsectService } from 'src/app/services/insect.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { Subscription } from 'rxjs';
-import { EntryService } from 'src/app/services/entry.service';
+import { LoadingFromServerService } from 'src/app/services/loading-from-server.service';
 
 @Component({
   selector: 'app-entries-list',
@@ -21,43 +21,45 @@ export class EntriesListComponent implements OnInit, OnDestroy {
 
   entries: Entry[];
 
-  constructor(public loadingService: LoadingService,
+  constructor(public loadingService: LoadingFromServerService,
               public entryService: EntryService,
               private route: ActivatedRoute,
               private router: Router,
               private flowerService: FlowerService,
               private insectService: InsectService) {
-    this.loadingService.startLoading();
+    this.loadingService.loading();
     this.entries = [];
    }
 
   ngOnInit(): void {
     this.paramSubscription = this.route.params.subscribe(params => {
       
-      this.type = params['type'];
+      this.entries.splice(0, this.entries.length);
 
+      this.type = params['type'];
+  
       this.entryService.setHeader(this.type);
 
-      this.loadingService.startLoading();
+      this.loadingService.loading();
 
       if (this.type === SpeciesType.Flower) {
         this.flowerService.getAll().subscribe(
           data => {
             this.entries = data;
-            this.loadingService.stopLoading();
+            this.loadingService.loaded();
           }, 
           error => {
-            console.error('Failed to load flowers !');
+            this.loadingService.error('Failed to load flowers !');
           }
         );
       } else if (this.type === SpeciesType.Insect) {
         this.insectService.getAll().subscribe(
           data => {
             this.entries = data;
-            this.loadingService.stopLoading();
+            this.loadingService.loaded();
           }, 
           error => {
-            console.error('Failed to load pollinating insects !');
+            this.loadingService.error('Failed to load pollinating insects !');
           }
         );
       } else {
@@ -68,7 +70,7 @@ export class EntriesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.loadingService.stopLoading();
+    this.loadingService.reset();
     this.paramSubscription.unsubscribe();
   }
 

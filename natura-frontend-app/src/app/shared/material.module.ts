@@ -16,6 +16,7 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -41,7 +42,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // import {MatSidenavModule} from '@angular/material/sidenav';
 // import {MatSliderModule} from '@angular/material/slider';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-// import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import {MatTabsModule} from '@angular/material/tabs';
 // import {MatTreeModule} from '@angular/material/tree';
 
@@ -65,6 +65,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatSortModule,
     MatTableModule,
     MatToolbarModule,
@@ -87,7 +88,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     // MatSidenavModule,
     // MatSliderModule,
     // MatSlideToggleModule,
-    // MatSnackBarModule,
     // MatTabsModule,
     // MatTreeModule,
     // PortalModule,
