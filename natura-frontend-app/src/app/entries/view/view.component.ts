@@ -170,21 +170,26 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   validate(identification, event) {
     const index = this.identifications.indexOf(identification);
-    if (this.canValidate && index !== -1) {
-      this.loadingService.loading();
-      this.identificationService.validate(identification, this.authService.user.getValue()).subscribe(
-        data => {
-          console.log('validated !');
-          this.identifications[index] = data;
-          this.dataSource = new MatTableDataSource<Identification>(this.identifications);
-          this.loadingService.loaded();
-        },
-        error => {
-          this.loadingService.error('Failed to validate identification !');
-        }
-      );
+    const validator = this.authService.user.getValue();
+    if (index === -1 || !validator) {
+      this.loadingService.openErrorAlert('An error occurred. Validation cannot be processed.');
     } else {
-      this.loadingService.error('You cannot validate this identification !');
+      if (this.canValidate && validator.id !== identification.suggestedBy.id) {
+        this.loadingService.loading();
+        this.identificationService.validate(identification, validator).subscribe(
+          data => {
+            console.log('validated !');
+            this.identifications[index] = data;
+            this.dataSource = new MatTableDataSource<Identification>(this.identifications);
+            this.loadingService.loaded();
+          },
+          error => {
+            this.loadingService.error('Failed to validate identification !');
+          }
+        );
+      } else {
+        this.loadingService.openErrorAlert('You have not the permission to validate this identification.');
+      }
     }
     event.preventDefault(); 
   }

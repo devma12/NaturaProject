@@ -130,6 +130,28 @@ public class IdentificationServiceTests {
     }
 
     @Test
+    void userCannotValidateItsOwnSuggestedIdentification() {
+        User user = new User("user");
+        user.setFlowerValidator(true);
+        Mockito.lenient().when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+        Species species = new Species();
+        species.setType(Species.Type.Flower);
+        Mockito.lenient().when(speciesRepository.findById(1L)).thenReturn(Optional.of(species));
+
+        Entry entry = new Flower();
+        Mockito.lenient().when(entryRepository.findById(1L)).thenReturn(Optional.of(entry));
+
+        Identification identification = new Identification(entry, species, user, new Date());
+        Mockito.lenient().when(identificationRepository.findByIdEntryIdAndIdSpeciesId(1L, 1L)).thenReturn(identification);
+
+
+        Assertions.assertThrows(UserAccountException.ValidationPermissionException.class, () -> {
+            identificationService.validate(1L, 1L, 1L);
+        });
+    }
+
+    @Test
     void validateFlowerIdentificationByFlowerValidator() throws DataNotFoundException, InvalidDataException, UserAccountException.ValidationPermissionException {
         Identification identification = identificationService.validate(1L, 1L, 2L);
         Assertions.assertNotNull(identification, "Validated identification should not be null for valid validator and entry & species ids.");
@@ -140,6 +162,5 @@ public class IdentificationServiceTests {
         Identification identification = identificationService.validate(2L, 2L, 3L);
         Assertions.assertNotNull(identification, "Validated identification should not be null for valid validator and entry & species ids.");
     }
-
 
 }

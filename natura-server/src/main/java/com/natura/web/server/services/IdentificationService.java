@@ -81,6 +81,9 @@ public class IdentificationService {
         } else {
             throw new InvalidDataException("entry of identification { entry : "  + entryId + ", species: " + speciesId + " }");
         }
+        if (identification.getSuggestedBy() != null && validator.getUsername() == identification.getSuggestedBy().getUsername()) {
+            throw new UserAccountException.ValidationPermissionException("User has not the permission to validate its own suggested identification.");
+        }
 
         // validate identification and save
         identification.setValidatedBy(validator);
