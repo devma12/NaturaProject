@@ -1,5 +1,6 @@
 package com.natura.web.server.exceptions;
 
+import com.natura.web.server.entities.Species;
 import org.springframework.http.HttpStatus;
 
 public class UserAccountException extends ServerException {
@@ -33,6 +34,18 @@ public class UserAccountException extends ServerException {
 
         public InvalidAccountDataException(String message) {
             super(HttpStatus.UNAUTHORIZED, "Invalid " + message);
+        }
+
+    }
+
+    public static class ValidationPermissionException extends UserAccountException {
+
+        public ValidationPermissionException(String message) {
+            super(HttpStatus.UNAUTHORIZED, message);
+        }
+
+        public ValidationPermissionException(String user, Species.Type type) {
+            super(HttpStatus.UNAUTHORIZED, "User " + user + " has no permission to validate " + type);
         }
 
     }

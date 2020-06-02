@@ -118,4 +118,26 @@ public class IdentificationTests {
         List<Identification> identifications = identificationRepository.findByIdEntryId(saved.getId());
         Assertions.assertTrue(identifications != null && identifications.size() == 1);
     }
+
+    @Test
+    void getIdentificationFromEntryAndSpeciesId() {
+        // First create and save data
+        // create a species
+        Species species = new Species();
+        species.setCommonName("Azuré bleu céleste");
+        species.setScientificName("Lysandra bellargus");
+        species.setType(Species.Type.Insect);
+        species = speciesRepository.save(species);
+        // create an entry
+        Insect entry = new Insect("testButterfly", new Date(), "description", "location");
+        entry = entryRepository.save(entry);
+        // create the identification
+        User user = userRepository.findById(this.userId).orElse(null);
+        Identification identification = new Identification(entry, species, user, new Date());
+        identificationRepository.save(identification);
+
+        // Retrieve identification by entry id and species id
+        Identification found = identificationRepository.findByIdEntryIdAndIdSpeciesId(entry.getId(), species.getId());
+        Assertions.assertNotNull(found);
+    }
 }

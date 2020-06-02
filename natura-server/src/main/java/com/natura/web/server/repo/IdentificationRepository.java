@@ -11,4 +11,6 @@ public interface IdentificationRepository extends CrudRepository<Identification,
     List<Identification> findByIdEntryId(Long entryId);
 
     List<Identification> findByIdSpeciesId(Long species);
+
+    Identification findByIdEntryIdAndIdSpeciesId(Long entry, Long species);
 }

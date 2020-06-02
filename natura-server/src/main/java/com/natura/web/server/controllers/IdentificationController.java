@@ -45,4 +45,20 @@ public class IdentificationController {
             throw e.responseStatus();
         }
     }
+
+    @PostMapping(path="/validate")
+    public @ResponseBody
+    Identification validate(@RequestParam("entry") String entry,
+                            @RequestParam("species") String species,
+                            @RequestParam("validator") String validator) throws IOException {
+
+        Long entryId = Long.parseLong(entry);
+        Long speciesId = Long.parseLong(species);
+        Long userId = Long.parseLong(validator);
+        try {
+            return identificationService.validate(entryId, speciesId, userId);
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
+    }
 }

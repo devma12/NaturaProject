@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Entry } from 'src/app/models/entries/entry.model';
 import { Identification } from 'src/app/models/identification.model';
 import { Species } from 'src/app/models/species.model';
@@ -25,6 +26,7 @@ import { ChooseSpeciesComponent } from './choose-species/choose-species.componen
 export class ViewComponent implements OnInit, OnDestroy {
 
   isRouting: boolean = true;
+  loaded: boolean = false;
 
   entry: Entry;
   type: SpeciesType;
@@ -33,6 +35,9 @@ export class ViewComponent implements OnInit, OnDestroy {
   identifications: Identification[] = [];
   displayedColumns: string[] = ['species', 'proposer', 'date', 'validated', 'validator', 'validationDate'];
   dataSource: MatTableDataSource<Identification>;
+
+  userSubscription: Subscription;
+  canValidate: boolean = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -52,12 +57,24 @@ export class ViewComponent implements OnInit, OnDestroy {
     const id = this.route.snapshot.params['id'];
     this.type = this.route.snapshot.params['type'];
 
+    this.userSubscription = this.authService.user.subscribe(user => {
+      this.canValidate = false;
+      if (user) {
+        if (this.type === SpeciesType.Flower) {
+          this.canValidate = user.flowerValidator;
+        } else if (this.type === SpeciesType.Insect) {
+          this.canValidate = user.insectValidator;
+        }
+      }
+    });
+
     this.entryService.setHeader(this.type);
 
     if (this.type === SpeciesType.Flower) {
       this.flowerService.getById(id).subscribe(
         data => {
           this.getEntryAndRelatedIdentifications(data);
+          this.loaded = true;
         },
         error => {
           this.loadingService.error('Failed to load flower details !');
@@ -68,6 +85,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       this.insectService.getById(id).subscribe(
         data => {
           this.getEntryAndRelatedIdentifications(data);
+          this.loaded = true;
         },
         error => {
           this.loadingService.error('Failed to load pollinating insect details !');
@@ -150,8 +168,30 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   }
 
+  validate(identification, event) {
+    const index = this.identifications.indexOf(identification);
+    if (this.canValidate && index !== -1) {
+      this.loadingService.loading();
+      this.identificationService.validate(identification, this.authService.user.getValue()).subscribe(
+        data => {
+          console.log('validated !');
+          this.identifications[index] = data;
+          this.dataSource = new MatTableDataSource<Identification>(this.identifications);
+          this.loadingService.loaded();
+        },
+        error => {
+          this.loadingService.error('Failed to validate identification !');
+        }
+      );
+    } else {
+      this.loadingService.error('You cannot validate this identification !');
+    }
+    event.preventDefault(); 
+  }
+
   ngOnDestroy(): void {
     this.loadingService.reset();
+    this.userSubscription.unsubscribe();
   }
 
 }

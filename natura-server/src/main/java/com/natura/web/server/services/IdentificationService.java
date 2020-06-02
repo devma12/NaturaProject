@@ -1,10 +1,9 @@
 package com.natura.web.server.services;
 
-import com.natura.web.server.entities.Entry;
-import com.natura.web.server.entities.Identification;
-import com.natura.web.server.entities.Species;
-import com.natura.web.server.entities.User;
+import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
+import com.natura.web.server.exceptions.InvalidDataException;
+import com.natura.web.server.exceptions.UserAccountException;
 import com.natura.web.server.repo.EntryRepository;
 import com.natura.web.server.repo.IdentificationRepository;
 import com.natura.web.server.repo.SpeciesRepository;
@@ -49,7 +48,43 @@ public class IdentificationService {
             throw new DataNotFoundException(Species.class, "id", speciesId);
         }
 
+        // To Do: check no identification already exists for entry + species couple
+        // To Do: check species and entry types are consistent
+
         Identification identification = new Identification(entry, species, suggestedBy, new Date());
+        return identificationRepository.save(identification);
+
+    }
+
+    public Identification validate(Long entryId, Long speciesId, Long userId)
+            throws DataNotFoundException, InvalidDataException, UserAccountException.ValidationPermissionException {
+
+        // Get validator user
+        User validator = userRepository.findById(userId).orElse(null);
+        if (validator  == null) {
+            throw new DataNotFoundException(User.class, "id", userId);
+        }
+
+        // Get identification
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        if (identification  == null) {
+            throw new DataNotFoundException(Identification.class, "id", "{ entry : "  + entryId + ", species: " + speciesId + " }");
+        }
+
+        // Check user has the right to validate this identification
+        if (identification.getEntry() != null && identification.getEntry() instanceof Flower) {
+            if (!validator.isFlowerValidator())
+                throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.Flower);
+        } else if (identification.getEntry() != null && identification.getEntry() instanceof Insect) {
+            if (!validator.isInsectValidator())
+                throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.Insect);
+        } else {
+            throw new InvalidDataException("entry of identification { entry : "  + entryId + ", species: " + speciesId + " }");
+        }
+
+        // validate identification and save
+        identification.setValidatedBy(validator);
+        identification.setValidatedDate(new Date());
         return identificationRepository.save(identification);
 
     }

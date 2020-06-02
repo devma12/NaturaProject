@@ -1,4 +1,4 @@
-<div class="container-wrapper" *ngIf="!loadingService.loader.loading$.value && entry">
+<div class="container-wrapper" *ngIf="loaded && entry">
     <div fxLayout="row">
         <div class="details-container" fxFlex="50" fxLayout="column" fxLayoutAlign="space-around">
             <h1>Details</h1>
@@ -39,15 +39,16 @@
             <ng-container matColumnDef="validated">
                 <th mat-header-cell *matHeaderCellDef> Validated </th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-checkbox (click)="$event.preventDefault()" disableRipple="true"
-                        [checked]="element.validatedBy !== null && element.validated !== undefined" 
+                    <mat-checkbox (click)="validate(element, $event)" disableRipple="true"
+                        [disabled]="!canValidate"
+                        [checked]="element.validatedBy !== null && element.validatedBy !== undefined" 
                         aria-label="validationCheckbox">
                     </mat-checkbox>
                 </td>
             </ng-container>
             <ng-container matColumnDef="validator">
                 <th mat-header-cell *matHeaderCellDef> Validated by </th>
-                <td mat-cell *matCellDef="let element"> {{element.validatedBy}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.validatedBy ? element.validatedBy.username : ''}} </td>
             </ng-container>
             <ng-container matColumnDef="validationDate">
                 <th mat-header-cell *matHeaderCellDef> Validation Date </th>
