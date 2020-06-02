@@ -17,6 +17,7 @@ import { LoadingFromServerService } from 'src/app/services/loading-from-server.s
 import { SpeciesService } from 'src/app/services/species.service';
 import { EntryUtils } from '../entry.utils';
 import { ChooseSpeciesComponent } from './choose-species/choose-species.component';
+import { ConfirmationComponent } from 'src/app/shared/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-view',
@@ -171,27 +172,42 @@ export class ViewComponent implements OnInit, OnDestroy {
   validate(identification, event) {
     const index = this.identifications.indexOf(identification);
     const validator = this.authService.user.getValue();
-    if (index === -1 || !validator) {
+    const species = identification.species;
+    if (index === -1 || !validator || !species) {
       this.loadingService.openErrorAlert('An error occurred. Validation cannot be processed.');
     } else {
+
       if (this.canValidate && validator.id !== identification.suggestedBy.id) {
-        this.loadingService.loading();
-        this.identificationService.validate(identification, validator).subscribe(
-          data => {
-            console.log('validated !');
-            this.identifications[index] = data;
-            this.dataSource = new MatTableDataSource<Identification>(this.identifications);
-            this.loadingService.loaded();
-          },
-          error => {
-            this.loadingService.error('Failed to validate identification !');
+        // open popup to confirm validation
+        const dialogRef = this.dialog.open(ConfirmationComponent, {
+          data: `Are you sure you want to identify ${this.entry.name} as ${species.commonName} specimen ?`
+        });
+
+        // when popup is closed, send request to validate identification
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result);
+          if (result) {
+            this.loadingService.loading();
+            this.identificationService.validate(identification, validator).subscribe(
+              data => {
+                console.log('validated !');
+                this.identifications[index] = data;
+                this.dataSource = new MatTableDataSource<Identification>(this.identifications);
+                this.loadingService.loaded();
+              },
+              error => {
+                this.loadingService.error('Failed to validate identification !');
+              }
+            );
           }
-        );
+        });
+
       } else {
         this.loadingService.openErrorAlert('You have not the permission to validate this identification.');
       }
     }
-    event.preventDefault(); 
+
+    event.preventDefault();
   }
 
   ngOnDestroy(): void {
