@@ -9,9 +9,12 @@ import com.natura.web.server.repo.IdentificationRepository;
 import com.natura.web.server.repo.SpeciesRepository;
 import com.natura.web.server.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IdentificationService {
@@ -27,6 +30,9 @@ public class IdentificationService {
 
     @Autowired
     private IdentificationRepository identificationRepository;
+
+    @Value("${validation.countNeeded}")
+    private Long validationCount;
 
     public Identification identify(Long entryId, Long speciesId, Long userId) throws DataNotFoundException {
 
@@ -89,6 +95,43 @@ public class IdentificationService {
         identification.setValidatedBy(validator);
         identification.setValidatedDate(new Date());
         return identificationRepository.save(identification);
+
+    }
+
+    public void giveValidatorRights(User user) {
+        boolean becomeValidator = false;
+        List<Identification> identifications = identificationRepository.findBySuggestedBy(user);
+
+        // Evaluate flower validator rights
+        if (!user.isFlowerValidator()) {
+            Long validated = identifications.stream()
+                                            .filter(i -> i.getValidatedBy() != null
+                                                    && i.getEntry() != null
+                                                    && i.getEntry() instanceof Flower)
+                                            .count();
+            if (validated >= validationCount) {
+                user.setFlowerValidator(true);
+                becomeValidator = true;
+            }
+        }
+
+        // Evaluate insect validator rights
+        if (!user.isInsectValidator()) {
+            Long validated = identifications.stream()
+                    .filter(i -> i.getValidatedBy() != null
+                            && i.getEntry() != null
+                            && i.getEntry() instanceof Insect)
+                    .count();
+            if (validated >= validationCount) {
+                user.setInsectValidator(true);
+                becomeValidator = true;
+            }
+        }
+
+        // update user if he gets validator rights
+        if (becomeValidator) {
+            userRepository.save(user);
+        }
 
     }
 }

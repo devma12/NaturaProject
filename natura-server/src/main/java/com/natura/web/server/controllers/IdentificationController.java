@@ -56,7 +56,13 @@ public class IdentificationController {
         Long speciesId = Long.parseLong(species);
         Long userId = Long.parseLong(validator);
         try {
-            return identificationService.validate(entryId, speciesId, userId);
+            // validate identification
+            Identification identification = identificationService.validate(entryId, speciesId, userId);
+
+            // Check if proposer should become a validator
+            identificationService.giveValidatorRights(identification.getSuggestedBy());
+
+            return identification;
         } catch (ServerException e) {
             throw e.responseStatus();
         }
