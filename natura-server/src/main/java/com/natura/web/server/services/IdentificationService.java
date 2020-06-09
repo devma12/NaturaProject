@@ -94,8 +94,14 @@ public class IdentificationService {
         // validate identification and save
         identification.setValidatedBy(validator);
         identification.setValidatedDate(new Date());
-        return identificationRepository.save(identification);
+        Identification validIdentification = identificationRepository.save(identification);
 
+        // set entry as validated and save
+        Entry entry = identification.getEntry();
+        entry.setValidated(true);
+        entryRepository.save(entry);
+
+        return validIdentification;
     }
 
     public void giveValidatorRights(User user) {

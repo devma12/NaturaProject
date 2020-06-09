@@ -1,8 +1,8 @@
 export abstract class ValidableItem {
 
-    public isValidated: boolean;
+    public validated: boolean;
 
-    constructor(isValidated: boolean = false) {
-        this.isValidated = isValidated;
+    constructor(validated: boolean = false) {
+        this.validated = validated;
     }
 }

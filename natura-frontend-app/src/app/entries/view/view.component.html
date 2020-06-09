@@ -16,42 +16,42 @@
     </div>
     <div class="identification-container" fxLayout="column" fxLayoutAlign="space-around">
         <div fxLayout="row" fxLayoutAlign="none center">
-            <h1>Identifications</h1>
-            <button mat-mini-fab color="accent" fxFlexOffset="3" id="add-new-identification" aria-label="add new identification"
-                (click)="openDialog()">
+            <h1>Identification</h1>
+            <button *ngIf="!isValidated" mat-mini-fab color="accent" fxFlexOffset="3" aria-label="add new identification"
+                id="add-new-identification" (click)="openDialog()">
                 <mat-icon>add</mat-icon>
             </button>
+            <mat-icon *ngIf="isValidated" fxFlexOffset="1" color="accent" class="validated-icon">check_circle_outline</mat-icon>
         </div>
         <mat-divider></mat-divider>
-        <table mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="species">
-                <th mat-header-cell *matHeaderCellDef> Species </th>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+            <ng-container matColumnDef="species.commonName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Species </th>
                 <td mat-cell *matCellDef="let element"> {{element.species ? element.species.commonName : ''}} </td>
             </ng-container>
             <ng-container matColumnDef="proposer">
-                <th mat-header-cell *matHeaderCellDef> Suggested By </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Suggested By </th>
                 <td mat-cell *matCellDef="let element"> {{element.suggestedBy ? element.suggestedBy.username : ''}} </td>
             </ng-container>
             <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
                 <td mat-cell *matCellDef="let element"> {{element.suggestedDate | date: 'dd/MM/yyyy'}} </td>
             </ng-container>
             <ng-container matColumnDef="validated">
-                <th mat-header-cell *matHeaderCellDef> Validated </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Validated </th>
                 <td mat-cell *matCellDef="let element">
                     <mat-checkbox (click)="validate(element, $event)" disableRipple="true"
-                        [disabled]="!canValidate"
                         [checked]="element.validatedBy !== null && element.validatedBy !== undefined" 
                         aria-label="validationCheckbox">
                     </mat-checkbox>
                 </td>
             </ng-container>
             <ng-container matColumnDef="validator">
-                <th mat-header-cell *matHeaderCellDef> Validated by </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Validated by </th>
                 <td mat-cell *matCellDef="let element"> {{element.validatedBy ? element.validatedBy.username : ''}} </td>
             </ng-container>
-            <ng-container matColumnDef="validationDate">
-                <th mat-header-cell *matHeaderCellDef> Validation Date </th>
+            <ng-container matColumnDef="validatedDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Validation Date </th>
                 <td mat-cell *matCellDef="let element"> {{element.validatedDate | date: 'dd/MM/yyyy'}} </td>
             </ng-container>
 
