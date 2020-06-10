@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SpeciesType } from '../models/type.enum';
 
 @Injectable()
 export class EntryService {
 
-    header$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    type$: BehaviorSubject<SpeciesType> = new BehaviorSubject<SpeciesType>(null);
 
     constructor() { }
   
-    setHeader(value: string) {
-      this.header$.next(value);
+    setCurrentType(value: SpeciesType) {
+      this.type$.next(value);
+    }
+
+    getCurrentType(): SpeciesType {
+      return this.type$.getValue();
     }
 
 }

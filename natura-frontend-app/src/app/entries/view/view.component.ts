@@ -50,9 +50,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     const id = this.route.snapshot.params['id'];
-    this.type = this.route.snapshot.params['type'];
-
-    this.entryService.setHeader(this.type);
+    this.type = this.entryService.getCurrentType();
 
     if (this.type === SpeciesType.Flower) {
       this.flowerService.getById(id).subscribe(
