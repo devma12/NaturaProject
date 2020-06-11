@@ -1,5 +1,6 @@
-package com.natura.web.server;
+package com.natura.web.server.unit.services;
 
+import com.natura.web.server.integration.db.SpeciesTests;
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.InvalidDataException;
 import com.natura.web.server.repo.SpeciesRepository;

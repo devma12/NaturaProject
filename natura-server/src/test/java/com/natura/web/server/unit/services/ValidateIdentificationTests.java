@@ -1,4 +1,4 @@
-package com.natura.web.server;
+package com.natura.web.server.unit.services;
 
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class IdentificationServiceTests {
+public class ValidateIdentificationTests {
 
     @Autowired
     IdentificationService identificationService;
@@ -72,33 +72,6 @@ public class IdentificationServiceTests {
 
         Identification identification2 = new Identification(insect, iSpecies, user, new Date());
         Mockito.lenient().when(identificationRepository.findByIdEntryIdAndIdSpeciesId(2L, 2L)).thenReturn(identification2);
-    }
-
-    @Test
-    void cannotCreateIdentificationWithoutEntry() {
-        Assertions.assertThrows(DataNotFoundException.class, () -> {
-            identificationService.identify(-1L, 1L, 1L);
-        });
-    }
-
-    @Test
-    void cannotCreateIdentificationWithoutSpecies() {
-        Assertions.assertThrows(DataNotFoundException.class, () -> {
-            identificationService.identify(1L, -1L, 1L);
-        });
-    }
-
-    @Test
-    void cannotCreateIdentificationWithoutUser() {
-        Assertions.assertThrows(DataNotFoundException.class, () -> {
-            identificationService.identify(1L, 1L, -1L);
-        });
-    }
-
-    @Test
-    void createIdentificationForSpecificEntryAndSpeciesByKnownUser() throws DataNotFoundException {
-        Identification identification = identificationService.identify(1L, 1L, 1L);
-        Assertions.assertNotNull(identification, "Created identification should not be null for known entry, species and user ids.");
     }
 
     @Test
@@ -189,5 +162,4 @@ public class IdentificationServiceTests {
             identificationService.giveValidatorRights(null);
         });
     }
-
 }

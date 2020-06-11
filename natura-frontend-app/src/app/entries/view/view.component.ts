@@ -183,7 +183,10 @@ export class ViewComponent implements OnInit, OnDestroy {
                 this.getIdentifications();
               },
               error => {
-                this.loadingService.error('Failed to create new identification !');
+                let msg: string = 'Failed to create new identification !';
+                if (error.status === 406 || error.status === 404)
+                  msg = error.error.message;
+                this.loadingService.error(msg);
               }
             );
           }
