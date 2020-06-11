@@ -1,7 +1,9 @@
 package com.natura.web.server.entities;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
+@MappedSuperclass
 public abstract class ValidableItem {
 
     @Column(name="validated", nullable = false)

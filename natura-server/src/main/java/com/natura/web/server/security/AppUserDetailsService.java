@@ -24,6 +24,7 @@ public class AppUserDetailsService implements UserDetailsService {
             builder.username(user.getUsername());
             builder.email(user.getEmail());
             builder.password(user.getPassword());
+            builder.roles(user.isFlowerValidator(), user.isInsectValidator());
             return builder.build();
         } else {
             throw new UsernameNotFoundException("User not found.");

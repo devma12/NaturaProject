@@ -1,13 +1,14 @@
 <div class="entry-card">
     <mat-card fxLayout="column" fxLayoutAlign="space-around center">
-        <mat-card-header fxFlex="20" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-card-header>
             <mat-card-title>{{ entry.name }}</mat-card-title>
+            <mat-icon *ngIf="entry.validated" mat-card-avatar color="primary">check_circle_outline</mat-icon>
         </mat-card-header>
         <mat-card-content fxFlex="50" fxLayout="column" fxLayoutAlign="center">
             <img [src]="picture" alt="Entry picture" class="image">
         </mat-card-content>
         <mat-card-footer fxFlex="30">
-            <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+            <mat-card-actions>
                 <a mat-raised-button color="accent" routerLink="/entries/{{type}}/view/{{entry.id}}">View</a>
                 <a mat-raised-button color="accent" [routerLink]="['/entries',type,'view',entry.id,{identify:true}]">Identify</a>
             </mat-card-actions>

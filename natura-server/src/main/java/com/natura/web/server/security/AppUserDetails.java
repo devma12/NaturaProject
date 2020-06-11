@@ -75,6 +75,16 @@ public class AppUserDetails extends User {
             return this.authorities((Collection)authorities);
         }
 
+        public AppUserBuilder roles(boolean isFlowerValidator, boolean isInsectValidator) {
+            List<GrantedAuthority> authorities = new ArrayList();
+            if (isFlowerValidator)
+                authorities.add(new SimpleGrantedAuthority("ROLE_FLOWER_VALIDATOR"));
+            if (isInsectValidator)
+                authorities.add(new SimpleGrantedAuthority("ROLE_INSECT_VALIDATOR"));
+
+            return this.authorities((Collection)authorities);
+        }
+
         public AppUserBuilder authorities(GrantedAuthority... authorities) {
             return this.authorities((Collection) Arrays.asList(authorities));
         }

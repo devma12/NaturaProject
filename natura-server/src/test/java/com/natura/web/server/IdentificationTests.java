@@ -7,6 +7,7 @@ import com.natura.web.server.repo.IdentificationRepository;
 import com.natura.web.server.repo.SpeciesRepository;
 import com.natura.web.server.repo.UserRepository;
 import com.natura.web.server.services.EntryService;
+import com.natura.web.server.services.IdentificationService;
 import com.natura.web.server.services.ImageService;
 import com.natura.web.server.services.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -39,6 +40,9 @@ public class IdentificationTests {
     UserService userService;
 
     @Autowired
+    IdentificationService identificationService;
+
+    @Autowired
     EntryRepository entryRepository;
 
     @Autowired
@@ -56,6 +60,8 @@ public class IdentificationTests {
 
     Long entryId = -1L;
 
+    Long validatorId = -1L;
+
     @BeforeEach
     void init() {
 
@@ -68,9 +74,20 @@ public class IdentificationTests {
             user.setEmail("test@email.com");
             user.setPassword("pwd");
             user = userRepository.save(user);
-            this.userId = user.getId();
         }
         this.userId = user.getId();
+
+        String validatorUsername = "validator";
+        User validator = userRepository.findByUsername(validatorUsername);
+        if (validator == null) {
+            // Create an user
+            validator = new User();
+            validator.setUsername(validatorUsername);
+            validator.setEmail("validator@email.com");
+            validator.setPassword("pwd");
+            validator = userRepository.save(validator);
+        }
+        this.validatorId = validator.getId();
 
         String speciesName = "commonName";
         Species species = speciesRepository.findByCommonName(speciesName);
@@ -117,5 +134,112 @@ public class IdentificationTests {
 
         List<Identification> identifications = identificationRepository.findByIdEntryId(saved.getId());
         Assertions.assertTrue(identifications != null && identifications.size() == 1);
+    }
+
+    @Test
+    void getIdentificationFromEntryAndSpeciesId() {
+        // First create and save data
+        // create a species
+        Species species = new Species();
+        species.setCommonName("Azuré bleu céleste");
+        species.setScientificName("Lysandra bellargus");
+        species.setType(Species.Type.Insect);
+        species = speciesRepository.save(species);
+        // create an entry
+        Insect entry = new Insect("testButterfly", new Date(), "description", "location");
+        entry = entryRepository.save(entry);
+        // create the identification
+        User user = userRepository.findById(this.userId).orElse(null);
+        Identification identification = new Identification(entry, species, user, new Date());
+        identificationRepository.save(identification);
+
+        // Retrieve identification by entry id and species id
+        Identification found = identificationRepository.findByIdEntryIdAndIdSpeciesId(entry.getId(), species.getId());
+        Assertions.assertNotNull(found);
+    }
+
+    private Identification createIdentification(Species.Type type, String entryName, User user, String speciesName, boolean isValidated) {
+
+
+        Entry entry = null;
+        if (type == Species.Type.Flower) {
+            entry = new Flower();
+        } else if (type == Species.Type.Insect) {
+            entry = new Insect();
+        }
+
+        Assertions.assertTrue(entry != null);
+        entry.setName(entryName);
+        entry.setDate(new Date());
+        entry.setValidated(isValidated);
+        entry = entryRepository.save(entry);
+
+        Species species = new Species();
+        species.setType(type);
+        species.setCommonName(speciesName);
+        species.setScientificName(speciesName);
+        species = speciesRepository.save(species);
+
+        Identification identification = new Identification(entry, species, user, new Date());
+        if (isValidated) {
+            User validator = userRepository.findById(this.validatorId).orElse(null);
+            identification.setValidatedBy(validator);
+            identification.setValidatedDate(new Date());
+        }
+        return identificationRepository.save(identification);
+    }
+
+    @Test
+    void getIdentificationsSuggestedByOneUser() {
+        // Create an user
+        User user = new User("testUser2");
+        user.setEmail("test2@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        createIdentification(Species.Type.Flower, "item1", user, "species_flower1", true);
+        createIdentification(Species.Type.Insect, "item2", user, "species_insect1", true);
+        createIdentification(Species.Type.Flower, "item3", user, "species_flower2", false);
+
+        List<Identification> identifications = identificationRepository.findBySuggestedBy(user);
+        Assertions.assertTrue(identifications != null && identifications.size() == 3);
+    }
+
+    @Test
+    void cannotGiveValidatorRightsForTwoValidatedIdentifications() throws DataNotFoundException {
+        // Create an user
+        String username = "testUser3";
+        User user = new User(username);
+        user.setEmail("test3@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        createIdentification(Species.Type.Flower, "element1", user, "flower1", true);
+        createIdentification(Species.Type.Insect, "element2", user, "insect1", true);
+        createIdentification(Species.Type.Flower, "element3", user, "flower2", true);
+        createIdentification(Species.Type.Flower, "element4", user, "flower3", false);
+
+
+        identificationService.giveValidatorRights(user);
+        user = userRepository.findByUsername(username);
+        Assertions.assertTrue(!user.isFlowerValidator());
+    }
+
+    @Test
+    void giveValidatorRightsForThreeFlowerValidatedIdentifications() throws DataNotFoundException {
+        // Create an user
+        String username = "testUser4";
+        User user = new User(username);
+        user.setEmail("test4@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        createIdentification(Species.Type.Flower, "el1", user, "plant1", true);
+        createIdentification(Species.Type.Flower, "el2", user, "plant2", true);
+        createIdentification(Species.Type.Flower, "el3", user, "plant3", true);
+
+        identificationService.giveValidatorRights(user);
+        user = userRepository.findByUsername(username);
+        Assertions.assertTrue(user.isFlowerValidator());
     }
 }

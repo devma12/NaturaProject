@@ -31,7 +31,7 @@ export class LoadingFromServerService {
         this.loader.stopLoading();
     }
 
-    private openErrorAlert(msg: string) {
+    openErrorAlert(msg: string) {
         console.error(msg);
         this.errorAlert = this.alert.openAlert(msg, 'X', 'error');
     }

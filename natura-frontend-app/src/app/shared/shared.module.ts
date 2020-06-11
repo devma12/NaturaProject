@@ -10,11 +10,13 @@ import { FieldListItemComponent } from './field-list-item/field-list-item.compon
 import { RouterModule } from '@angular/router';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { Ng5SliderModule } from 'ng5-slider';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 @NgModule({
     declarations: [
       FieldListItemComponent,
-      SpinnerComponent
+      SpinnerComponent,
+      ConfirmationComponent
     ],
     imports: [
       AppMaterialModule,
@@ -32,7 +34,8 @@ import { Ng5SliderModule } from 'ng5-slider';
       HttpClientModule,
       RouterModule,
       FieldListItemComponent,
-      SpinnerComponent
+      SpinnerComponent,
+      ConfirmationComponent
     ],
     providers: []
   })
