@@ -1,4 +1,4 @@
-package com.natura.web.server;
+package com.natura.web.server.integration.db;
 
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.MysqldConfig;

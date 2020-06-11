@@ -1,4 +1,4 @@
-package com.natura.web.server;
+package com.natura.web.server.integration.db;
 
 import com.natura.web.server.entities.Phenology;
 import com.natura.web.server.entities.Species;
