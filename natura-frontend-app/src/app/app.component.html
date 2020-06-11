@@ -5,8 +5,8 @@
       <mat-icon>filter_vintage</mat-icon>
       Natura
     </a>
-    <a *ngIf="authService.isAuth" routerLink="/entries/list/Flower" mat-button>Flowers</a>
-    <a *ngIf="authService.isAuth" routerLink="/entries/list/Insect" mat-button>Pollinating Insects</a>
+    <a *ngIf="authService.isAuth" routerLink="/entries/Flower/list" mat-button>Flowers</a>
+    <a *ngIf="authService.isAuth" routerLink="/entries/Insect/list" mat-button>Pollinating Insects</a>
     <a *ngIf="authService.isAuth" routerLink="/species/list" mat-button>Species</a>
     <span class="fill-remaining-space"></span>
     <a *ngIf="authService.isAuth" href="#" mat-button>

@@ -80,7 +80,7 @@ export class AuthService {
         sessionStorage.setItem('JWT_TOKEN', value.token);
         this.user.next(value);
         this.isAuth = true;
-        this.router.navigate([this.redirectUrl]);
+        this.router.navigateByUrl(this.redirectUrl);
         this.redirectUrl = null;
     }
 

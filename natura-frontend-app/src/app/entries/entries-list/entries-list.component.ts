@@ -15,7 +15,7 @@ import { LoadingFromServerService } from 'src/app/services/loading-from-server.s
 })
 export class EntriesListComponent implements OnInit, OnDestroy {
 
-  paramSubscription: Subscription;
+  typeSubscription: Subscription;
 
   type: SpeciesType;
 
@@ -32,13 +32,11 @@ export class EntriesListComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
-    this.paramSubscription = this.route.params.subscribe(params => {
+    this.typeSubscription = this.entryService.type$.subscribe(type => {
       
       this.entries.splice(0, this.entries.length);
-
-      this.type = params['type'];
   
-      this.entryService.setHeader(this.type);
+      this.type = type;
 
       this.loadingService.loading();
 
@@ -71,7 +69,7 @@ export class EntriesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.loadingService.reset();
-    this.paramSubscription.unsubscribe();
+    this.typeSubscription.unsubscribe();
   }
 
 }

@@ -77,9 +77,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     // get info from route params
     const id = this.route.snapshot.params['id'];
-    this.type = this.route.snapshot.params['type'];
-
-    this.entryService.setHeader(this.type);
+    this.type = this.entryService.getCurrentType();
 
     // evaluate logged user rights to validate entry identification
     this.userSubscription = this.authService.user.subscribe(user => {
@@ -102,7 +100,6 @@ export class ViewComponent implements OnInit, OnDestroy {
         },
         error => {
           this.loadingService.error('Failed to load flower details !');
-
         }
       );
     } else if (this.type === SpeciesType.Insect) {
@@ -164,31 +161,32 @@ export class ViewComponent implements OnInit, OnDestroy {
         // when popup is closed
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
-          const species: Species = result;
+          if (result) {
+            const species: Species = result;
 
-          // save identification
-          const identificationData = new FormData();
-          identificationData.append('entryId', this.entry.id.toString());
-          identificationData.append('speciesId', species.id.toString());
+            // save identification
+            const identificationData = new FormData();
+            identificationData.append('entryId', this.entry.id.toString());
+            identificationData.append('speciesId', species.id.toString());
 
-          // Get logged user id to be set as proposer user
-          const user: User = this.authService.user.getValue();
-          if (user && user.id !== null && user.id !== undefined) {
-            identificationData.append('userId', user.id.toString());
-          } else {
-            identificationData.append('userId', '-1');
-          }
-
-          this.loadingService.loading();
-          this.identificationService.identify(identificationData).subscribe(
-            data => {
-              this.getIdentifications();
-            },
-            error => {
-              this.loadingService.error('Failed to create new identification !');
+            // Get logged user id to be set as proposer user
+            const user: User = this.authService.user.getValue();
+            if (user && user.id !== null && user.id !== undefined) {
+              identificationData.append('userId', user.id.toString());
+            } else {
+              identificationData.append('userId', '-1');
             }
-          );
 
+            this.loadingService.loading();
+            this.identificationService.identify(identificationData).subscribe(
+              data => {
+                this.getIdentifications();
+              },
+              error => {
+                this.loadingService.error('Failed to create new identification !');
+              }
+            );
+          }
         });
       }, error => {
         this.loadingService.error('Failed to load species !');

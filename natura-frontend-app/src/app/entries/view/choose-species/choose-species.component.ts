@@ -45,7 +45,10 @@ export class ChooseSpeciesComponent implements OnInit {
   }
 
   getOptionName(option: Species) {
-    return option.commonName;
+    if (option)
+      return option.commonName;
+    else
+      return null;
   }
 
 }

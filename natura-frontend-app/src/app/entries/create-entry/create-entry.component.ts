@@ -24,8 +24,7 @@ export class CreateEntryComponent implements OnInit, OnDestroy {
 
   species: Species[];
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
+  constructor(private router: Router,
               private speciesService: SpeciesService,
               private authService: AuthService,
               public loadingService: LoadingFromServerService,
@@ -39,8 +38,7 @@ export class CreateEntryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     
-    this.type = this.route.snapshot.params['type'];
-    this.entryService.setHeader(this.type);
+    this.type = this.entryService.getCurrentType();
 
     this.isFlower = (this.type === SpeciesType.Flower);
 
@@ -92,7 +90,7 @@ export class CreateEntryComponent implements OnInit, OnDestroy {
       this.flowerService.create(entryData).subscribe(
         data => {
           this.loadingService.loaded();
-          this.router.navigate(['/entries/view', this.type, data.id]);
+          this.router.navigate(['/entries', this.type, 'view', data.id]);
         },
         error => {
           this.loadingService.error('Failed to create new flower entry.');
@@ -102,7 +100,7 @@ export class CreateEntryComponent implements OnInit, OnDestroy {
       this.insectService.create(entryData).subscribe(
         data => {
           this.loadingService.loaded();
-          this.router.navigate(['/entries/view', this.type, data.id]);
+          this.router.navigate(['/entries', this.type, 'view', data.id]);
         },
         error => {
           this.loadingService.error('Failed to create new insect entry.');

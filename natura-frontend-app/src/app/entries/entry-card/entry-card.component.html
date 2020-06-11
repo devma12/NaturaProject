@@ -9,8 +9,8 @@
         </mat-card-content>
         <mat-card-footer fxFlex="30">
             <mat-card-actions>
-                <a mat-raised-button color="accent" routerLink="/entries/view/{{type}}/{{entry.id}}">View</a>
-                <a mat-raised-button color="accent"  *ngIf="!entry.validated" [routerLink]="['/entries/view',type,entry.id,{identify:true}]">Identify</a>
+                <a mat-raised-button color="accent" routerLink="/entries/{{type}}/view/{{entry.id}}">View</a>
+                <a mat-raised-button color="accent" [routerLink]="['/entries',type,'view',entry.id,{identify:true}]">Identify</a>
             </mat-card-actions>
         </mat-card-footer>
     </mat-card>
