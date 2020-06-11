@@ -96,7 +96,21 @@ public class IdentificationServiceTests {
     }
 
     @Test
-    void createIdentificationForSpecificEntryAndSpeciesByKnownUser() throws DataNotFoundException {
+    void cannotCreateIdentificationForInconsistentEntryAndSpecies() {
+        Assertions.assertThrows(InvalidDataException.class, () -> {
+            identificationService.identify(1L, 2L, 1L);
+        });
+    }
+
+    @Test
+    void cannotCreateIdentificationForInconsistentEntryAndSpecies2() {
+        Assertions.assertThrows(InvalidDataException.class, () -> {
+            identificationService.identify(2L, 1L, 1L);
+        });
+    }
+
+    @Test
+    void createIdentificationForConsistentEntryAndSpeciesByKnownUser() throws DataNotFoundException, InvalidDataException {
         Identification identification = identificationService.identify(1L, 1L, 1L);
         Assertions.assertNotNull(identification, "Created identification should not be null for known entry, species and user ids.");
     }

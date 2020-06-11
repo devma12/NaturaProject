@@ -34,7 +34,7 @@ public class IdentificationService {
     @Value("${validation.countNeeded}")
     private Long validationCount;
 
-    public Identification identify(Long entryId, Long speciesId, Long userId) throws DataNotFoundException {
+    public Identification identify(Long entryId, Long speciesId, Long userId) throws DataNotFoundException, InvalidDataException {
 
         // Get proposer user
         User suggestedBy = userRepository.findById(userId).orElse(null);
@@ -55,7 +55,13 @@ public class IdentificationService {
         }
 
         // To Do: check no identification already exists for entry + species couple
-        // To Do: check species and entry types are consistent
+
+        // Check species and entry types are consistent
+        if (entry instanceof Flower && species.getType() != Species.Type.Flower) {
+            throw new InvalidDataException("Suggested species must be of type Flower for a Flower entry.");
+        } else if (entry instanceof Insect && species.getType() != Species.Type.Insect) {
+            throw new InvalidDataException("Suggested species must be of type Insect for an Insect entry.");
+        }
 
         Identification identification = new Identification(entry, species, suggestedBy, new Date());
         return identificationRepository.save(identification);
