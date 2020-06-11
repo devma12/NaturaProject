@@ -11,7 +11,7 @@ public class InvalidDataException extends ServerException {
     public static class DuplicateDataException extends InvalidDataException {
 
         public DuplicateDataException(String message) {
-            super("Data already exists with same " + message);
+            super(message);
         }
 
         public DuplicateDataException(String type, String attribute, String value) {
