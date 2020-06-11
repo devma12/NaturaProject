@@ -37,14 +37,14 @@ public class SpeciesService {
             // Check phenology start is before phenology end
             for (Phenology phenology: species.getPhenologies()) {
                 if (phenology.getStart().compareTo(phenology.getEnd()) > 0) {
-                    throw new InvalidDataException("phenology. Start and end months should be reversed.");
+                    throw new InvalidDataException("Invalid phenology: Start and end months should be reversed.");
                 }
             }
 
             if (species.getPhenologies().size() > 1) {
                 // Check phenologies do not overlap each other
                 if (phenologiesOverlap(species.getPhenologies()))
-                    throw new InvalidDataException("phenologies. Periods overlap.");
+                    throw new InvalidDataException("Invalid phenologies: Periods overlap.");
             }
         }
 

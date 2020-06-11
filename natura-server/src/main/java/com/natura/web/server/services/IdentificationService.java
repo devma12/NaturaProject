@@ -77,16 +77,25 @@ public class IdentificationService {
             throw new DataNotFoundException(Identification.class, "id", "{ entry : "  + entryId + ", species: " + speciesId + " }");
         }
 
+        // Check entry is not null
+        if (identification.getEntry() == null) {
+            throw new InvalidDataException("Invalid entry of identification { entry : "  + entryId + ", species: " + speciesId + " }");
+        }
+        // Check entry has not been validated yet
+        else if(identification.getEntry().isValidated()) {
+            throw new InvalidDataException.AlreadyValidatedDataException("Entry " + identification.getEntry().getName());
+        }
         // Check user has the right to validate this identification
-        if (identification.getEntry() != null && identification.getEntry() instanceof Flower) {
+        else if (identification.getEntry() instanceof Flower) {
             if (!validator.isFlowerValidator())
                 throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.Flower);
-        } else if (identification.getEntry() != null && identification.getEntry() instanceof Insect) {
+        } else if (identification.getEntry() instanceof Insect) {
             if (!validator.isInsectValidator())
                 throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.Insect);
         } else {
-            throw new InvalidDataException("entry of identification { entry : "  + entryId + ", species: " + speciesId + " }");
+            throw new InvalidDataException("Invalid entry of identification { entry : "  + entryId + ", species: " + speciesId + " }");
         }
+
         if (identification.getSuggestedBy() != null && validator.getUsername() == identification.getSuggestedBy().getUsername()) {
             throw new UserAccountException.ValidationPermissionException("User has not the permission to validate its own suggested identification.");
         }

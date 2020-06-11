@@ -228,7 +228,10 @@ export class ViewComponent implements OnInit, OnDestroy {
                   this.loadingService.loaded();
                 },
                 error => {
-                  this.loadingService.error('Failed to validate identification !');
+                  let msg: string = 'Failed to validate identification !';
+                  if (error.status === 406)
+                    msg = error.error.message;
+                  this.loadingService.error(msg);
                 }
               );
             }
