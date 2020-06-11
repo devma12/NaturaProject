@@ -113,40 +113,45 @@ public class IdentificationService {
         return validIdentification;
     }
 
-    public void giveValidatorRights(User user) {
+    public void giveValidatorRights(User user) throws DataNotFoundException {
         boolean becomeValidator = false;
+
+        if (user == null)
+            throw new DataNotFoundException("Null user");
+
         List<Identification> identifications = identificationRepository.findBySuggestedBy(user);
 
-        // Evaluate flower validator rights
-        if (!user.isFlowerValidator()) {
-            Long validated = identifications.stream()
-                                            .filter(i -> i.getValidatedBy() != null
-                                                    && i.getEntry() != null
-                                                    && i.getEntry() instanceof Flower)
-                                            .count();
-            if (validated >= validationCount) {
-                user.setFlowerValidator(true);
-                becomeValidator = true;
+        if (identifications.size() > 0) {
+            // Evaluate flower validator rights
+            if (!user.isFlowerValidator()) {
+                Long validated = identifications.stream()
+                                                .filter(i -> i.getValidatedBy() != null
+                                                        && i.getEntry() != null
+                                                        && i.getEntry() instanceof Flower)
+                                                .count();
+                if (validated >= validationCount) {
+                    user.setFlowerValidator(true);
+                    becomeValidator = true;
+                }
+            }
+
+            // Evaluate insect validator rights
+            if (!user.isInsectValidator()) {
+                Long validated = identifications.stream()
+                                                .filter(i -> i.getValidatedBy() != null
+                                                        && i.getEntry() != null
+                                                        && i.getEntry() instanceof Insect)
+                                                .count();
+                if (validated >= validationCount) {
+                    user.setInsectValidator(true);
+                    becomeValidator = true;
+                }
+            }
+
+            // update user if he gets validator rights
+            if (becomeValidator) {
+                userRepository.save(user);
             }
         }
-
-        // Evaluate insect validator rights
-        if (!user.isInsectValidator()) {
-            Long validated = identifications.stream()
-                    .filter(i -> i.getValidatedBy() != null
-                            && i.getEntry() != null
-                            && i.getEntry() instanceof Insect)
-                    .count();
-            if (validated >= validationCount) {
-                user.setInsectValidator(true);
-                becomeValidator = true;
-            }
-        }
-
-        // update user if he gets validator rights
-        if (becomeValidator) {
-            userRepository.save(user);
-        }
-
     }
 }
