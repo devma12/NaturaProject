@@ -12,6 +12,10 @@ import { SpeciesListComponent } from './species/species-list/species-list.compon
 import { SpeciesComponent } from './species/species/species.component';
 import { EntryComponent } from './entries/entry/entry.component';
 import { NewSpeciesComponent } from './species/new-species/new-species.component';
+import { AccountComponent } from './account/account.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { SettingsComponent } from './account/settings/settings.component';
+import { HerbariumComponent } from './account/herbarium/herbarium.component';
 
 
 const routes: Routes = [
@@ -31,6 +35,13 @@ const routes: Routes = [
       children: [
         { path: 'list', component: SpeciesListComponent },
         { path: 'new', component: NewSpeciesComponent },
+      ]
+  },
+  { path: 'user-account', canActivate: [AuthGuard], component: AccountComponent,
+      children: [
+        { path: 'profile', component: ProfileComponent },
+        { path: 'settings', component: SettingsComponent },
+        { path: 'herbarium', component: HerbariumComponent },
       ]
   },
   { path: '**', redirectTo: 'not-found' }

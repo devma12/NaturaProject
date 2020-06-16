@@ -32,10 +32,8 @@ $success:  mat-palette($mat-green);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
-    z-index: -1 !important;
     color: white;
-    background:mat-color($primary, 500);
+    background:mat-color($primary);
     padding-left: 20px;
 }
 

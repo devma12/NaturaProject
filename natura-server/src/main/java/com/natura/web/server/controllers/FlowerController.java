@@ -1,13 +1,17 @@
 package com.natura.web.server.controllers;
 
 import com.natura.web.server.entities.Flower;
+import com.natura.web.server.entities.User;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.FlowerRepository;
+import com.natura.web.server.repo.UserRepository;
 import com.natura.web.server.services.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Date;
@@ -22,6 +26,9 @@ public class FlowerController {
 
     @Autowired
     private FlowerRepository flowerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping(path="/new")
     public @ResponseBody Flower create(@RequestParam("imageFile") MultipartFile file,
@@ -54,4 +61,17 @@ public class FlowerController {
         Long entryId = Long.parseLong(id);
         return this.flowerRepository.findById(entryId).orElse(null);
     }
+
+    @GetMapping(path="/creator/{id}")
+    @ResponseBody
+    public List<Flower> getByCreator(@PathVariable String id) {
+        Long userId = Long.parseLong(id);
+        User createdBy = userRepository.findById(userId).orElse(null);
+        if (createdBy != null) {
+            return this.flowerRepository.findByCreatedBy(createdBy);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
+        }
+    }
+    
 }

@@ -1,5 +1,7 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { UserModule } from './account/user.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EntryModule } from './entries/entry.module';
@@ -8,15 +10,14 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
+import { AlertService } from './services/alert.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { LoadingFromServerService } from './services/loading-from-server.service';
+import { LoadingService } from './services/loading.service';
 import { UserService } from './services/user.service';
 import { SharedModule } from './shared/shared.module';
 import { SpeciesModule } from './species/species.module';
-import { LoadingService } from './services/loading.service';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { AlertService } from './services/alert.service';
-import { LoadingFromServerService } from './services/loading-from-server.service';
 
 
 @NgModule({
@@ -26,12 +27,13 @@ import { LoadingFromServerService } from './services/loading-from-server.service
     HomeComponent,
     NotFoundComponent,
     RegisterComponent
-  ],
+   ],
   imports: [
     AppRoutingModule,
     SharedModule,
     EntryModule,
-    SpeciesModule
+    SpeciesModule,
+    UserModule
   ],
   providers: [
     AuthService,

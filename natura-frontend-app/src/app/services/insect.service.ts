@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Insect } from '../models/entries/insect.model';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class InsectService {
@@ -20,6 +21,10 @@ constructor(private http: HttpClient) { }
 
   getById(id: number): Observable<Insect> {
     return this.http.get<Insect>(this.insectUrl + '/' + id);
+  }
+
+  getByUser(user: User): Observable<Insect[]> {
+    return this.http.get<Insect[]>(this.insectUrl + '/creator/' + user.id);
   }
 
 }

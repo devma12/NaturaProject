@@ -79,4 +79,24 @@ public class UserController {
 
         return userRepository.findById(id).orElse(null);
     }
+
+    @PutMapping(path = "/email/{id}")
+    public @ResponseBody User changeUserEmail(@PathVariable Long id, @RequestBody String email) {
+        try {
+            return userService.updateEmail(id, email);
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
+    }
+
+    @PutMapping(path = "/password/{id}")
+    public @ResponseBody User changeUserPassword(@PathVariable Long id,
+                            @RequestParam("old") String oldPwd,
+                            @RequestParam("new") String newPwd) {
+        try {
+            return userService.updatePassword(id, oldPwd, newPwd);
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
+    }
 }

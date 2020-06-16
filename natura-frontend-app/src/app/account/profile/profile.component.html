@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutAlign="space-around center">
+    <mat-card class="profile-card">
+        <mat-card-header>
+            <mat-icon class="user-profile-icon" mat-card-avatar>account_circle</mat-icon>
+            <mat-card-title>{{user.username}}</mat-card-title>
+            <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
+        </mat-card-header>
+    </mat-card>
+    <mat-card class="profile-card">
+        <mat-card-header>
+            <mat-card-title>Validation Roles</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div fxLayout="row" class="validator-role">
+                <p>Flower validator</p>
+                <mat-checkbox [checked]="user.flowerValidator" disabled></mat-checkbox>
+            </div>
+            <div fxLayout="row" class="validator-role">
+                <p>Insect validator</p>
+                <mat-checkbox [checked]="user.insectValidator" disabled></mat-checkbox>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

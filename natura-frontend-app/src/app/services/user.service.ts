@@ -37,4 +37,17 @@ export class UserService {
     return this.http.post<User>(this.userUrl + '/logout', null);
   }
 
+  changeEmail(user: User, email: string): Observable<User> {
+    return this.http.put<User>(this.userUrl + '/email/' + user.id, email);
+  }
+
+  changePassword(user: User, oldPassword: string, newPassword: string): Observable<User> {
+    return this.http.put<User>(this.userUrl + '/password/' + user.id, null, {
+      params: {
+        'old': oldPassword,
+        'new': newPassword
+      }
+    });
+  }
+
 }

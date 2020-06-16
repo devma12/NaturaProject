@@ -30,6 +30,7 @@ import { EntryService } from '../services/entry.service';
         RouterModule
     ],
     exports: [
+        EntryCardComponent
     ],
     providers: [
         AuthService,

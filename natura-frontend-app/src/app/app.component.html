@@ -1,4 +1,4 @@
-<header class="mat-elevation-z6">
+<header>
   <mat-toolbar color="primary" class="mat-elevation-z6">
     <a routerLink="/home" mat-button>
       <!-- <span><img src="./assets/logo.png"></span> -->
@@ -9,14 +9,19 @@
     <a *ngIf="authService.isAuth" routerLink="/entries/Insect/list" mat-button>Pollinating Insects</a>
     <a *ngIf="authService.isAuth" routerLink="/species/list" mat-button>Species</a>
     <span class="fill-remaining-space"></span>
-    <a *ngIf="authService.isAuth" href="#" mat-button>
+    <a *ngIf="authService.isAuth" [matMenuTriggerFor]="userMenu" mat-button>
       <mat-icon>account_circle</mat-icon>
       {{ username }}
     </a>
-    <button *ngIf="authService.isAuth" (click)="logout()" mat-button>
-      Sign out
-      <mat-icon>exit_to_app</mat-icon>
-    </button>
+    <mat-menu #userMenu="matMenu">
+      <button routerLink="/user-account/profile" mat-menu-item>Profile</button>
+      <button routerLink="/user-account/settings" mat-menu-item>Settings</button>
+      <button routerLink="/user-account/herbarium" mat-menu-item>Herbarium</button>
+      <button *ngIf="authService.isAuth" (click)="logout()" mat-menu-item>
+        Sign out
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </mat-menu>
   </mat-toolbar>
 </header>
 <div class="container">

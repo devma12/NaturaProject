@@ -1,6 +1,7 @@
 package com.natura.web.server.services;
 
 import com.natura.web.server.entities.User;
+import com.natura.web.server.exceptions.DataNotFoundException;
 import com.natura.web.server.exceptions.UserAccountException;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.UserRepository;
@@ -184,5 +185,42 @@ public class UserService {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return getAuthenticatedUserDetails(auth);
+    }
+
+    public User updateEmail(Long id, String email)
+            throws DataNotFoundException, UserAccountException.DuplicateAccountException {
+
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            throw new DataNotFoundException("User not found.");
+
+        // Check email is not already used by another user
+        User duplicated = userRepository.findByEmail(email);
+        if (duplicated != null && duplicated != user)
+            throw new UserAccountException.DuplicateAccountException("email: " + email);
+
+        // update email and save user
+        user.setEmail(email);
+        return userRepository.save(user);
+    }
+
+    public User updatePassword(Long id, String oldPassword, String newPassword)
+            throws DataNotFoundException, UserAccountException.AuthenticationException {
+
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            throw new DataNotFoundException("User not found.");
+
+        // Check old password is correct
+        boolean authenticate = bCryptPasswordEncoder.matches(oldPassword, user.getPassword());
+
+        if (authenticate) {
+            // update password and save user
+            String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
+            user.setPassword(encryptedPassword);
+            return userRepository.save(user);
+        } else {
+            throw new UserAccountException.AuthenticationException("Old password is invalid.");
+        }
     }
 }

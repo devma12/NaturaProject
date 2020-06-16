@@ -12,13 +12,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatNativeDateModule} from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -35,14 +37,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // import {MatChipsModule} from '@angular/material/chips';
 // import {MatStepperModule} from '@angular/material/stepper';
 // import {MatExpansionModule} from '@angular/material/expansion';
-// import {MatMenuModule} from '@angular/material/menu';
 // import {MatProgressBarModule} from '@angular/material/progress-bar';
 // import {MatRippleModule} from '@angular/material/core';
 // import {MatRadioModule} from '@angular/material/radio';
 // import {MatSidenavModule} from '@angular/material/sidenav';
 // import {MatSliderModule} from '@angular/material/slider';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-// import {MatTabsModule} from '@angular/material/tabs';
 // import {MatTreeModule} from '@angular/material/tree';
 
 @NgModule({
@@ -61,6 +61,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
     MatNativeDateModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
@@ -68,6 +69,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
+    MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
     // A11yModule,
@@ -81,14 +83,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     // MatChipsModule,
     // MatStepperModule,
     // MatExpansionModule,
-    // MatMenuModule,
     // MatProgressBarModule,
     // MatRadioModule,
     // MatRippleModule,
     // MatSidenavModule,
     // MatSliderModule,
     // MatSlideToggleModule,
-    // MatTabsModule,
     // MatTreeModule,
     // PortalModule,
     // ScrollingModule,

@@ -1,0 +1,16 @@
+<div fxLayout="column" fxLayoutAlign="space-around center">
+    <mat-card class="settings-card">
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+            <a>Email</a>
+            <a>{{user.email}}</a>
+            <button color="primary" mat-raised-button (click)="changeEmail()">Change email</button>
+        </div>
+    </mat-card>
+    <mat-card class="settings-card">
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+            <a>Password</a>
+            <a>**********</a>
+            <button color="primary" mat-raised-button (click)="changePassword()">Change password</button>
+        </div>
+    </mat-card>
+</div>
