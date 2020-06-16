@@ -1,19 +1,16 @@
-.entry-card {
-    width: calc(100% - 30px);
-    height: calc(100% - 30px);
+mat-card {
+    width: 280px;
+    height: 300px;
 }
 
-.image {
-    background-size: cover;
-    max-height: calc(100% - 10px);
-    max-width: calc(100% - 20px);
+mat-card img {
+    object-fit: cover;
+    max-width: 250px;
+    max-height: 185px;
+    width: 250px;
+    height: auto;
     margin: 0 10px 10px 10px;
-}
-
-mat-card-content {
-    min-width: 200px;
-    height: 250px;
-}
+  }
 
 mat-icon.mat-card-avatar {
     width: 24px;
