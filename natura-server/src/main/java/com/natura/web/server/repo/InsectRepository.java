@@ -1,6 +1,5 @@
 package com.natura.web.server.repo;
 
-import com.natura.web.server.entities.Flower;
 import com.natura.web.server.entities.Insect;
 import com.natura.web.server.entities.User;
 import org.springframework.data.repository.CrudRepository;

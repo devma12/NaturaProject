@@ -1,6 +1,5 @@
 package com.natura.web.server.controllers;
 
-import com.natura.web.server.entities.Insect;
 import com.natura.web.server.entities.Species;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.SpeciesRepository;

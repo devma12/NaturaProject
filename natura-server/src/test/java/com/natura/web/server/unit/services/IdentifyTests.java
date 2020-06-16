@@ -3,7 +3,6 @@ package com.natura.web.server.unit.services;
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
 import com.natura.web.server.exceptions.InvalidDataException;
-import com.natura.web.server.exceptions.UserAccountException;
 import com.natura.web.server.repo.EntryRepository;
 import com.natura.web.server.repo.IdentificationRepository;
 import com.natura.web.server.repo.SpeciesRepository;
