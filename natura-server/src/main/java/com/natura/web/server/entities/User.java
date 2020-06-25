@@ -21,10 +21,10 @@ public class User {
     @Column(unique=true, columnDefinition="VARCHAR(500)")
     private String token;
 
-    @Column(name = "flower_validator")
+    @Column(name = "flower_validator", columnDefinition="TINYINT(1)")
     private boolean flowerValidator;
 
-    @Column(name = "insect_validator")
+    @Column(name = "insect_validator", columnDefinition="TINYINT(1)")
     private boolean insectValidator;
 
     public User() {

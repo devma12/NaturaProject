@@ -1,0 +1,13 @@
+# compiled output
+/bin
+
+# dependencies
+/pkg
+/src/github.com
+/src/google.golang.org
+/src/gopkg.in
+
+
+# IDE - VSCode
+.vscode/*
+
