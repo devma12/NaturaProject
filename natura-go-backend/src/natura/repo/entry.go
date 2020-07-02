@@ -8,7 +8,7 @@ import (
 )
 
 func GetEntryByID(entry *models.Entry, id string) (err error) {
-	if err = config.DB.Where("id = ?", id).First(entry).Error; err != nil {
+	if err = config.DB.Preload("CreatedBy").Where("id = ?", id).First(entry).Error; err != nil {
 		return err
 	}
 	return nil

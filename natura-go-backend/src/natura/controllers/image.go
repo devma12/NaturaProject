@@ -3,6 +3,7 @@ package controllers
 import (
 	"natura/models"
 	"natura/repo"
+	"natura/auth"
 	"fmt"
 	"bytes"
 	"io"
@@ -11,6 +12,13 @@ import (
 )
 
 func Upload(c *gin.Context) {
+
+	authErr := auth.TokenValid(c.Request)
+	if authErr != nil {
+	   c.JSON(http.StatusUnauthorized, "invalid token")
+	   return
+	}
+
 	file, header, err := c.Request.FormFile("file")
 	defer file.Close()
 	if err != nil {
@@ -43,6 +51,13 @@ func Upload(c *gin.Context) {
 }
 
 func Download(c *gin.Context) {
+
+	authErr := auth.TokenValid(c.Request)
+	if authErr != nil {
+	   c.JSON(http.StatusUnauthorized, "invalid token")
+	   return
+	}
+
 	id := c.Params.ByName("id")
 	var image models.Image
 	err := repo.GetImageByID(&image, id)

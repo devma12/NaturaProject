@@ -7,7 +7,7 @@ import (
 )
 
 func GetAllInsects(insect *[]models.Entry) (err error) {
-	if err = config.DB.Where("discriminator = ?", models.Insect).Find(insect).Error; err != nil {
+	if err = config.DB.Preload("CreatedBy").Where("discriminator = ?", models.Insect).Find(insect).Error; err != nil {
 		return err
 	}
 	return nil

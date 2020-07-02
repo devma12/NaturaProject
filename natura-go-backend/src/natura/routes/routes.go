@@ -5,23 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//SetupRouter ... Configure routes
-// func SetupRouter() *gin.Engine {
-// 	r := gin.Default()
-// 	grp1 := r.Group("/natura-api")
-// 	{ 
-// 		grp1.GET("user/:id", controllers.GetUser)
-// 		// grp1.GET("authenticate", controllers.Authenticate)
-// 		// grp1.POST("register", controllers.RegisterUser)
-// 		// grp1.POST("login", controllers.Login)
-// 		// grp1.POST("logout", controllers.Logout)
-// 		// grp1.PUT("email/:id", controllers.UpdateUserEmail)
-// 		// grp1.PUT("password/:id", controllers.UpdateUserPassword)
-// 		// grp1.DELETE(":id", controllers.DeleteUser)
-// 	}
-// 	return r
-// }
-
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	grp := r.Group("/natura-api")
@@ -30,12 +13,12 @@ func SetupRouter() *gin.Engine {
 		{ 
 			grp1.GET(":id", controllers.DispatchGetUser)
 			// grp1.GET("authenticate", controllers.Authenticate)
-			// grp1.POST("register", controllers.RegisterUser)
-			// grp1.POST("login", controllers.Login)
-			// grp1.POST("logout", controllers.Logout)
-			// grp1.PUT("email/:id", controllers.UpdateUserEmail)
-			// grp1.PUT("password/:id", controllers.UpdateUserPassword)
-			// grp1.DELETE(":id", controllers.DeleteUser)
+			grp1.POST("register", controllers.RegisterUser)
+			grp1.POST("login", controllers.Login)
+			grp1.POST("logout", controllers.Logout)
+			grp1.PUT("email/:id", controllers.UpdateUserEmail)
+			grp1.PUT("password/:id", controllers.UpdateUserPassword)
+			grp1.DELETE(":id", controllers.DeleteUser)
 		}
 		grp2 := grp.Group("/flower")
 		{ 
