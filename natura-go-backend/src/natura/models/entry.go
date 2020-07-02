@@ -22,10 +22,3 @@ type Entry struct {
 func (b *Entry) TableName() string {
 	return "entry"
 }
-
-type SpeciesType string
-
-const(
-    Flower SpeciesType = "Flower"
-    Insect = "Insect"
-)

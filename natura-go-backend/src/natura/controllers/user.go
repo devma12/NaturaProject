@@ -16,6 +16,8 @@ func DispatchGetUser(c *gin.Context) {
 	param := c.Params.ByName("id")
 	if param == "all" {
 		GetUsers(c)
+	} else if param == "authenticate" {
+		Authenticate(c)
 	} else {
 		GetUserByID(c)
 	}
@@ -143,6 +145,30 @@ func Login(c *gin.Context) {
 			}
 			
 		}
+	}
+
+}
+
+// Authenticate user from token
+func Authenticate(c *gin.Context) {
+	authErr := auth.TokenValid(c.Request)
+	if authErr != nil {
+	   c.JSON(http.StatusUnauthorized, "invalid token")
+	   return
+	}
+
+	// Get username from token
+	username:= auth.GetUsernameFromClaimsToken(c.Request)
+	if username == "" {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		var user models.User
+		err := repo.GetUserByUsername(&user, username)
+		if err != nil {
+			c.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+		c.JSON(http.StatusOK, user)
 	}
 
 }

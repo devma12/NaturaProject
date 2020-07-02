@@ -23,11 +23,15 @@ func CreateEntry(entry *models.Entry) (err error) {
 
 func UpdateEntry(entry *models.Entry, id string) (err error) {
 	fmt.Println(entry)
-	config.DB.Save(entry)
+	if err = config.DB.Save(entry).Error; err != nil {
+		return err
+	}
 	return nil
 }
 
 func DeleteEntry(entry *models.Entry, id string) (err error) {
-	config.DB.Where("id = ?", id).Delete(entry)
+	if err = config.DB.Where("id = ?", id).Delete(entry).Error; err != nil {
+		return
+	}
 	return nil
 }

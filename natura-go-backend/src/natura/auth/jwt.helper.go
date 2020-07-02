@@ -77,7 +77,7 @@ func TokenValid(r *http.Request) error {
 	if user.Token.Valid && user.Token.String != tokenString {
 		return &errors.JwtError{Message: "invalid token for user " + username}
 	}
-	
+	fmt.Println("valid token")
 	return nil
 }
 

@@ -9,33 +9,38 @@ func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	grp := r.Group("/natura-api")
 	{ 
-		grp1 := grp.Group("/user")
+		userGroup := grp.Group("/user")
 		{ 
-			grp1.GET(":id", controllers.DispatchGetUser)
-			// grp1.GET("authenticate", controllers.Authenticate)
-			grp1.POST("register", controllers.RegisterUser)
-			grp1.POST("login", controllers.Login)
-			grp1.POST("logout", controllers.Logout)
-			grp1.PUT("email/:id", controllers.UpdateUserEmail)
-			grp1.PUT("password/:id", controllers.UpdateUserPassword)
-			grp1.DELETE(":id", controllers.DeleteUser)
+			userGroup.GET(":id", controllers.DispatchGetUser)
+			userGroup.POST("register", controllers.RegisterUser)
+			userGroup.POST("login", controllers.Login)
+			userGroup.POST("logout", controllers.Logout)
+			userGroup.PUT("email/:id", controllers.UpdateUserEmail)
+			userGroup.PUT("password/:id", controllers.UpdateUserPassword)
+			userGroup.DELETE(":id", controllers.DeleteUser)
 		}
-		grp2 := grp.Group("/flower")
+		flowerGroup := grp.Group("/flower")
 		{ 
-			grp2.POST("new", controllers.CreateFlower)
-			grp2.GET(":param1", controllers.DispatchGetFlower)
-			grp2.GET(":param1/:param2", controllers.DispatchGetFlower)
+			flowerGroup.POST("new", controllers.CreateFlower)
+			flowerGroup.GET(":param1", controllers.DispatchGetFlower)
+			flowerGroup.GET(":param1/:param2", controllers.DispatchGetFlower)
 		}
-		grp3 := grp.Group("/insect")
+		insectGroup := grp.Group("/insect")
 		{ 
-			grp3.POST("new", controllers.CreateInsect)
-			grp3.GET(":param1", controllers.DispatchGetInsect)
-			grp3.GET(":param1/:param2", controllers.DispatchGetInsect)
+			insectGroup.POST("new", controllers.CreateInsect)
+			insectGroup.GET(":param1", controllers.DispatchGetInsect)
+			insectGroup.GET(":param1/:param2", controllers.DispatchGetInsect)
 		}
-		grp4 := grp.Group("/image")
+		imageGroup := grp.Group("/image")
 		{ 
-			grp4.POST("upload", controllers.Upload)
-			grp4.GET("get/:id", controllers.Download)
+			imageGroup.POST("upload", controllers.Upload)
+			imageGroup.GET("get/:id", controllers.Download)
+		}
+		speciesGroup := grp.Group("/species")
+		{ 
+			speciesGroup.GET("all", controllers.GetAllSpecies)
+			speciesGroup.GET("type/:type", controllers.GetSpeciesByType)
+			speciesGroup.POST("new", controllers.CreateSpecies)
 		}
 	}
 	return r
