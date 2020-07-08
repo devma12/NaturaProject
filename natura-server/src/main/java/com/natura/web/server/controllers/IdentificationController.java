@@ -1,5 +1,6 @@
 package com.natura.web.server.controllers;
 
+import com.natura.web.server.entities.Comment;
 import com.natura.web.server.entities.Identification;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.IdentificationRepository;
@@ -63,6 +64,41 @@ public class IdentificationController {
             identificationService.giveValidatorRights(identification.getSuggestedBy());
 
             return identification;
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
+    }
+
+    @PostMapping(path="/comment")
+    public @ResponseBody
+    Comment comment(@RequestParam("entry") String entry,
+                            @RequestParam("species") String species,
+                            @RequestParam("observer") String observer,
+                            @RequestParam("comment") String text) throws IOException {
+
+        Long entryId = Long.parseLong(entry);
+        Long speciesId = Long.parseLong(species);
+        Long userId = Long.parseLong(observer);
+        try {
+            // comment identification
+            Comment comment = identificationService.comment(entryId, speciesId, userId, text);
+
+            return comment;
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
+    }
+
+    @GetMapping(path="/comments")
+    public @ResponseBody
+    List<Comment> getComments(@RequestParam("entry") String entry,
+                    @RequestParam("species") String species) throws IOException {
+
+        Long entryId = Long.parseLong(entry);
+        Long speciesId = Long.parseLong(species);
+        try {
+            return identificationService.getIdentificationComments(entryId, speciesId);
+
         } catch (ServerException e) {
             throw e.responseStatus();
         }

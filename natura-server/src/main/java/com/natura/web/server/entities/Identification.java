@@ -1,10 +1,13 @@
 package com.natura.web.server.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Identification implements Serializable {
@@ -35,9 +38,17 @@ public class Identification implements Serializable {
 
     private Date validatedDate;
 
-    public Identification() { }
+    @OneToMany(mappedBy = "identification")
+    @JsonManagedReference
+    private List<Comment> comments;
+
+    public Identification() {
+
+        this.comments = new ArrayList<Comment>();
+    }
 
     public Identification(Entry entry, Species species, User proposer, Date date) {
+        this();
         Assert.notNull(entry, "Entry cannot be null to define an identification.");
         Assert.notNull(species, "Species cannot be null to define an identification.");
 
@@ -99,6 +110,14 @@ public class Identification implements Serializable {
 
     public void setValidatedDate(Date validatedDate) {
         this.validatedDate = validatedDate;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
 }

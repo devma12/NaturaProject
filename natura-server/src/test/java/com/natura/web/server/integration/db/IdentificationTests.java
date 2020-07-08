@@ -2,10 +2,7 @@ package com.natura.web.server.integration.db;
 
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
-import com.natura.web.server.repo.EntryRepository;
-import com.natura.web.server.repo.IdentificationRepository;
-import com.natura.web.server.repo.SpeciesRepository;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.repo.*;
 import com.natura.web.server.services.EntryService;
 import com.natura.web.server.services.IdentificationService;
 import com.natura.web.server.services.ImageService;
@@ -53,6 +50,9 @@ public class IdentificationTests {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     Long userId = -1L;
 
@@ -241,5 +241,24 @@ public class IdentificationTests {
         identificationService.giveValidatorRights(user);
         user = userRepository.findByUsername(username);
         Assertions.assertTrue(user.isFlowerValidator());
+    }
+
+    @Test
+    void createAndCommentIdentification() throws DataNotFoundException {
+        // Create an user
+        User user = new User("observer");
+        user.setEmail("observer@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        Identification created = createIdentification(Species.Type.Flower, "beatiful_flower", user, "yellow_flower", false);
+        Long speciesId = created.getSpecies().getId();
+        Long entryId = created.getEntry().getId();
+
+        Comment comment = identificationService.comment(entryId, speciesId, user.getId(), "this is a comment to an identification");
+
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        List<Comment> comments = commentRepository.findByIdentification(identification);
+        Assertions.assertTrue(comments != null && comments.size() == 1);
     }
 }

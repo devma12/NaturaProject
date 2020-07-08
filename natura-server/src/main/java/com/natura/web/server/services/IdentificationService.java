@@ -4,10 +4,7 @@ import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
 import com.natura.web.server.exceptions.InvalidDataException;
 import com.natura.web.server.exceptions.UserAccountException;
-import com.natura.web.server.repo.EntryRepository;
-import com.natura.web.server.repo.IdentificationRepository;
-import com.natura.web.server.repo.SpeciesRepository;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +27,9 @@ public class IdentificationService {
 
     @Autowired
     private IdentificationRepository identificationRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Value("${validation.countNeeded}")
     private Long validationCount;
@@ -165,5 +165,36 @@ public class IdentificationService {
                 userRepository.save(user);
             }
         }
+    }
+
+    public Comment comment(Long entryId, Long speciesId, Long userId, String text)
+            throws DataNotFoundException {
+        // Get commentator user
+        User observer = userRepository.findById(userId).orElse(null);
+        if (observer  == null) {
+            throw new DataNotFoundException(User.class, "id", userId);
+        }
+
+        // Get identification
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        if (identification  == null) {
+            throw new DataNotFoundException(Identification.class, "id", "{ entry: "  + entryId + ", species: " + speciesId + " }");
+        }
+
+        // Create comment and linked it to identification
+        Comment comment = new Comment(text, observer, new Date());
+        comment.setIdentification(identification);
+        return commentRepository.save(comment);
+    }
+
+    public List<Comment> getIdentificationComments(Long entryId, Long speciesId) throws DataNotFoundException {
+        // Get identification
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        if (identification  == null) {
+            throw new DataNotFoundException(Identification.class, "id", "{ entry: "  + entryId + ", species: " + speciesId + " }");
+        }
+
+        List<Comment> comments = commentRepository.findByIdentification(identification);
+        return comments;
     }
 }
