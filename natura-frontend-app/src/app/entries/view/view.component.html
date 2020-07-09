@@ -18,7 +18,7 @@
         <div fxLayout="row" fxLayoutAlign="none center">
             <h1>Identification</h1>
             <button *ngIf="!isValidated" mat-mini-fab color="accent" fxFlexOffset="3" aria-label="add new identification"
-                id="add-new-identification" (click)="openDialog()">
+                id="add-new-identification" (click)="openIdentificationDialog()">
                 <mat-icon>add</mat-icon>
             </button>
             <mat-icon *ngIf="isValidated" fxFlexOffset="1" color="accent" class="validated-icon">check_circle_outline</mat-icon>
@@ -53,6 +53,14 @@
             <ng-container matColumnDef="validatedDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Validation Date </th>
                 <td mat-cell *matCellDef="let element"> {{element.validatedDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="comments">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-button aria-label="comment identification" id="comment-identification" (click)="openCommentDialog(element)">
+                        <mat-icon [matBadge]="element?.comments?.length" [matBadgeHidden]="element?.comments?.length < 1">comment</mat-icon>
+                    </button>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

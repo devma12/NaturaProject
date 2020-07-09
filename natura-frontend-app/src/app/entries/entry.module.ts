@@ -14,6 +14,8 @@ import { IdentificationService } from '../services/identification.service';
 import { ChooseSpeciesComponent } from './view/choose-species/choose-species.component';
 import { EntryComponent } from './entry/entry.component';
 import { EntryService } from '../services/entry.service';
+import { CommentsComponent } from './view/comments/comments.component';
+import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 @NgModule({
     declarations: [
@@ -23,7 +25,9 @@ import { EntryService } from '../services/entry.service';
     EntryCardComponent,
     ViewComponent,
     ChooseSpeciesComponent,
-    EntryComponent
+    EntryComponent,
+    CommentsComponent,
+    DateAgoPipe
     ],
     imports: [
         SharedModule,
@@ -38,7 +42,8 @@ import { EntryService } from '../services/entry.service';
         SpeciesService,
         InsectService,
         IdentificationService,
-        EntryService
+        EntryService,
+        DateAgoPipe
     ]
   })
   export class EntryModule { }

@@ -44,4 +44,9 @@ export class IdentificationService {
       }
     });
   }
+
+  comment(commentData: FormData): Observable<Comment> {
+    return this.http.post<Comment>(this.identificationUrl + '/comment', commentData);
+  }
+
 }
