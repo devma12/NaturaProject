@@ -5,9 +5,7 @@ import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Identification implements Serializable {
@@ -42,9 +40,20 @@ public class Identification implements Serializable {
     @JsonManagedReference
     private List<Comment> comments;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "identification_like",
+            joinColumns = {
+                    @JoinColumn(name = "entry_id", referencedColumnName = "entry_id"),
+                    @JoinColumn(name = "species_id", referencedColumnName = "species_id"),
+            },
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> likes;
+
     public Identification() {
 
         this.comments = new ArrayList<Comment>();
+        this.likes = new HashSet<User>();
     }
 
     public Identification(Entry entry, Species species, User proposer, Date date) {
@@ -118,6 +127,14 @@ public class Identification implements Serializable {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
     }
 
 }

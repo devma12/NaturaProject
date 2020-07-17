@@ -11,6 +11,7 @@ export class Identification {
     validatedBy: User;
     validatedDate: Date;
     comments: Comment[];
+    likes: User[];
 
     constructor(entry: Entry,
                 species: Species,
@@ -21,5 +22,6 @@ export class Identification {
         this.suggestedBy = suggestedBy;
         this.suggestedDate = suggestedDate;
         this.comments = [];
+        this.likes = [];
     }
 }

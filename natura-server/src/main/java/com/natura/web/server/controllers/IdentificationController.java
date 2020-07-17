@@ -103,4 +103,21 @@ public class IdentificationController {
             throw e.responseStatus();
         }
     }
+
+    @PutMapping(path="/like")
+    public @ResponseBody
+    Identification like(@RequestParam("entry") String entry,
+                        @RequestParam("species") String species,
+                        @RequestParam("user") String user) throws IOException {
+
+        Long entryId = Long.parseLong(entry);
+        Long speciesId = Long.parseLong(species);
+        Long userId = Long.parseLong(user);
+        try {
+            return identificationService.like(entryId, speciesId, userId);
+
+        } catch (ServerException e) {
+            throw e.responseStatus();
+        }
+    }
 }

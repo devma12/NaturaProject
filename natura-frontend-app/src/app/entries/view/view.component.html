@@ -55,11 +55,19 @@
                 <td mat-cell *matCellDef="let element"> {{element.validatedDate | date: 'dd/MM/yyyy'}} </td>
             </ng-container>
             <ng-container matColumnDef="comments">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments </th>
+                <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-button aria-label="comment identification" id="comment-identification" (click)="openCommentDialog(element)">
-                        <mat-icon [matBadge]="element?.comments?.length" [matBadgeHidden]="element?.comments?.length < 1">comment</mat-icon>
+                    <button mat-button  class="action-btn" aria-label="Like identification to share you agree with it" id="like-identification"
+                        matTooltip="Like / Agree with" (click)="likeIdentification(element)">
+                        <mat-icon>thumb_up_alt</mat-icon>
                     </button>
+                    <a class="action-btn-txt" (click)="viewLikes(element)">{{ element?.likes?.length }}</a>
+
+                    <button mat-button class="action-btn" aria-label="Comment identification" id="comment-identification"
+                        matTooltip="Comment" (click)="openCommentDialog(element)">
+                        <mat-icon>comment</mat-icon>
+                    </button>
+                    <a class="action-btn-txt" (click)="openCommentDialog(element)">{{ element?.comments?.length }}</a>
                 </td>
             </ng-container>
 

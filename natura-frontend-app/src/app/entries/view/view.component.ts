@@ -20,6 +20,7 @@ import { ConfirmationComponent } from 'src/app/shared/confirmation/confirmation.
 import { EntryUtils } from '../entry.utils';
 import { ChooseSpeciesComponent } from './choose-species/choose-species.component';
 import { CommentsComponent } from './comments/comments.component';
+import { LikesComponent } from './likes/likes.component';
 
 @Component({
   selector: 'app-view',
@@ -250,47 +251,77 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   openCommentDialog(identification: Identification): void {
 
-        // open popup to enable user to suggest species to identify entry
-        const dialogRef = this.dialog.open(CommentsComponent, {
-          width: '500px',
-          data: identification.comments
-        });
+    // open popup to enable user to suggest species to identify entry
+    const dialogRef = this.dialog.open(CommentsComponent, {
+      width: '500px',
+      data: identification.comments
+    });
 
-        // when popup is closed
-        dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
-          if (result) {
+    // when popup is closed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
 
-            // get comment infos
-            const commentData = new FormData();
-            commentData.append('entry', identification.entry.id.toString());
-            commentData.append('species', identification.species.id.toString());
-            commentData.append('comment', result);
+        // get comment infos
+        const commentData = new FormData();
+        commentData.append('entry', identification.entry.id.toString());
+        commentData.append('species', identification.species.id.toString());
+        commentData.append('comment', result);
 
-            // Get logged user id to be set as commentator
-            const user: User = this.authService.user.getValue();
-            if (user && user.id !== null && user.id !== undefined) {
-              commentData.append('observer', user.id.toString());
-            } else {
-              commentData.append('observer', '-1');
-            }
+        // Get logged user id to be set as commentator
+        const user: User = this.authService.user.getValue();
+        if (user && user.id !== null && user.id !== undefined) {
+          commentData.append('observer', user.id.toString());
+        } else {
+          commentData.append('observer', '-1');
+        }
 
-            this.loadingService.loading();
-            this.identificationService.comment(commentData).subscribe(
-              data => {
-                identification.comments.push(data);
-                this.loadingService.loaded();
-              },
-              error => {
-                let msg: string = 'Failed to add new comment to identification !';
-                if (error.status === 406 || error.status === 404)
-                  msg = error.error.message;
-                this.loadingService.error(msg);
-              }
-            );
+        this.loadingService.loading();
+        this.identificationService.comment(commentData).subscribe(
+          data => {
+            identification.comments.push(data);
+            this.loadingService.loaded();
+          },
+          error => {
+            let msg: string = 'Failed to add new comment to identification !';
+            if (error.status === 406 || error.status === 404)
+              msg = error.error.message;
+            this.loadingService.error(msg);
           }
-        });
+        );
+      }
+    });
 
+  }
+
+  likeIdentification(identification: Identification) {
+    // Get logged user id to be set as liker user
+    const user: User = this.authService.user.getValue();
+
+    this.loadingService.loading();
+    this.identificationService.like(identification, user).subscribe(
+      data => {
+        identification.likes = data.likes;
+        this.loadingService.loaded();
+      },
+      error => {
+        let msg: string = 'Failed to like identification !';
+        if (error.status === 406 || error.status === 404)
+          msg = error.error.message;
+        this.loadingService.error(msg);
+      }
+    );
+
+  }
+
+  viewLikes(identification: Identification): void {
+    if (identification && identification.likes && identification.likes.length > 0) {
+      // open popup to enable user to view who liked the identification
+      const dialogRef = this.dialog.open(LikesComponent, {
+        width: '300px',
+        data: identification.likes
+      });
+    }
   }
 
   ngOnDestroy(): void {

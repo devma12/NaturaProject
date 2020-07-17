@@ -49,4 +49,29 @@ export class IdentificationService {
     return this.http.post<Comment>(this.identificationUrl + '/comment', commentData);
   }
 
+  like(identification: Identification, user: User): Observable<Identification> {
+    let userId: string = '-1';
+    if (user && user.id !== null && user.id !== undefined) {
+      userId = user.id.toString();
+    }
+
+    let entryId: string = '-1';
+    if (identification && identification.entry && identification.entry.id !== null && identification.entry.id !== undefined) {
+      entryId = identification.entry.id.toString();
+    }
+
+    let speciesId: string = '-1';
+    if (identification && identification.species && identification.species.id !== null && identification.species.id !== undefined) {
+      speciesId = identification.species.id.toString();
+    }
+
+    return this.http.put<Identification>(this.identificationUrl + '/like', null, {
+      params: {
+        'entry': entryId,
+        'species': speciesId,
+        'user': userId
+      }
+    });
+  }
+
 }

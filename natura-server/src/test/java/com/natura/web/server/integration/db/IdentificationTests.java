@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -251,7 +252,7 @@ public class IdentificationTests {
         user.setPassword("pwd");
         user = userRepository.save(user);
 
-        Identification created = createIdentification(Species.Type.Flower, "beatiful_flower", user, "yellow_flower", false);
+        Identification created = createIdentification(Species.Type.Flower, "red_flower", user, "Rosaceae", false);
         Long speciesId = created.getSpecies().getId();
         Long entryId = created.getEntry().getId();
 
@@ -261,4 +262,49 @@ public class IdentificationTests {
         List<Comment> comments = commentRepository.findByIdentification(identification);
         Assertions.assertTrue(comments != null && comments.size() == 1);
     }
+
+    @Test
+    void likeIdentification() throws DataNotFoundException {
+        // Create an user
+        User user = new User("liker");
+        user.setEmail("liker@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        Identification created = createIdentification(Species.Type.Flower, "blue_flower", user, "Cyanus segetum", false);
+        Long speciesId = created.getSpecies().getId();
+        Long entryId = created.getEntry().getId();
+
+        Identification liked = identificationService.like(entryId, speciesId, user.getId());
+
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        Set<User> likes = identification.getLikes();
+        Assertions.assertTrue(likes != null && likes.size() == 1 && likes.iterator().next().getId().equals(user.getId()));
+
+    }
+
+    @Test
+    void dislikeIdentification() throws DataNotFoundException {
+        // Create an user
+        User user = new User("liker2");
+        user.setEmail("liker2@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        Identification created = createIdentification(Species.Type.Flower, "white_flower", user, "Orchidaceae", false);
+        Long speciesId = created.getSpecies().getId();
+        Long entryId = created.getEntry().getId();
+
+        created.getLikes().add(user);
+        identificationRepository.save(created);
+        Assertions.assertTrue(created.getLikes() != null && created.getLikes().size() == 1 && created.getLikes().iterator().next().getId().equals(user.getId()));
+
+        Identification disliked = identificationService.like(entryId, speciesId, user.getId());
+
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        Set<User> likes = identification.getLikes();
+        Assertions.assertTrue(likes != null && likes.size() == 0);
+
+    }
+
 }

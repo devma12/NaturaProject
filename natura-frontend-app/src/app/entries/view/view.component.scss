@@ -40,3 +40,19 @@ mat-divider {
     transform: scale(1.5);
     margin-bottom: 8px;
 }
+
+.action-btn {
+    padding: 0px;
+    min-width: 36px;
+}
+
+.action-btn-txt {
+    font-size: 12px;
+    padding-right: 12px;
+    color: #9e9e9e;
+}
+
+.action-btn-txt:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
