@@ -1,6 +1,9 @@
 package com.natura.web.server.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -26,6 +29,10 @@ public class User {
 
     @Column(name = "insect_validator")
     private boolean insectValidator;
+
+    @ManyToMany(mappedBy = "likes")
+    @JsonIgnore
+    private Set<Identification> liked;
 
     public User() {
         this.flowerValidator = false;

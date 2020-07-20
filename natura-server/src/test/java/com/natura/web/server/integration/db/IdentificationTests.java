@@ -2,10 +2,7 @@ package com.natura.web.server.integration.db;
 
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
-import com.natura.web.server.repo.EntryRepository;
-import com.natura.web.server.repo.IdentificationRepository;
-import com.natura.web.server.repo.SpeciesRepository;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.repo.*;
 import com.natura.web.server.services.EntryService;
 import com.natura.web.server.services.IdentificationService;
 import com.natura.web.server.services.ImageService;
@@ -25,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -53,6 +51,9 @@ public class IdentificationTests {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     Long userId = -1L;
 
@@ -242,4 +243,68 @@ public class IdentificationTests {
         user = userRepository.findByUsername(username);
         Assertions.assertTrue(user.isFlowerValidator());
     }
+
+    @Test
+    void createAndCommentIdentification() throws DataNotFoundException {
+        // Create an user
+        User user = new User("observer");
+        user.setEmail("observer@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        Identification created = createIdentification(Species.Type.Flower, "red_flower", user, "Rosaceae", false);
+        Long speciesId = created.getSpecies().getId();
+        Long entryId = created.getEntry().getId();
+
+        Comment comment = identificationService.comment(entryId, speciesId, user.getId(), "this is a comment to an identification");
+
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        List<Comment> comments = commentRepository.findByIdentification(identification);
+        Assertions.assertTrue(comments != null && comments.size() == 1);
+    }
+
+    @Test
+    void likeIdentification() throws DataNotFoundException {
+        // Create an user
+        User user = new User("liker");
+        user.setEmail("liker@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        Identification created = createIdentification(Species.Type.Flower, "blue_flower", user, "Cyanus segetum", false);
+        Long speciesId = created.getSpecies().getId();
+        Long entryId = created.getEntry().getId();
+
+        Identification liked = identificationService.like(entryId, speciesId, user.getId());
+
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        Set<User> likes = identification.getLikes();
+        Assertions.assertTrue(likes != null && likes.size() == 1 && likes.iterator().next().getId().equals(user.getId()));
+
+    }
+
+    @Test
+    void dislikeIdentification() throws DataNotFoundException {
+        // Create an user
+        User user = new User("liker2");
+        user.setEmail("liker2@email.com");
+        user.setPassword("pwd");
+        user = userRepository.save(user);
+
+        Identification created = createIdentification(Species.Type.Flower, "white_flower", user, "Orchidaceae", false);
+        Long speciesId = created.getSpecies().getId();
+        Long entryId = created.getEntry().getId();
+
+        created.getLikes().add(user);
+        identificationRepository.save(created);
+        Assertions.assertTrue(created.getLikes() != null && created.getLikes().size() == 1 && created.getLikes().iterator().next().getId().equals(user.getId()));
+
+        Identification disliked = identificationService.like(entryId, speciesId, user.getId());
+
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        Set<User> likes = identification.getLikes();
+        Assertions.assertTrue(likes != null && likes.size() == 0);
+
+    }
+
 }

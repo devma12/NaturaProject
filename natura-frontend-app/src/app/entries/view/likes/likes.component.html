@@ -1,0 +1,14 @@
+<h1 mat-dialog-title fxFlexAlign="center">Likes</h1>
+<div mat-dialog-content>
+    
+    <mat-list *ngIf="likes && likes.length > 0">
+        <mat-list-item *ngFor="let like of likes">
+            <mat-divider></mat-divider>
+            <a mat-button disabled><mat-icon style="padding-right: 4px;">account_circle</mat-icon>{{ like.username }}</a>
+        </mat-list-item>
+    </mat-list>
+    <p *ngIf="!likes || likes.length === 0" class="no-like">No likes yet.</p>
+</div>
+<div mat-dialog-actions align="center">
+    <button mat-button (click)="onNoClick()" cdkFocusInitial>OK</button>
+</div>

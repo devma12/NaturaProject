@@ -4,16 +4,16 @@ import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
 import com.natura.web.server.exceptions.InvalidDataException;
 import com.natura.web.server.exceptions.UserAccountException;
-import com.natura.web.server.repo.EntryRepository;
-import com.natura.web.server.repo.IdentificationRepository;
-import com.natura.web.server.repo.SpeciesRepository;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +30,9 @@ public class IdentificationService {
 
     @Autowired
     private IdentificationRepository identificationRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Value("${validation.countNeeded}")
     private Long validationCount;
@@ -165,5 +168,68 @@ public class IdentificationService {
                 userRepository.save(user);
             }
         }
+    }
+
+    public Comment comment(Long entryId, Long speciesId, Long userId, String text)
+            throws DataNotFoundException {
+        // Get commentator user
+        User observer = userRepository.findById(userId).orElse(null);
+        if (observer  == null) {
+            throw new DataNotFoundException(User.class, "id", userId);
+        }
+
+        // Get identification
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        if (identification  == null) {
+            throw new DataNotFoundException(Identification.class, "id", "{ entry: "  + entryId + ", species: " + speciesId + " }");
+        }
+
+        // Create comment and linked it to identification
+        Comment comment = new Comment(text, observer, new Date());
+        comment.setIdentification(identification);
+        return commentRepository.save(comment);
+    }
+
+    public List<Comment> getIdentificationComments(Long entryId, Long speciesId) throws DataNotFoundException {
+        // Get identification
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        if (identification  == null) {
+            throw new DataNotFoundException(Identification.class, "id", "{ entry: "  + entryId + ", species: " + speciesId + " }");
+        }
+
+        List<Comment> comments = commentRepository.findByIdentification(identification);
+        return comments;
+    }
+
+    public Identification like(Long entryId, Long speciesId, Long userId) throws DataNotFoundException {
+        // Get user
+        User user = userRepository.findById(userId).orElse(null);
+        if (user  == null) {
+            throw new DataNotFoundException(User.class, "id", userId);
+        }
+
+        // Get identification
+        Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(entryId, speciesId);
+        if (identification  == null) {
+            throw new DataNotFoundException(Identification.class, "id", "{ entry: "  + entryId + ", species: " + speciesId + " }");
+        }
+
+        if (identification.getLikes() == null) {
+            Set<User> likes = new HashSet<User>();
+            likes.add(user);
+            identification.setLikes(likes);
+        } else {
+            boolean alreadyLikedByUser = identification.getLikes().stream().anyMatch(p -> p != null && p.getId().equals(userId));
+            // If user already liked the identification
+            if (alreadyLikedByUser) {
+                // remove his like
+                identification.getLikes().removeIf(p -> p != null && p.getId().equals(userId));
+            } else {
+                // add his like
+                identification.getLikes().add(user);
+            }
+        }
+
+        return identificationRepository.save(identification);
     }
 }

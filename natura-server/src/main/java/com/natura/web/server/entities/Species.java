@@ -35,7 +35,6 @@ public class Species extends ValidableItem implements Serializable {
     @Column(name="family")
     private String family;
 
-
     @OneToMany(mappedBy = "species", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Phenology> phenologies;

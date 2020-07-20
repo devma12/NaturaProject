@@ -1,0 +1,35 @@
+<h1 mat-dialog-title fxFlexAlign="center">Comments</h1>
+<div mat-dialog-content>
+    <mat-list *ngIf="comments && comments.length > 0" class="comments-list">
+        <mat-list-item *ngFor="let comment of comments" class="comment">
+            <div matLine  fxLayout="row" fxLayoutAlign="space-between">
+                <div class="commentator">{{comment.commentedBy.username}}</div>
+                <div class="comment-date"> {{comment.commentedDate | dateAgo}} </div>
+            </div>
+            <div matLine>
+                <div class="comment-text">{{comment.text}}</div>
+            </div>
+        </mat-list-item>
+    </mat-list>
+    <!-- <mat-grid-list *ngIf="comments && comments.length > 0" cols="1">
+        <mat-grid-tile *ngFor="let comment of comments" class="comment">
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <div class="commentator">{{comment.commentedBy.username}}</div>
+                <div class="comment-date"> {{comment.commentedDate | dateAgo}} </div>
+            </div>
+            <div>
+                {{comment.text}}
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list> -->
+    <p *ngIf="!comments || comments.length === 0" class="no-comment">No comments on this identification</p>
+</div>
+<div mat-dialog-actions align="end">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Comment</mat-label>
+        <textarea matInput [(ngModel)]="newComment" placeholder="Add a comment ..." maxlength="10000" rows="3">
+        </textarea>
+    </mat-form-field>
+    <button mat-button [mat-dialog-close]="newComment" [disabled]="!newComment">Send</button>
+    <button mat-button (click)="onNoClick()" cdkFocusInitial>Cancel</button>
+</div>
