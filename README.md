@@ -10,7 +10,7 @@ A new entry can be of two types: Flower or Pollinating Insect.
 The entry is based on the picture of the item to identify. 
 It also has other optional details such as location, description, etc.
 
-All other users can suggest an identification for the entry.
+Other users can suggest an identification for the entry.
 
 Some users has validator role and can validate suggested identification.
 
