@@ -32,3 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### GOLANG ###
+/natura-go-backend/src/github.com/
