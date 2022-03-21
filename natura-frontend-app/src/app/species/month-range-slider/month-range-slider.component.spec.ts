@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MonthRangeSliderComponent } from './month-range-slider.component';
 
@@ -6,7 +6,7 @@ describe('MonthRangeSliderComponent', () => {
   let component: MonthRangeSliderComponent;
   let fixture: ComponentFixture<MonthRangeSliderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MonthRangeSliderComponent ]
     })

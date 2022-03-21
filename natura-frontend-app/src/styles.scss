@@ -1,14 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
 @import './styles/app-material-theme';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-$primary:  mat-palette($mat-deep-purple);
-$accent:  mat-palette($mat-amber);
-$warn:  mat-palette($mat-deep-orange);
-$success:  mat-palette($mat-green);
+$primary:  mat.define-palette(mat.$deep-purple-palette);
+$accent:  mat.define-palette(mat.$amber-palette);
+$warn:  mat.define-palette(mat.$deep-orange-palette);
+$success:  mat.define-palette(mat.$green-palette);
 
 /** global container styles **/
 
@@ -33,7 +34,7 @@ $success:  mat-palette($mat-green);
     flex-direction: column;
     justify-content: center;
     color: white;
-    background:mat-color($primary);
+    background:mat.get-color-from-palette($primary);
     padding-left: 20px;
 }
 
@@ -68,43 +69,43 @@ $success:  mat-palette($mat-green);
 /** Color **/
 
 .text-color-primary-800 {
-   color: mat-color($primary, 800);
+   color: mat.get-color-from-palette($primary, 800);
 }
 
 .text-color-primary-600 {
-    color: mat-color($primary, 600);
+    color: mat.get-color-from-palette($primary, 600);
  }
 
 .text-color-accent-800 {
-    color: mat-color($accent, 800);
+    color: mat.get-color-from-palette($accent, 800);
  }
 
 .alert-error {
     background: #ffffff;
-    color: mat-color($warn, 500);
+    color: mat.get-color-from-palette($warn, 500);
     white-space: pre-line;
 }
 
 .alert-warning {
     background: #ffffff;
-    color: mat-color($accent, 500);
+    color: mat.get-color-from-palette($accent, 500);
     white-space: pre-line;
 }
 
 .alert-success {
     background: #ffffff;
-    color: mat-color($success, 500);
+    color: mat.get-color-from-palette($success, 500);
     white-space: pre-line;
 }
 
 .alert-info {
     background: #ffffff;
-    color: mat-color($primary, 500);
+    color: mat.get-color-from-palette($primary, 500);
     white-space: pre-line;
 }
 
 /** Text styles **/
-@include mat-base-typography($custom-typography);
+@include mat.typography-hierarchy($custom-typography);
 
 .text-uppercase {
     text-transform: uppercase;
@@ -117,12 +118,12 @@ $success:  mat-palette($mat-green);
 /** Slider styles **/
 
 .custom-slider .ng5-slider .ng5-slider-bar {
-    background: mat-color($primary, 200);
+    background: mat.get-color-from-palette($primary, 200);
     height: 2px;
 }
 
 .custom-slider .ng5-slider .ng5-slider-selection {
-    background: mat-color($primary, 800);
+    background: mat.get-color-from-palette($primary, 800);
 }
   
 .custom-slider .ng5-slider .ng5-slider-pointer {
@@ -130,7 +131,7 @@ $success:  mat-palette($mat-green);
     height: 14px;
     top: auto; /* to remove the default positioning */
     bottom: -3.5px;
-    background-color: mat-color($primary, 800);
+    background-color: mat.get-color-from-palette($primary, 800);
     border-radius: 7px;
 }
   
@@ -145,7 +146,7 @@ $success:  mat-palette($mat-green);
   
 .custom-slider .ng5-slider .ng5-slider-limit {
     font-weight: bold;
-    color: mat-color($primary, 800);
+    color: mat.get-color-from-palette($primary, 800);
 }
   
 .custom-slider .ng5-slider .ng5-slider-tick {
@@ -153,10 +154,10 @@ $success:  mat-palette($mat-green);
     height: 8px;
     margin-left: 4px;
     border-radius: 0;
-    background:mat-color($primary, 200);
+    background:mat.get-color-from-palette($primary, 200);
     top: -0.5px;
 }
   
 .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
-    background: mat-color($primary, 800);
+    background: mat.get-color-from-palette($primary, 800);
 }
