@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/models/user.model';
 
@@ -7,7 +7,7 @@ import { User } from 'src/app/models/user.model';
   templateUrl: './likes.component.html',
   styleUrls: ['./likes.component.scss']
 })
-export class LikesComponent implements OnInit {
+export class LikesComponent {
 
   likes: User[] = [];
 
@@ -15,9 +15,6 @@ export class LikesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: User[]) {
       this.likes = data;
      }
-
-  ngOnInit(): void {
-  }
 
   onNoClick(): void {
     this.dialogRef.close();

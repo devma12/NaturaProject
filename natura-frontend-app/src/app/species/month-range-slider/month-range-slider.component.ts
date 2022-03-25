@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ChangeContext, LabelType, Options } from 'ng5-slider';
 import { Month } from 'src/app/models/month.enum';
 import { EnumToArrayPipe } from 'src/app/pipes/enum-to-array.pipe';
@@ -8,7 +8,7 @@ import { EnumToArrayPipe } from 'src/app/pipes/enum-to-array.pipe';
   templateUrl: './month-range-slider.component.html',
   styleUrls: ['./month-range-slider.component.scss']
 })
-export class MonthRangeSliderComponent implements OnInit {
+export class MonthRangeSliderComponent {
 
   @Input() start: number = 1;
 
@@ -36,9 +36,6 @@ export class MonthRangeSliderComponent implements OnInit {
   };
 
   constructor(private enumToArrayPipe: EnumToArrayPipe) { }
-
-  ngOnInit(): void {
-  }
 
   onRangeChange(changeContext: ChangeContext): void {
     this.startChange.emit(this.start);
