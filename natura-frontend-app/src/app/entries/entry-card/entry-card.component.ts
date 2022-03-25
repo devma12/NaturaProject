@@ -12,8 +12,8 @@ import { SpeciesType } from 'src/app/models/type.enum';
 })
 export class EntryCardComponent implements OnInit {
 
-  @Input('entry') entry: Entry;
-  @Input('type') type: SpeciesType;
+  @Input() entry: Entry;
+  @Input() type: SpeciesType;
 
   picture: any = {};
 

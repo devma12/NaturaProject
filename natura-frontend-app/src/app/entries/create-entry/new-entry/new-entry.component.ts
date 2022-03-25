@@ -9,7 +9,7 @@ import { Species } from 'src/app/models/species.model';
 })
 export class NewEntryComponent implements OnInit {
 
-  @Input('type') type: string;
+  @Input() type: string;
   @Input() species: Species[];
 
   @Output() entry = new EventEmitter<any>(); 
