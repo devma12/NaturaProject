@@ -1,16 +1,1 @@
-.fill-remaining-space {
-    /* This fills the remaining space, by using flexbox. 
-       Every toolbar row uses a flexbox row layout. */
-    flex: 1 1 auto;
-}
 
-mat-toolbar {
-    position: relative;
-    z-index: 2;
-}
-
-.natura-icon {
-    font-size: 42px;
-    padding-right: 18px;
-    padding-bottom: 18px;
-}

@@ -1,0 +1,51 @@
+= Frontend Architecture
+
+[plantuml, target=architecture-model, format=png]
+----
+@startuml
+skinparam component {
+    BackgroundColor Orange
+}
+component [LazyLoadingModule] #Chartreuse
+component [AreaModule] #yellow
+[AppModule] --> [CoreModule] : import
+[CoreModule] --> [SharedModule] : import
+[CoreModule] --> [AreaModule] : import
+[AreaModule] --> [SharedModule] : import
+[AreaModule] ..> [LazyLoadingModule] : lazy loading
+@enduml
+----
+
+[plantuml, target=architecture-implementation, format=png]
+----
+@startuml
+skinparam component {
+    BackgroundColor<<LazyLoadingModule>> Chartreuse
+    BackgroundColor<<AreaModule>> Yellow
+    BackgroundColor Orange
+}
+[PublicModule] << AreaModule >>
+[UserModule] << AreaModule >>
+[AccountModule] << LazyLoadingModule >>
+[EntryModule] << LazyLoadingModule >>
+[SpeciesModule] << LazyLoadingModule >>
+[AppModule] --> [CoreModule] : import
+[CoreModule] --> [SharedModule] : import
+[CoreModule] --> [PublicModule] : import
+[PublicModule] --> [SharedModule] : import
+[CoreModule] --> [UserModule] : import
+[UserModule] --> [SharedModule] : import
+[UserModule] ..> [AccountModule] : lazy loading
+[AccountModule] --> [SharedModule] : import
+[AccountModule] --> [SharedUserModule] : import
+[UserModule] ..> [EntryModule] : lazy loading
+[EntryModule] --> [SharedModule] : import
+[EntryModule] --> [SharedUserModule] : import
+[UserModule] ..> [SpeciesModule] : lazy loading
+@enduml
+----
+
+[NOTE]
+Help site to write asciidoc:
+* real-world-plantuml.com
+* plantuml.com/fr/color
