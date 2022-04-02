@@ -1,40 +1,34 @@
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { Ng5SliderModule } from 'ng5-slider';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AppMaterialModule } from '../shared/material.module';
-import { FieldListItemComponent } from './field-list-item/field-list-item.component';
-import { RouterModule } from '@angular/router';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { Ng5SliderModule } from 'ng5-slider';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { FieldListItemComponent } from './field-list-item/field-list-item.component';
 
 @NgModule({
     declarations: [
       FieldListItemComponent,
-      SpinnerComponent,
       ConfirmationComponent
     ],
     imports: [
       AppMaterialModule,
-      Ng5SliderModule
+      Ng5SliderModule,
+      CommonModule
     ],
     exports: [
-      BrowserModule,
-      BrowserAnimationsModule,
+      CommonModule,
       AppMaterialModule,
       Ng5SliderModule,
       MaterialFileInputModule,
       FormsModule,
       ReactiveFormsModule,
       FlexLayoutModule,
-      HttpClientModule,
       RouterModule,
       FieldListItemComponent,
-      SpinnerComponent,
       ConfirmationComponent
     ],
     providers: []
