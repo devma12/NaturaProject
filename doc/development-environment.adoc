@@ -1,0 +1,84 @@
+= Development Environment
+
+== Installed tools
+
+Below a list of useful tools to install when starting development of current project :
+
+=== Windows Basic tools
+* 7zip
+* Notepad++
+* Cmder
+
+=== Development tools
+* Git
+** configure user name with command :
+[clone,git]
+----
+git config --global user.name "<username>"
+----
+** configure user email with command :
+[clone,git]
+----
+git config --global user.email "<email>"
+----
+** configure useful lga command with :
+[clone,git]
+----
+git config --global alias.lga "log --graph --decorate --oneline --all"
+----
+* Fork
+* Java
+** some versions can be found in https://adoptium.net/temurin/releases
+* maven
+* IntelliJ
+** plugins to add :
+*** AsciiDoc
+** configure :
+*** Settings > Build, Execution, Deployment > Build Tools > Maven > Maven home path
+* NodeJS
+** nvm
+*** can be used to install and manage multiple versions of node : https://dev.to/skaytech/how-to-install-node-version-manager-nvm-for-windows-10-4nbi
+* VS Codium (free open-source version of Microsoft Visual Studio Code)
+
+=== Test tools
+* Postman
+* MySQL Community Server + MySQLWorkbench
+** can require to pre install Microsoft Visual C++ 2015-2022 Redistributable (x64)
+
+== How to start working on project
+
+Clone project with git command
+[clone,git]
+----
+git clone <git_link>
+----
+
+____
+Note : you might need to create a ssh key.
+____
+
+=== Frontend
+
+Run commands
+[clone,npm]
+----
+npm install
+npm run build
+----
+
+=== Backend
+
+Edit run configuration on main class NaturaServerApplication
+
+* Build and run java14
+* add following value in environment variables : spring.profiles.active=dev
+
+MySQL
+
+Add user account by running following sql commands from root account
+[useraccount,sql]
+----
+CREATE USER 'naturauser'@'localhost' IDENTIFIED BY 'natura';
+CREATE DATABASE db_natura;
+GRANT ALL PRIVILEGES ON db_natura.* TO 'naturauser'@'localhost';
+----
