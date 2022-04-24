@@ -35,3 +35,6 @@ build/
 
 ### GOLANG ###
 /natura-go-backend/src/github.com/
+
+### Local Configuration ###
+**/application-local.properties
