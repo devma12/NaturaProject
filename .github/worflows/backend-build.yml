@@ -1,11 +1,11 @@
 name: Natura Project Backend Server Build & Test
 on: push
-  branches:
-    - develop
-    - 'features/**'
-  paths:
-    - 'natura-server/**'
-    - '.github/**'
+#  branches:
+#    - develop
+#    - 'features/**'
+#  paths:
+#    - 'natura-server/**'
+#    - '.github/**'
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
