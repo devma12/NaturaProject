@@ -5,6 +5,7 @@ on: push
     - 'features/**'
   paths:
     - 'natura-server/**'
+    - '.github/**'
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
