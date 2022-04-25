@@ -1,6 +1,7 @@
 name: Natura Project Backend Server Build & Test
 on: push
-#  branches:
+  branches:
+    - feature/cicd
 #    - develop
 #    - 'features/**'
 #  paths:
