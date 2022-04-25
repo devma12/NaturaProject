@@ -8,6 +8,7 @@ on:
 #  paths:
 #    - 'natura-server/**'
 #    - '.github/**'
+  workflow_dispatch:
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
