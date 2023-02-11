@@ -1,9 +1,9 @@
 package com.natura.web.server.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import org.springframework.util.Assert;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -15,7 +15,7 @@ public class Identification implements Serializable {
     private IdentificationKey id;
 
     @MapsId("entry_id")
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "entry_id", nullable = false, insertable = false, updatable = false)
     private Entry entry;
 

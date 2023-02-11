@@ -1,7 +1,7 @@
 package com.natura.web.server.entities;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import java.util.Date;
 
 @Entity

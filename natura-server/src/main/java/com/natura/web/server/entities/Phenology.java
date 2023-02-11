@@ -2,7 +2,7 @@ package com.natura.web.server.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.Month;
 
 @Entity

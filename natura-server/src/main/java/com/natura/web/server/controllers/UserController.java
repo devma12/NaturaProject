@@ -5,19 +5,21 @@ import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repo.UserRepository;
 import com.natura.web.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(path="/natura-api/user")
 public class UserController {
 
+    @Lazy
     @Autowired
     private UserService userService;
 
