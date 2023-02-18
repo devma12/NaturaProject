@@ -14,7 +14,7 @@ public class FlowerService {
         this.flowerProvider = flowerProvider;
     }
 
-    public Optional<Flower> getFlowerById(Long entryId) {
+    public Optional<Flower> getFlowerById(final Long entryId) {
         return flowerProvider.getFlowerById(entryId);
     }
 
@@ -22,7 +22,7 @@ public class FlowerService {
         return flowerProvider.getFlowers();
     }
 
-    public List<Flower> getFlowersByCreator(Long userId) {
+    public List<Flower> getFlowersByCreator(final Long userId) {
         return flowerProvider.getFlowersByCreatedBy(userId);
     }
 }

@@ -39,8 +39,8 @@ class DatabaseUserProviderTest {
         UserEntity entity = new UserEntity();
         User user = new User();
         User saved = new User();
-        when(repository.save(entity)).thenReturn(entity);
         when(mapper.map(user)).thenReturn(entity);
+        when(repository.save(entity)).thenReturn(entity);
         when(mapper.map(entity)).thenReturn(saved);
 
         // When

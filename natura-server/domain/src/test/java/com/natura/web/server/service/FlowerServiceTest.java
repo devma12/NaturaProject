@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ class FlowerServiceTest {
     @DisplayName("return all flowers.")
     void getFlowers() {
         // Given
-        List<Flower> flowers = List.of(new Flower());
+        List<Flower> flowers = Collections.singletonList(new Flower());
         when(flowerProvider.getFlowers()).thenReturn(flowers);
 
         // When
@@ -61,7 +62,7 @@ class FlowerServiceTest {
     @DisplayName("return flowers created by given user id.")
     void getFlowersByCreator() {
         // Given
-        List<Flower> flowers = List.of(new Flower());
+        List<Flower> flowers = Collections.singletonList(new Flower());
         when(flowerProvider.getFlowersByCreatedBy(USER_ID)).thenReturn(flowers);
 
         // When

@@ -20,7 +20,6 @@ public class Comment {
     private Identification identification;
 
     public Comment(String text, User user, Date date) {
-        this();
         this.text = text;
         this.commentedBy = user;
         this.commentedDate = date;

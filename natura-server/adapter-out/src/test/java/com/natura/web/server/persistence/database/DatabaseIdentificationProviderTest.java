@@ -1,18 +1,18 @@
 package com.natura.web.server.persistence.database;
 
+import com.natura.web.server.mapper.IdentificationMapper;
+import com.natura.web.server.mapper.UserMapper;
 import com.natura.web.server.model.Identification;
 import com.natura.web.server.model.User;
+import com.natura.web.server.persistence.database.entity.IdentificationEntity;
+import com.natura.web.server.persistence.database.entity.UserEntity;
+import com.natura.web.server.persistence.database.repository.IdentificationRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import com.natura.web.server.mapper.IdentificationMapper;
-import com.natura.web.server.mapper.UserMapper;
-import com.natura.web.server.persistence.database.entity.IdentificationEntity;
-import com.natura.web.server.persistence.database.entity.UserEntity;
-import com.natura.web.server.persistence.database.repository.IdentificationRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,6 +102,22 @@ class DatabaseIdentificationProviderTest {
 
         // When
         List<Identification> result = provider.getIdentificationsBySuggestedByUser(user);
+
+        // Then
+        assertThat(result).isEqualTo(identifications);
+    }
+
+    @Test
+    @DisplayName("return identifications gor given entry id.")
+    void getIdentificationsByEntryId() {
+        // Given
+        List<IdentificationEntity> entities = List.of(new IdentificationEntity());
+        List<Identification> identifications = List.of(new Identification());
+        when(repository.findByIdEntryId(ENTRY_ID)).thenReturn(entities);
+        when(mapper.map(entities)).thenReturn(identifications);
+
+        // When
+        List<Identification> result = provider.getIdentificationsByEntryId(ENTRY_ID);
 
         // Then
         assertThat(result).isEqualTo(identifications);

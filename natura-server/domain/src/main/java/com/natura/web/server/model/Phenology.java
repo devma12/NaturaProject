@@ -11,14 +11,23 @@ public class Phenology {
 
     private Long id;
 
-    private Month start;
-
-    private Month end;
-
-    private Species species;
+    private MonthRange range;
 
     public Phenology(Month start, Month end) {
-        this.start = start;
-        this.end = end;
+        this.range = new MonthRange(start, end);
+    }
+
+    public Month getStart() {
+        if (this.range == null) {
+            return null;
+        }
+        return this.range.getStart();
+    }
+
+    public Month getEnd() {
+        if (this.range == null) {
+            return null;
+        }
+        return this.range.getEnd();
     }
 }

@@ -14,7 +14,7 @@ public class InsectService {
         this.insectProvider = insectProvider;
     }
 
-    public Optional<Insect> getInsectById(Long entryId) {
+    public Optional<Insect> getInsectById(final Long entryId) {
         return insectProvider.getInsectById(entryId);
     }
 
@@ -22,7 +22,7 @@ public class InsectService {
         return insectProvider.getInsects();
     }
 
-    public List<Insect> getInsectsByCreator(Long userId) {
+    public List<Insect> getInsectsByCreator(final Long userId) {
         return insectProvider.getInsectsByCreatedBy(userId);
     }
 }

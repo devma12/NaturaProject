@@ -41,8 +41,8 @@ class DatabaseEntryProviderTest {
         EntryEntity entity = new InsectEntity();
         Entry entry = new Insect();
         Entry saved = new Insect();
-        when(repository.save(entity)).thenReturn(entity);
         when(mapper.mapEntry(entry)).thenReturn(entity);
+        when(repository.save(entity)).thenReturn(entity);
         when(mapper.mapEntryEntity(entity)).thenReturn(saved);
 
         // When

@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ class InsectServiceTest {
     @DisplayName("return all insects.")
     void getInsects() {
         // Given
-        List<Insect> insects = List.of(new Insect());
+        List<Insect> insects = Collections.singletonList(new Insect());
         when(insectProvider.getInsects()).thenReturn(insects);
 
         // When
@@ -61,7 +62,7 @@ class InsectServiceTest {
     @DisplayName("return insects created by given user id.")
     void getInsectByCreator() {
         // Given
-        List<Insect> insects = List.of(new Insect());
+        List<Insect> insects = Collections.singletonList(new Insect());
         when(insectProvider.getInsectsByCreatedBy(USER_ID)).thenReturn(insects);
 
         // When

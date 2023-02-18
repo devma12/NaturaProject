@@ -3,9 +3,11 @@ package com.natura.web.server.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class Image {
 
@@ -17,12 +19,7 @@ public class Image {
 
     private byte[] data;
 
-    public Image() {
-        this.id = Long.valueOf(-1);
-    }
-
     public Image(String name, String type, byte[] bytes) {
-        this();
         this.name = name;
         this.type = type;
         this.data = bytes;

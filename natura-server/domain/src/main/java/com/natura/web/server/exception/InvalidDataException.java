@@ -4,6 +4,10 @@ public class InvalidDataException extends ServerException {
 
     private static final Integer DEFAULT_CODE = 200;
 
+    public InvalidDataException(Integer code) {
+        super(code);
+    }
+
     public InvalidDataException(String message) {
         super(DEFAULT_CODE, message);
     }
@@ -18,12 +22,31 @@ public class InvalidDataException extends ServerException {
 
     public static class DuplicateDataException extends InvalidDataException {
 
+        private final String type;
+        private final String attribute;
+        private final String value;
+
         public DuplicateDataException(String message) {
             super(201, message);
+            this.type = null;
+            this.attribute = null;
+            this.value = null;
         }
 
         public DuplicateDataException(String type, String attribute, String value) {
-            super(201, type + " already exists with same " + attribute + ": " + value + ".");
+            super(201);
+            this.type = type;
+            this.attribute = attribute;
+            this.value = value;
+        }
+
+        @Override
+        public String getMessage() {
+            String message = super.getMessage();
+            if (message == null) {
+                message = type + " already exists with same " + attribute + ": " + value + ".";
+            }
+            return message;
         }
     }
 

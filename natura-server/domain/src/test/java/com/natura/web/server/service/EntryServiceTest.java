@@ -20,7 +20,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
@@ -66,18 +65,20 @@ class EntryServiceTest {
     @DisplayName("create new entry and suggested identification when species id is given.")
     void create_should_save_new_entry_and_identification() throws DataNotFoundException, InvalidFileException {
         // Given
+        String imageName = "mocked";
+        String contentType = "contentType";
         Entry newEntry = new EntryTest();
         InputStream is = new ByteArrayInputStream(new byte[10]);
         User user = User.builder().id(USER_ID).username("user").build();
-        Image image = Image.builder().name("mocked").build();
         Species species = Species.builder().id(SPECIES_ID).commonName("species").build();
         when(userProvider.getUserById(USER_ID)).thenReturn(Optional.of(user));
-        when(imageService.upload("mocked", "", is)).thenReturn(image);
+        when(imageService.upload(imageName, contentType, is))
+                .thenReturn(Image.builder().name(imageName).build());
         when(speciesProvider.getSpeciesById(SPECIES_ID)).thenReturn(Optional.of(species));
         when(entryProvider.save(newEntry)).thenReturn(newEntry);
 
         // When
-        Entry created = entryService.createEntryAndSuggestedIdentification(newEntry, "mocked", "", is, USER_ID, SPECIES_ID);
+        Entry created = entryService.createEntryAndSuggestedIdentification(newEntry, imageName, contentType, is, USER_ID, SPECIES_ID);
 
         // Then
         ArgumentCaptor<Identification> identificationArgumentCaptor = ArgumentCaptor.forClass(Identification.class);
@@ -94,17 +95,18 @@ class EntryServiceTest {
     @DisplayName("create new entry but no suggested identification when species id is not given")
     void create_should_save_new_entry_but_not_identification() throws DataNotFoundException, InvalidFileException {
         // Given
+        String imageName = "mocked";
+        String contentType = "contentType";
         Entry newEntry = new EntryTest();
         InputStream is = new ByteArrayInputStream(new byte[10]);
         User user = User.builder().id(USER_ID).username("user").build();
-        Image image = Image.builder().name("mocked").build();
         when(userProvider.getUserById(USER_ID)).thenReturn(Optional.of(user));
-        when(imageService.upload("mocked", "", is)).thenReturn(image);
+        when(imageService.upload(imageName, contentType, is)).thenReturn(Image.builder().name(imageName).build());
         when(speciesProvider.getSpeciesById(any())).thenReturn(Optional.empty());
         when(entryProvider.save(newEntry)).thenReturn(newEntry);
 
         // When
-        Entry created = entryService.createEntryAndSuggestedIdentification(newEntry, "mocked", "", is, USER_ID, null);
+        Entry created = entryService.createEntryAndSuggestedIdentification(newEntry, imageName, contentType, is, USER_ID, null);
 
         // Then
         verify(entryProvider).save(newEntry);
@@ -113,15 +115,15 @@ class EntryServiceTest {
     }
 
     @Test
-    @DisplayName("should raise DataNotFoundException when no user is found with given id during entry creation")
-    void create_should_raise_DataNotFoundException_when_no_user_is_found() throws DataNotFoundException, IOException {
+    @DisplayName("raise DataNotFoundException when no user is found with given id during entry creation")
+    void create_should_raise_DataNotFoundException_when_no_user_is_found() {
         // Given
         Entry newEntry = new EntryTest();
         InputStream is = new ByteArrayInputStream(new byte[10]);
         when(userProvider.getUserById(USER_ID)).thenReturn(Optional.empty());
 
         // When
-        Throwable thrown = catchThrowable(() -> entryService.createEntryAndSuggestedIdentification(newEntry, "mocked", "", is, USER_ID, null));
+        Throwable thrown = catchThrowable(() -> entryService.createEntryAndSuggestedIdentification(newEntry, "mocked", "contentType", is, USER_ID, null));
 
         // Then
         assertThat(thrown).isInstanceOf(DataNotFoundException.class);

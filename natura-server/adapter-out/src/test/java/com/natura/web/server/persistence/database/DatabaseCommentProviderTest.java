@@ -43,8 +43,8 @@ class DatabaseCommentProviderTest {
         CommentEntity entity = new CommentEntity();
         Comment comment = new Comment();
         Comment saved = new Comment();
-        when(repository.save(entity)).thenReturn(entity);
         when(mapper.map(comment)).thenReturn(entity);
+        when(repository.save(entity)).thenReturn(entity);
         when(mapper.map(entity)).thenReturn(saved);
 
         // When
@@ -63,8 +63,8 @@ class DatabaseCommentProviderTest {
         List<Comment> comments = List.of(new Comment());
         Identification identification = new Identification();
         IdentificationEntity identificationEntity = new IdentificationEntity();
-        when(repository.findByIdentification(identificationEntity)).thenReturn(entities);
         when(identificationMapper.map(identification)).thenReturn(identificationEntity);
+        when(repository.findByIdentification(identificationEntity)).thenReturn(entities);
         when(mapper.map(entities)).thenReturn(comments);
 
         // When

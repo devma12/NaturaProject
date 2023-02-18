@@ -40,7 +40,9 @@ public class EntryService {
         this.identificationProvider = identificationProvider;
     }
 
-    public Entry createEntryAndSuggestedIdentification(Entry entry, String filename, String contentType, InputStream inputStream, Long userId, Long speciesId)
+    public Entry createEntryAndSuggestedIdentification(final Entry entry, final String filename,
+                                                       final String contentType, final InputStream inputStream,
+                                                       final Long userId, final Long speciesId)
             throws DataNotFoundException, InvalidFileException {
 
         // Check user exists
@@ -51,7 +53,7 @@ public class EntryService {
         entry.setCreatedBy(createdBy.get());
 
         // Create image and store it in db
-        Image image = imageService.upload(filename, contentType, inputStream);
+        final Image image = imageService.upload(filename, contentType, inputStream);
         entry.setImage(image);
 
         // Save new entry
@@ -60,8 +62,8 @@ public class EntryService {
         // Create identification if any
         Optional<Species> species = speciesProvider.getSpeciesById(speciesId);
         if (species.isPresent()) {
-            Identification creatorProposal = new Identification(saved, species.get(), createdBy.get(), new Date());
-            identificationProvider.save(creatorProposal);
+            final Identification identification = new Identification(saved, species.get(), createdBy.get(), new Date());
+            identificationProvider.save(identification);
         }
         return saved;
     }

@@ -51,7 +51,7 @@ public class IdentificationService {
         this.validationCount = validationCount;
     }
 
-    public Identification identify(Long entryId, Long speciesId, Long userId)
+    public Identification identify(final Long entryId, final Long speciesId, final Long userId)
             throws DataNotFoundException, InvalidDataException {
 
         // Get proposer user
@@ -73,10 +73,12 @@ public class IdentificationService {
         }
 
         // Check no identification already exists for entry + species couple
-        Optional<Identification> duplicate = identificationProvider.getIdentificationByEntryIdAndSpeciesId(entryId, speciesId);
+        Optional<Identification> duplicate = identificationProvider
+                .getIdentificationByEntryIdAndSpeciesId(entryId, speciesId);
         if (duplicate.isPresent()) {
-            throw new InvalidDataException.DuplicateDataException("Identification already exists for entry "
-                    + entry.get().getName() + " and species " + species.get().getCommonName() + ".");
+            throw new InvalidDataException.DuplicateDataException(
+                    String.format("Identification already exists for entry %s and species %s.",
+                            entry.get().getName(), species.get().getCommonName()));
         }
 
         // Check species and entry types are consistent
@@ -86,12 +88,11 @@ public class IdentificationService {
             throw new InvalidDataException("Suggested species must be of type Insect for an Insect entry.");
         }
 
-        Identification identification = new Identification(entry.get(), species.get(), suggestedBy.get(), new Date());
+        final Identification identification = new Identification(entry.get(), species.get(), suggestedBy.get(), new Date());
         return identificationProvider.save(identification);
-
     }
 
-    public Identification validate(Long entryId, Long speciesId, Long userId)
+    public Identification validate(final Long entryId, final Long speciesId, final Long userId)
             throws DataNotFoundException, InvalidDataException, UserAccountException.ValidationPermissionException {
 
         // Get validator user
@@ -103,16 +104,16 @@ public class IdentificationService {
         // Get identification
         Optional<Identification> opt = identificationProvider.getIdentificationByEntryIdAndSpeciesId(entryId, speciesId);
         if (opt.isEmpty()) {
-            throw new DataNotFoundException(Identification.class, "id", "{ entry: " + entryId + ", species: " + speciesId + " }");
+            throw new DataNotFoundException(Identification.class, "id", String.format("{ entry: %s, species: %s }", entryId, speciesId));
         }
         Identification identification = opt.get();
         // Check entry is not null
         if (identification.getEntry() == null) {
-            throw new InvalidDataException("Invalid entry of identification { entry: " + entryId + ", species: " + speciesId + " }");
+            throw new InvalidDataException(String.format("Invalid entry of identification { entry: %s, species: %s }", entryId, speciesId));
         }
         // Check entry has not been validated yet
         else if (identification.getEntry().isValidated()) {
-            throw new InvalidDataException.AlreadyValidatedDataException("Entry " + identification.getEntry().getName());
+            throw new InvalidDataException.AlreadyValidatedDataException(String.format("Entry %s",identification.getEntry().getName()));
         }
         // Check user has the right to validate this identification
         else if (identification.getEntry() instanceof Flower) {
@@ -122,7 +123,7 @@ public class IdentificationService {
             if (!validator.get().isInsectValidator())
                 throw new UserAccountException.ValidationPermissionException(validator.get().getUsername(), SpeciesType.Insect);
         } else {
-            throw new InvalidDataException("Invalid entry of identification { entry : " + entryId + ", species: " + speciesId + " }");
+            throw new InvalidDataException(String.format("Invalid entry of identification { entry: %s, species: %s }", entryId, speciesId));
         }
 
         if (identification.getSuggestedBy() != null && validator.get().getUsername().equals(identification.getSuggestedBy().getUsername())) {
@@ -148,12 +149,12 @@ public class IdentificationService {
         if (user == null)
             throw new DataNotFoundException("Null user");
 
-        List<Identification> identifications = identificationProvider.getIdentificationsBySuggestedByUser(user);
+        final List<Identification> identifications = identificationProvider.getIdentificationsBySuggestedByUser(user);
 
         if (!identifications.isEmpty()) {
             // Evaluate flower validator rights
             if (!user.isFlowerValidator()) {
-                Long validated = identifications.stream()
+                long validated = identifications.stream()
                         .filter(i -> i.getValidatedBy() != null
                                 && i.getEntry() != null
                                 && i.getEntry() instanceof Flower)
@@ -166,7 +167,7 @@ public class IdentificationService {
 
             // Evaluate insect validator rights
             if (!user.isInsectValidator()) {
-                Long validated = identifications.stream()
+                long validated = identifications.stream()
                         .filter(i -> i.getValidatedBy() != null
                                 && i.getEntry() != null
                                 && i.getEntry() instanceof Insect)
@@ -187,19 +188,19 @@ public class IdentificationService {
     public Comment comment(Long entryId, Long speciesId, Long userId, String text)
             throws DataNotFoundException {
         // Get commentator user
-        User observer = userProvider.getUserById(userId).orElse(null);
-        if (observer == null) {
+        Optional<User> observer = userProvider.getUserById(userId);
+        if (observer.isEmpty()) {
             throw new DataNotFoundException(User.class, "id", userId);
         }
 
         // Get identification
         Optional<Identification> identification = identificationProvider.getIdentificationByEntryIdAndSpeciesId(entryId, speciesId);
         if (identification.isEmpty()) {
-            throw new DataNotFoundException(Identification.class, "id", "{ entry: " + entryId + ", species: " + speciesId + " }");
+            throw new DataNotFoundException(Identification.class, "id", String.format("{ entry: %s, species: %s }", entryId, speciesId));
         }
 
         // Create comment and linked it to identification
-        Comment comment = new Comment(text, observer, new Date());
+        final Comment comment = new Comment(text, observer.get(), new Date());
         comment.setIdentification(identification.get());
         return commentProvider.save(comment);
     }
@@ -208,38 +209,40 @@ public class IdentificationService {
         // Get identification
         Optional<Identification> identification = identificationProvider.getIdentificationByEntryIdAndSpeciesId(entryId, speciesId);
         if (identification.isEmpty()) {
-            throw new DataNotFoundException(Identification.class, "id", "{ entry: " + entryId + ", species: " + speciesId + " }");
+            throw new DataNotFoundException(Identification.class, "id", String.format("{ entry: %s, species: %s }", entryId, speciesId));
         }
 
         return commentProvider.getCommentsByIdentification(identification.get());
     }
 
-    public Identification like(Long entryId, Long speciesId, Long userId) throws DataNotFoundException {
+    public Identification like(final Long entryId, final Long speciesId, final Long userId)
+            throws DataNotFoundException {
         // Get user
-        User user = userProvider.getUserById(userId).orElse(null);
-        if (user == null) {
+        Optional<User> user = userProvider.getUserById(userId);
+        if (user.isEmpty()) {
             throw new DataNotFoundException(User.class, "id", userId);
         }
 
         // Get identification
         Optional<Identification> identification = identificationProvider.getIdentificationByEntryIdAndSpeciesId(entryId, speciesId);
         if (identification.isEmpty()) {
-            throw new DataNotFoundException(Identification.class, "id", "{ entry: " + entryId + ", species: " + speciesId + " }");
+            throw new DataNotFoundException(Identification.class, "id", String.format("{ entry: %s, species: %s }", entryId, speciesId));
         }
 
         if (identification.get().getLikes() == null) {
             Set<User> likes = new HashSet<>();
-            likes.add(user);
+            likes.add(user.get());
             identification.get().setLikes(likes);
         } else {
-            boolean alreadyLikedByUser = identification.get().getLikes().stream().anyMatch(p -> p != null && p.getId().equals(userId));
+            boolean alreadyLikedByUser = identification.get().getLikes().stream()
+                    .anyMatch(liker -> liker != null && liker.getId().equals(userId));
             // If user already liked the identification
             if (alreadyLikedByUser) {
                 // remove his like
-                identification.get().getLikes().removeIf(p -> p != null && p.getId().equals(userId));
+                identification.get().getLikes().removeIf(liker -> liker != null && liker.getId().equals(userId));
             } else {
                 // add his like
-                identification.get().getLikes().add(user);
+                identification.get().getLikes().add(user.get());
             }
         }
 

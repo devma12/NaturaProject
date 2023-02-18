@@ -39,8 +39,8 @@ class DatabaseImageProviderTest {
         ImageEntity entity = new ImageEntity();
         Image image = new Image();
         Image saved = new Image();
-        when(repository.save(entity)).thenReturn(entity);
         when(mapper.map(image)).thenReturn(entity);
+        when(repository.save(entity)).thenReturn(entity);
         when(mapper.map(entity)).thenReturn(saved);
 
         // When

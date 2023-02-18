@@ -6,6 +6,8 @@ public class UserAccountException extends ServerException {
 
     private static final Integer DEFAULT_CODE = 300;
 
+    public UserAccountException() {super(DEFAULT_CODE);}
+
     public UserAccountException(String message) {
         super(DEFAULT_CODE, message);
     }
@@ -41,13 +43,28 @@ public class UserAccountException extends ServerException {
 
     public static class ValidationPermissionException extends UserAccountException {
 
+        private final String user;
+        private final SpeciesType speciesType;
+
         public ValidationPermissionException(String message) {
             super(message);
+            this.user = null;
+            this.speciesType = null;
         }
 
         public ValidationPermissionException(String user, SpeciesType type) {
-            super("User " + user + " has no permission to validate " + type);
+            super();
+            this.user = user;
+            this.speciesType = type;
         }
 
+        @Override
+        public String getMessage() {
+            String message = super.getMessage();
+            if (message == null && this.speciesType != null) {
+                message = String.format("User %s has no permission to validate %s", user, speciesType);
+            }
+            return message;
+        }
     }
 }
