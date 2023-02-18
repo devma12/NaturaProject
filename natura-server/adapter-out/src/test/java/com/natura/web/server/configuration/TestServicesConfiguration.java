@@ -16,11 +16,11 @@ import com.natura.web.server.service.InsectService;
 import com.natura.web.server.service.SpeciesService;
 import com.natura.web.server.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class ServicesConfiguration {
+@TestConfiguration
+public class TestServicesConfiguration {
 
     @Value("${validation.countNeeded}")
     private Long validationCount;

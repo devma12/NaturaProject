@@ -5,8 +5,9 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>domain</module>
-		<module>adapters</module>
+		<module>adapter-in</module>
 		<module>core</module>
+		<module>adapter-out</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -43,7 +44,12 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>adapters</artifactId>
+				<artifactId>adapter-in</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>adapter-out</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
