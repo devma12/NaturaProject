@@ -1,0 +1,24 @@
+package com.natura.web.server.security;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+
+public class WebTokenAuthenticationDetails extends WebAuthenticationDetails {
+
+	private String token;
+	
+	public WebTokenAuthenticationDetails(HttpServletRequest request) {
+		super(request);
+		
+		// Get token detail
+		final String requestTokenHeader = request.getHeader("Authorization");
+    	// JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token
+    	if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer "))
+    		this.token = requestTokenHeader.substring(7);
+	}
+	
+	public String getTokenValue() {
+		return this.token;
+	}
+
+}
