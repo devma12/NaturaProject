@@ -2,10 +2,10 @@ package com.natura.web.server.unit.services;
 
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
-import com.natura.web.server.repo.EntryRepository;
-import com.natura.web.server.repo.IdentificationRepository;
-import com.natura.web.server.repo.SpeciesRepository;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.repository.EntryRepository;
+import com.natura.web.server.repository.IdentificationRepository;
+import com.natura.web.server.repository.SpeciesRepository;
+import com.natura.web.server.repository.UserRepository;
 import com.natura.web.server.services.IdentificationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class LikeIdentificationTests {
+class LikeIdentificationTest {
 
     @Autowired
     IdentificationService identificationService;
@@ -96,7 +96,7 @@ public class LikeIdentificationTests {
 
         Identification identification = identificationService.like(1L, 1L, 2L);
         Assertions.assertTrue(identification.getLikes() != null
-                && identification.getLikes().size() == 1);
+            && identification.getLikes().size() == 1);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class LikeIdentificationTests {
         Identification identification = identificationRepository.findByIdEntryIdAndIdSpeciesId(1L, 1L);
         identification.getLikes().add(user);
         Assertions.assertTrue(identification.getLikes() != null
-                && identification.getLikes().size() == 1);
+            && identification.getLikes().size() == 1);
         Mockito.lenient().when(identificationRepository.findByIdEntryIdAndIdSpeciesId(1L, 1L)).thenReturn(identification);
 
         Mockito.when(identificationRepository.save(Mockito.any())).then(AdditionalAnswers.returnsFirstArg());

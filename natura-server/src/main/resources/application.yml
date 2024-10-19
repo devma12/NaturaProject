@@ -1,0 +1,32 @@
+# server properties
+server:
+  port: 8081
+
+# database properties
+spring:
+  jpa:
+  hibernate:
+    ddl-auto: update
+  datasource:
+    initialization-mode: always
+    continue-on-error: true
+    data: classpath:/data-mysql.sql
+
+  # multipart file settings
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# JWT properties
+jwt:
+  secret: naturaSecretKeyToGenerateTokenMustBeMuchMoreLongerSoIAddedSomeCharactersToHaveAValidKeyForHS512Algorithm
+  token:
+    expiration.ms: 43200000
+
+# custom properties
+validation:
+  countNeeded: 10
+
+

@@ -2,7 +2,7 @@ package com.natura.web.server.integration.db;
 
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
-import com.natura.web.server.repo.*;
+import com.natura.web.server.repository.*;
 import com.natura.web.server.services.EntryService;
 import com.natura.web.server.services.IdentificationService;
 import com.natura.web.server.services.ImageService;
@@ -26,7 +26,7 @@ import java.util.Set;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class IdentificationTests {
+class IdentificationTest {
 
     @Autowired
     EntryService entryService;
@@ -160,8 +160,6 @@ public class IdentificationTests {
     }
 
     private Identification createIdentification(Species.Type type, String entryName, User user, String speciesName, boolean isValidated) {
-
-
         Entry entry = null;
         if (type == Species.Type.Flower) {
             entry = new Flower();

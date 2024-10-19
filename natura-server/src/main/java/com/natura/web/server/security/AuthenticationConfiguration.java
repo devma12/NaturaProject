@@ -1,5 +1,6 @@
 package com.natura.web.server.security;
 
+import com.natura.web.server.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,16 +13,16 @@ public class AuthenticationConfiguration {
 
     @Bean
     public AuthenticationManager authenticationManager(org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
+        throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
 
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailsService);
 
         authProvider.setPasswordEncoder(passwordEncoder());
 
@@ -34,7 +35,7 @@ public class AuthenticationConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new AppUserDetailsService();
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new AppUserDetailsService(userRepository);
     }
 }

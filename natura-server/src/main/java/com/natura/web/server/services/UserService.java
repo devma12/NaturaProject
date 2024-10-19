@@ -2,14 +2,19 @@ package com.natura.web.server.services;
 
 import com.natura.web.server.entities.User;
 import com.natura.web.server.exceptions.DataNotFoundException;
-import com.natura.web.server.exceptions.UserAccountException;
 import com.natura.web.server.exceptions.ServerException;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.exceptions.UserAccountException;
+import com.natura.web.server.repository.UserRepository;
 import com.natura.web.server.security.JwtTokenUtil;
 import com.natura.web.server.security.WebTokenAuthenticationDetails;
 import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +22,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class UserService {
@@ -90,7 +92,7 @@ public class UserService {
     }
 
     public User returnJwtWithUserDetailsFromAuthentication(Authentication auth)
-            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
+        throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
         // Get user
         User user = getUserFromAuthentication(auth, true);
 
@@ -107,18 +109,18 @@ public class UserService {
     }
 
     public User getAuthenticatedUserDetails(Authentication auth)
-            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
+        throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         User user = getUserFromAuthentication(auth, false);
 
-        String token = ((WebTokenAuthenticationDetails)auth.getDetails()).getTokenValue();
+        String token = ((WebTokenAuthenticationDetails) auth.getDetails()).getTokenValue();
         user.setToken(token);
 
         return user;
     }
 
     private User getUserFromAuthentication(Authentication auth, boolean withPassword)
-            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
+        throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         if (auth.getPrincipal() != null && auth.getPrincipal() instanceof UserDetails) {
             UserDetails details = (UserDetails) auth.getPrincipal();
@@ -131,7 +133,7 @@ public class UserService {
     }
 
     private void getInternalUserData(User user, boolean withPassword)
-            throws UserAccountException.InvalidAccountDataException {
+        throws UserAccountException.InvalidAccountDataException {
 
         User storedUser = userRepository.findByUsername(user.getUsername());
         if (storedUser != null) {
@@ -165,7 +167,7 @@ public class UserService {
     }
 
     public User logout(HttpServletRequest request, HttpServletResponse response)
-            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
+        throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logged = getUserFromAuthentication(auth, true);
@@ -181,14 +183,14 @@ public class UserService {
     }
 
     public User authenticate()
-            throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
+        throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return getAuthenticatedUserDetails(auth);
     }
 
     public User updateEmail(Long id, String email)
-            throws DataNotFoundException, UserAccountException.DuplicateAccountException {
+        throws DataNotFoundException, UserAccountException.DuplicateAccountException {
 
         User user = userRepository.findById(id).orElse(null);
         if (user == null)
@@ -205,7 +207,7 @@ public class UserService {
     }
 
     public User updatePassword(Long id, String oldPassword, String newPassword)
-            throws DataNotFoundException, UserAccountException.AuthenticationException {
+        throws DataNotFoundException, UserAccountException.AuthenticationException {
 
         User user = userRepository.findById(id).orElse(null);
         if (user == null)

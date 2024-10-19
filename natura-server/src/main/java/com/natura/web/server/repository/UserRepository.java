@@ -1,8 +1,10 @@
-package com.natura.web.server.repo;
+package com.natura.web.server.repository;
 
 import com.natura.web.server.entities.User;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByEmail(String email);

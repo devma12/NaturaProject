@@ -11,16 +11,16 @@ import java.util.*;
 public class Identification implements Serializable {
 
     @EmbeddedId
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private IdentificationKey id;
 
-    @MapsId("entry_id")
-    @ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name = "entry_id", nullable = false, insertable = false, updatable = false)
+    //    @MapsId("id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Entry entry;
 
-    @MapsId("species_id")
-    @ManyToOne(fetch=FetchType.EAGER)
+    //    @MapsId("id")
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "species_id", nullable = false, insertable = false, updatable = false)
     private Species species;
 
@@ -42,18 +42,18 @@ public class Identification implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "identification_like",
-            joinColumns = {
-                    @JoinColumn(name = "entry_id", referencedColumnName = "entry_id"),
-                    @JoinColumn(name = "species_id", referencedColumnName = "species_id"),
-            },
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+        name = "identification_like",
+        joinColumns = {
+            @JoinColumn(name = "entry_id", referencedColumnName = "entry_id"),
+            @JoinColumn(name = "species_id", referencedColumnName = "species_id"),
+        },
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> likes;
 
     public Identification() {
 
-        this.comments = new ArrayList<Comment>();
-        this.likes = new HashSet<User>();
+        this.comments = new ArrayList<>();
+        this.likes = new HashSet<>();
     }
 
     public Identification(Entry entry, Species species, User proposer, Date date) {
@@ -69,9 +69,13 @@ public class Identification implements Serializable {
 
     }
 
-    public IdentificationKey getId() { return id; }
+    public IdentificationKey getId() {
+        return id;
+    }
 
-    public void setId(IdentificationKey id) { this.id = id; }
+    public void setId(IdentificationKey id) {
+        this.id = id;
+    }
 
     public Entry getEntry() {
         return entry;

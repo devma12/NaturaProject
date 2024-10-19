@@ -1,0 +1,22 @@
+services:
+  db-mysql:
+    image: mysql:latest
+    networks:
+      - natura-network
+    environment:
+      MYSQL_DATABASE: db_natura
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: naturauser
+      MYSQL_PASSWORD: natura
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+volumes:
+  db-data:
+  # ./db/docker-entrypoint-initdb.d:
+
+networks:
+  natura-network:
