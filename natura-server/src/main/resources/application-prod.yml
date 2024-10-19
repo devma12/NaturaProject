@@ -1,0 +1,8 @@
+# prod properties
+
+# database properties (configure to run with docker compose file)
+spring:
+  datasource:
+    url: jdbc:mysql://db-mysql/db_natura?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&max_allowed_packet=32M
+    username: naturauser
+    password: natura

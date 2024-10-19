@@ -3,10 +3,10 @@ package com.natura.web.server.unit.services;
 import com.natura.web.server.entities.*;
 import com.natura.web.server.exceptions.DataNotFoundException;
 import com.natura.web.server.exceptions.InvalidDataException;
-import com.natura.web.server.repo.EntryRepository;
-import com.natura.web.server.repo.IdentificationRepository;
-import com.natura.web.server.repo.SpeciesRepository;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.repository.EntryRepository;
+import com.natura.web.server.repository.IdentificationRepository;
+import com.natura.web.server.repository.SpeciesRepository;
+import com.natura.web.server.repository.UserRepository;
 import com.natura.web.server.services.IdentificationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class IdentifyTests {
+class IdentifyTest {
 
     @Autowired
     IdentificationService identificationService;

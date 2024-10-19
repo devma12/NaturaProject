@@ -1,8 +1,9 @@
 package com.natura.web.server.services;
 
 import com.natura.web.server.entities.Image;
-import com.natura.web.server.repo.ImageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.natura.web.server.repository.ImageRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,16 +13,17 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+@Slf4j
+@AllArgsConstructor
 @Service
 public class ImageService {
 
-    @Autowired
     private ImageRepository imageRepository;
 
     public Image upload(MultipartFile file) throws IOException {
-        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+        log.debug("Original Image Byte Size - " + file.getBytes().length);
         Image img = new Image(file.getOriginalFilename(), file.getContentType(),
-                compressBytes(file.getBytes()));
+            compressBytes(file.getBytes()));
         Image stored = imageRepository.save(img);
         stored.setData(decompressBytes(stored.getData()));
         return stored;
@@ -30,16 +32,17 @@ public class ImageService {
     public Image download(Long id) {
         Image retrievedImage = imageRepository.findById(id).orElse(null);
         if (retrievedImage != null) {
-            Image img = new Image(retrievedImage.getName(), retrievedImage.getType(),
-                    decompressBytes(retrievedImage.getData()));
-            return img;
+            return new Image(retrievedImage.getName(), retrievedImage.getType(),
+                decompressBytes(retrievedImage.getData()));
         } else {
             return null;
         }
 
     }
 
-    /** compress the image bytes before storing it in the database
+    /**
+     * compress the image bytes before storing it in the database
+     *
      * @param data
      */
     private static byte[] compressBytes(byte[] data) {
@@ -60,7 +63,9 @@ public class ImageService {
         return outputStream.toByteArray();
     }
 
-    /** uncompress the image bytes before returning it to the angular application
+    /**
+     * uncompress the image bytes before returning it to the angular application
+     *
      * @param data
      */
     private static byte[] decompressBytes(byte[] data) {

@@ -1,9 +1,9 @@
 package com.natura.web.server.unit.services;
 
-import com.natura.web.server.integration.db.SpeciesTests;
-import com.natura.web.server.entities.*;
+import com.natura.web.server.entities.Phenology;
+import com.natura.web.server.entities.Species;
 import com.natura.web.server.exceptions.InvalidDataException;
-import com.natura.web.server.repo.SpeciesRepository;
+import com.natura.web.server.repository.SpeciesRepository;
 import com.natura.web.server.services.SpeciesService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +17,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Month;
 
+import static com.natura.web.server.TestUtils.createDefaultButterfly;
+
 @SpringBootTest
 @ActiveProfiles("test")
-public class SpeciesServiceTests {
+class SpeciesServiceTest {
 
     @Autowired
     SpeciesService speciesService;
@@ -43,7 +45,7 @@ public class SpeciesServiceTests {
     @Test
     void createSpeciesWithDuplicateScientificName() {
 
-        Species species = SpeciesTests.createDefaultButterfly();
+        Species species = createDefaultButterfly();
         species.setCommonName("Vanesse de l'ortie");
 
         Assertions.assertThrows(InvalidDataException.DuplicateDataException.class, () -> {
@@ -55,7 +57,7 @@ public class SpeciesServiceTests {
     @Test
     void createSpeciesWithDuplicateCommonName() {
 
-        Species species = SpeciesTests.createDefaultButterfly();
+        Species species = createDefaultButterfly();
         species.setScientificName("Undetermined");
 
         Assertions.assertThrows(InvalidDataException.DuplicateDataException.class, () -> {
@@ -65,7 +67,7 @@ public class SpeciesServiceTests {
     }
 
     private void testInvalidPhenologies(Month start, Month end) {
-        Species species = SpeciesTests.createDefaultButterfly();
+        Species species = createDefaultButterfly();
         species.setScientificName("Undetermined");
         species.setCommonName("Vanesse de l'ortie");
 
@@ -107,12 +109,14 @@ public class SpeciesServiceTests {
     }
 
     @Test
-    void createSpeciesWithReversedPhenology() { testInvalidPhenologies(Month.NOVEMBER, Month.OCTOBER); }
+    void createSpeciesWithReversedPhenology() {
+        testInvalidPhenologies(Month.NOVEMBER, Month.OCTOBER);
+    }
 
     @Test
     void createSpecies() throws InvalidDataException {
 
-        Species species = SpeciesTests.createDefaultButterfly();
+        Species species = createDefaultButterfly();
         species.setScientificName("Aglais io");
         species.setCommonName("Paon du jour");
 

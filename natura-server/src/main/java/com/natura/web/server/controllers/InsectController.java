@@ -3,12 +3,11 @@ package com.natura.web.server.controllers;
 import com.natura.web.server.entities.Insect;
 import com.natura.web.server.entities.User;
 import com.natura.web.server.exceptions.ServerException;
-import com.natura.web.server.repo.InsectRepository;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.repository.InsectRepository;
+import com.natura.web.server.repository.UserRepository;
 import com.natura.web.server.services.EntryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,21 +16,19 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-@Controller
-@RequestMapping(path="/natura-api/insect")
+@AllArgsConstructor
+@RestController
+@RequestMapping(path = "/natura-api/insect")
 public class InsectController {
 
-    @Autowired
     private EntryService entryService;
 
-    @Autowired
     private InsectRepository insectRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path="/new")
-    public @ResponseBody  Insect create(@RequestParam("imageFile") MultipartFile file,
+    @PostMapping(path = "/new")
+    public Insect create(@RequestParam("imageFile") MultipartFile file,
                          @RequestParam("name") String name,
                          @RequestParam("date") Date date,
                          @RequestParam("description") String description,
@@ -49,22 +46,19 @@ public class InsectController {
         }
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody
-    List<Insect> getAllInsects() {
+    @GetMapping(path = "/all")
+    public List<Insect> getAllInsects() {
 
         return (List<Insect>) this.insectRepository.findAll();
     }
 
-    @GetMapping(path="/{id}")
-    @ResponseBody
+    @GetMapping(path = "/{id}")
     public Insect getById(@PathVariable String id) {
         Long entryId = Long.parseLong(id);
         return this.insectRepository.findById(entryId).orElse(null);
     }
 
-    @GetMapping(path="/creator/{id}")
-    @ResponseBody
+    @GetMapping(path = "/creator/{id}")
     public List<Insect> getByCreator(@PathVariable String id) {
         Long userId = Long.parseLong(id);
         User createdBy = userRepository.findById(userId).orElse(null);

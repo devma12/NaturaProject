@@ -1,38 +1,21 @@
 package com.natura.web.server.integration.db;
 
-import com.natura.web.server.entities.Phenology;
 import com.natura.web.server.entities.Species;
-import com.natura.web.server.repo.SpeciesRepository;
+import com.natura.web.server.repository.SpeciesRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
+import static com.natura.web.server.TestUtils.createDefaultButterfly;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class SpeciesTests {
+class SpeciesTest {
 
     @Autowired
     SpeciesRepository speciesRepository;
-
-    static public Species createDefaultButterfly() {
-        Species species = new Species();
-        species.setCommonName("Petite tortue");
-        species.setScientificName("Aglais urticae");
-        species.setType(Species.Type.Insect);
-        species.setOrder("Lepidoptera");
-        species.setFamily("Nymphalidae");
-        List<Phenology> phenologies = new ArrayList<>();
-        phenologies.add(new Phenology(Month.APRIL, Month.SEPTEMBER));
-        species.setPhenologies(phenologies);
-        species.setHabitatType("rural");
-        return species;
-    }
 
     @Test
     void createSpecies() {

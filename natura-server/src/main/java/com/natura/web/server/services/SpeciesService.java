@@ -3,17 +3,17 @@ package com.natura.web.server.services;
 import com.natura.web.server.entities.Phenology;
 import com.natura.web.server.entities.Species;
 import com.natura.web.server.exceptions.InvalidDataException;
-import com.natura.web.server.repo.SpeciesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.natura.web.server.repository.SpeciesRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Month;
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class SpeciesService {
 
-    @Autowired
     private SpeciesRepository speciesRepository;
 
     public Species create(Species species) throws InvalidDataException {
@@ -33,9 +33,9 @@ public class SpeciesService {
         }
 
 
-        if (species.getPhenologies() != null && species.getPhenologies().size() > 0) {
+        if (species.getPhenologies() != null && species.getPhenologies().isEmpty()) {
             // Check phenology start is before phenology end
-            for (Phenology phenology: species.getPhenologies()) {
+            for (Phenology phenology : species.getPhenologies()) {
                 if (phenology.getStart().compareTo(phenology.getEnd()) > 0) {
                     throw new InvalidDataException("Invalid phenology: Start and end months should be reversed.");
                 }
@@ -49,7 +49,6 @@ public class SpeciesService {
         }
 
 
-
         Species created = speciesRepository.save(species);
         return created;
     }
@@ -58,7 +57,7 @@ public class SpeciesService {
         for (int i = 0; i < phenologies.size(); i++) {
             for (int j = 0; j < phenologies.size(); j++) {
                 if (phenologies.get(i) != null && phenologies.get(j) != null
-                        && phenologies.get(i) != phenologies.get(j)) {
+                    && phenologies.get(i) != phenologies.get(j)) {
                     Month iStart = phenologies.get(i).getStart();
                     Month iEnd = phenologies.get(i).getEnd();
                     Month jStart = phenologies.get(j).getStart();

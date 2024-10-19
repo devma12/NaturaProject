@@ -1,10 +1,12 @@
-package com.natura.web.server.repo;
+package com.natura.web.server.repository;
 
 import com.natura.web.server.entities.Species;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface SpeciesRepository extends CrudRepository<Species, Long> {
 
     public List<Species> findByType(Species.Type type);

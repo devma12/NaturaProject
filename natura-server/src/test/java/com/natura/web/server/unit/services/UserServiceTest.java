@@ -1,9 +1,9 @@
 package com.natura.web.server.unit.services;
 
 import com.natura.web.server.entities.User;
-import com.natura.web.server.exceptions.UserAccountException;
 import com.natura.web.server.exceptions.ServerException;
-import com.natura.web.server.repo.UserRepository;
+import com.natura.web.server.exceptions.UserAccountException;
+import com.natura.web.server.repository.UserRepository;
 import com.natura.web.server.services.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class UserServiceTests {
+class UserServiceTest {
 
     @Autowired
     UserService userService;
