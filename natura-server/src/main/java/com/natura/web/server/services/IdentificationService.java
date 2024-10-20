@@ -68,9 +68,9 @@ public class IdentificationService {
         }
 
         // Check species and entry types are consistent
-        if (entry instanceof Flower && species.getType() != Species.Type.Flower) {
+        if (entry instanceof Flower && species.getType() != Species.Type.FLOWER) {
             throw new InvalidDataException("Suggested species must be of type Flower for a Flower entry.");
-        } else if (entry instanceof Insect && species.getType() != Species.Type.Insect) {
+        } else if (entry instanceof Insect && species.getType() != Species.Type.INSECT) {
             throw new InvalidDataException("Suggested species must be of type Insect for an Insect entry.");
         }
 
@@ -105,10 +105,10 @@ public class IdentificationService {
         // Check user has the right to validate this identification
         else if (identification.getEntry() instanceof Flower) {
             if (!validator.isFlowerValidator())
-                throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.Flower);
+                throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.FLOWER);
         } else if (identification.getEntry() instanceof Insect) {
             if (!validator.isInsectValidator())
-                throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.Insect);
+                throw new UserAccountException.ValidationPermissionException(validator.getUsername(), Species.Type.INSECT);
         } else {
             throw new InvalidDataException("Invalid entry of identification { entry : " + entryId + ", species: " + speciesId + " }");
         }

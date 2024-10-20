@@ -12,7 +12,7 @@ public class TestUtils {
         Species species = new Species();
         species.setCommonName("Petite tortue");
         species.setScientificName("Aglais urticae");
-        species.setType(Species.Type.Insect);
+        species.setType(Species.Type.INSECT);
         species.setOrder("Lepidoptera");
         species.setFamily("Nymphalidae");
         List<Phenology> phenologies = new ArrayList<>();

@@ -14,7 +14,3 @@ hibernate:
 # custom properties
 validation:
   countNeeded: 3
-
-
-
-

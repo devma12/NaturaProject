@@ -6,6 +6,7 @@ import com.natura.web.server.repository.UserRepository;
 import com.natura.web.server.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -13,15 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(path = "/natura-api/user")
 public class UserController {
 
-    @Lazy
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private UserRepository userRepository;
 
     @PostMapping(path = "/register")

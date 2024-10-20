@@ -2,8 +2,10 @@ package com.natura.web.server.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import lombok.EqualsAndHashCode;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
+@EqualsAndHashCode(callSuper = true)
 public class WebTokenAuthenticationDetails extends WebAuthenticationDetails {
 	
 	/**

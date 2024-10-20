@@ -1,19 +1,37 @@
 package com.natura.web.server.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import java.io.Serializable;
-
 import java.util.List;
 import java.util.Set;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 @Entity
 public class Species extends ValidableItem implements Serializable {
 
-    public static enum Type {
-        Flower,
-        Insect;
+    public enum Type {
+        FLOWER,
+        INSECT;
     }
 
     @Id
@@ -50,78 +68,6 @@ public class Species extends ValidableItem implements Serializable {
 
     public Species() {
         super();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCommonName() {
-        return commonName;
-    }
-
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
-    }
-
-    public String getScientificName() {
-        return scientificName;
-    }
-
-    public void setScientificName(String scientificName) {
-        this.scientificName = scientificName;
-    }
-
-    public Set<Criteria> getCriteria() {
-        return criteria;
-    }
-
-    public void setCriteria(Set<Criteria> criteria) {
-        this.criteria = criteria;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
-    }
-
-    public String getFamily() {
-        return family;
-    }
-
-    public void setFamily(String family) {
-        this.family = family;
-    }
-
-    public List<Phenology> getPhenologies() {
-        return phenologies;
-    }
-
-    public void setPhenologies(List<Phenology> phenologies) {
-        this.phenologies = phenologies;
-    }
-
-    public String getHabitatType() {
-        return habitatType;
-    }
-
-    public void setHabitatType(String habitatType) {
-        this.habitatType = habitatType;
     }
 
 }

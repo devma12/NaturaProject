@@ -4,19 +4,19 @@ import com.natura.web.server.entities.Species;
 import com.natura.web.server.exceptions.ServerException;
 import com.natura.web.server.repository.SpeciesRepository;
 import com.natura.web.server.services.SpeciesService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(path = "/natura-api/species")
 public class SpeciesController {
 
-    @Autowired
     private SpeciesService speciesService;
 
-    @Autowired
     private SpeciesRepository speciesRepository;
 
     @GetMapping(path = "/all")

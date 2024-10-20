@@ -5,15 +5,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 public abstract class ServerException extends Exception {
 
-    protected HttpStatus status;
+    protected final HttpStatus status;
 
-    public ServerException(HttpStatus status, String message) {
+    protected ServerException(HttpStatus status, String message) {
         super(message);
         this.status = status;
     }
 
 
-    public ServerException(HttpStatus status, String message, Throwable cause) {
+    protected ServerException(HttpStatus status, String message, Throwable cause) {
         super(message, cause);
         this.status = status;
     }

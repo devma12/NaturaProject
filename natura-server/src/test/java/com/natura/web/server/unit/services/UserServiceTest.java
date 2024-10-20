@@ -67,28 +67,28 @@ class UserServiceTest {
     }
 
     @Test
-    void registerUserWithoutEmail() throws ServerException {
+    void registerUserWithoutEmail() {
         Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
             userService.register(null, "testUser", "pwd");
         });
     }
 
     @Test
-    void registerUserWithoutUsername() throws ServerException {
+    void registerUserWithoutUsername() {
         Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
             userService.register("test@exemple.com", null, "pwd");
         });
     }
 
     @Test
-    void registerUserWithoutPassword() throws ServerException {
+    void registerUserWithoutPassword() {
         Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
             userService.register("test@exemple.com", "testUser", null);
         });
     }
 
     @Test
-    void registerUserWithUsedEmail() throws ServerException {
+    void registerUserWithUsedEmail() {
         Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(new User());
         Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
 
@@ -98,7 +98,7 @@ class UserServiceTest {
     }
 
     @Test
-    void registerUserWithUsedUsername() throws ServerException {
+    void registerUserWithUsedUsername() {
         Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(null);
         Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenReturn(new User());
 

@@ -56,10 +56,10 @@ class ValidateIdentificationTest {
         Mockito.lenient().when(userRepository.findById(3L)).thenReturn(Optional.of(insectValidator));
 
         Species fSpecies = new Species();
-        fSpecies.setType(Species.Type.Flower);
+        fSpecies.setType(Species.Type.FLOWER);
         Mockito.lenient().when(speciesRepository.findById(1L)).thenReturn(Optional.of(fSpecies));
         Species iSpecies = new Species();
-        iSpecies.setType(Species.Type.Insect);
+        iSpecies.setType(Species.Type.INSECT);
         Mockito.lenient().when(speciesRepository.findById(2L)).thenReturn(Optional.of(iSpecies));
 
         Entry flower = new Flower();
@@ -108,7 +108,7 @@ class ValidateIdentificationTest {
         Mockito.lenient().when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         Species species = new Species();
-        species.setType(Species.Type.Flower);
+        species.setType(Species.Type.FLOWER);
         Mockito.lenient().when(speciesRepository.findById(1L)).thenReturn(Optional.of(species));
 
         Entry entry = new Flower();
@@ -130,7 +130,7 @@ class ValidateIdentificationTest {
         Mockito.lenient().when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         Species species = new Species();
-        species.setType(Species.Type.Flower);
+        species.setType(Species.Type.FLOWER);
         Mockito.lenient().when(speciesRepository.findById(1L)).thenReturn(Optional.of(species));
 
         Entry entry = new Flower();
