@@ -29,45 +29,45 @@ import lombok.ToString;
 @Entity
 public class Species extends ValidableItem implements Serializable {
 
-    public enum Type {
-        FLOWER,
-        INSECT;
-    }
+  public enum Type {
+    FLOWER,
+    INSECT;
+  }
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name="common_name", unique=true, nullable = false)
-    private String commonName;
+  @Column(name = "common_name", unique = true, nullable = false)
+  private String commonName;
 
-    @Column(name="scientific_name", unique=true, nullable = false)
-    private String scientificName;
+  @Column(name = "scientific_name", unique = true, nullable = false)
+  private String scientificName;
 
-    @Enumerated(EnumType.STRING)
-    private Type type;
+  @Enumerated(EnumType.STRING)
+  private Type type;
 
-    @Column(name="classification_order")
-    private String order;
+  @Column(name = "classification_order")
+  private String order;
 
-    @Column(name="family")
-    private String family;
+  @Column(name = "family")
+  private String family;
 
-    @OneToMany(mappedBy = "species", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Phenology> phenologies;
+  @OneToMany(mappedBy = "species", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private List<Phenology> phenologies;
 
-    private String habitatType;
+  private String habitatType;
 
-    @ManyToMany
-    @JoinTable(
-            name = "species_criteria",
-            joinColumns = @JoinColumn(name = "species_id"),
-            inverseJoinColumns = @JoinColumn(name = "criteria_id"))
-    private Set<Criteria> criteria;
+  @ManyToMany
+  @JoinTable(
+      name = "species_criteria",
+      joinColumns = @JoinColumn(name = "species_id"),
+      inverseJoinColumns = @JoinColumn(name = "criteria_id"))
+  private Set<Criteria> criteria;
 
-    public Species() {
-        super();
-    }
+  public Species() {
+    super();
+  }
 
 }

@@ -1,59 +1,70 @@
 package com.natura.web.server.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Image {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "type")
-    private String type;
+  @Column(name = "type")
+  private String type;
 
-    @Column(name = "data", columnDefinition="MEDIUMBLOB")
-    @Lob
-    private byte[] data;
+  @Column(name = "data", columnDefinition = "MEDIUMBLOB")
+  @Lob
+  private byte[] data;
 
-    public Image() {
-        this.id = Long.valueOf(-1);
-    }
+  public Image() {
+    this.id = Long.valueOf(-1);
+  }
 
-    public Image(String name, String type, byte[] bytes) {
-        this();
-        this.name = name;
-        this.type = type;
-        this.data = bytes;
-    }
-    public Long getId() {
-        return id;
-    }
+  public Image(String name, String type, byte[] bytes) {
+    this();
+    this.name = name;
+    this.type = type;
+    this.data = bytes;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getType() {
-        return type;
-    }
-    public void setType(String type) {
-        this.type = type;
-    }
-    public byte[] getData() {
-        return data;
-    }
-    public void setData(byte[] data) {
-        this.data = data;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public byte[] getData() {
+    return data;
+  }
+
+  public void setData(byte[] data) {
+    this.data = data;
+  }
 }

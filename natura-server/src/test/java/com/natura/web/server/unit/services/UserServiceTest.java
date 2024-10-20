@@ -22,88 +22,88 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class UserServiceTest {
 
-    @Autowired
-    UserService userService;
+  @Autowired
+  UserService userService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+  @Autowired
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @MockBean
-    UserRepository userRepository;
+  @MockBean
+  UserRepository userRepository;
 
-    @BeforeEach
-    void init() {
+  @BeforeEach
+  void init() {
 
-        Mockito.lenient().when(userRepository.save(Mockito.any())).then(AdditionalAnswers.returnsFirstArg());
+    Mockito.lenient().when(userRepository.save(Mockito.any())).then(AdditionalAnswers.returnsFirstArg());
 
-    }
+  }
 
-    @Test
-    void registerNewValidUser() throws ServerException {
-        String username = "testUser";
-        String password = "pwd";
+  @Test
+  void registerNewValidUser() throws ServerException {
+    String username = "testUser";
+    String password = "pwd";
 
-        User user = new User();
-        user.setId((long) 1);
-        user.setUsername(username);
-        user.setPassword(bCryptPasswordEncoder.encode(password));
+    User user = new User();
+    user.setId((long) 1);
+    user.setUsername(username);
+    user.setPassword(bCryptPasswordEncoder.encode(password));
 
-        Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(null);
-        Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenAnswer(new Answer() {
-            private int count = 0;
+    Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(null);
+    Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenAnswer(new Answer() {
+      private int count = 0;
 
-            public Object answer(InvocationOnMock invocation) {
-                if (count == 0) {
-                    count++;
-                    return null;
-                }
+      public Object answer(InvocationOnMock invocation) {
+        if (count == 0) {
+          count++;
+          return null;
+        }
 
-                return user;
-            }
-        });
+        return user;
+      }
+    });
 
-        User newUser = userService.register("test@exemple.com", username, password);
-        Assertions.assertNotNull(newUser);
-    }
+    User newUser = userService.register("test@exemple.com", username, password);
+    Assertions.assertNotNull(newUser);
+  }
 
-    @Test
-    void registerUserWithoutEmail() {
-        Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
-            userService.register(null, "testUser", "pwd");
-        });
-    }
+  @Test
+  void registerUserWithoutEmail() {
+    Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
+      userService.register(null, "testUser", "pwd");
+    });
+  }
 
-    @Test
-    void registerUserWithoutUsername() {
-        Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
-            userService.register("test@exemple.com", null, "pwd");
-        });
-    }
+  @Test
+  void registerUserWithoutUsername() {
+    Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
+      userService.register("test@exemple.com", null, "pwd");
+    });
+  }
 
-    @Test
-    void registerUserWithoutPassword() {
-        Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
-            userService.register("test@exemple.com", "testUser", null);
-        });
-    }
+  @Test
+  void registerUserWithoutPassword() {
+    Assertions.assertThrows(UserAccountException.MandatoryUserDetailException.class, () -> {
+      userService.register("test@exemple.com", "testUser", null);
+    });
+  }
 
-    @Test
-    void registerUserWithUsedEmail() {
-        Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(new User());
-        Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
+  @Test
+  void registerUserWithUsedEmail() {
+    Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(new User());
+    Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
 
-        Assertions.assertThrows(UserAccountException.DuplicateAccountException.class, () -> {
-            userService.register("test@exemple.com", "testUser", "pwd");
-        });
-    }
+    Assertions.assertThrows(UserAccountException.DuplicateAccountException.class, () -> {
+      userService.register("test@exemple.com", "testUser", "pwd");
+    });
+  }
 
-    @Test
-    void registerUserWithUsedUsername() {
-        Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(null);
-        Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenReturn(new User());
+  @Test
+  void registerUserWithUsedUsername() {
+    Mockito.lenient().when(userRepository.findByEmail(Mockito.any())).thenReturn(null);
+    Mockito.lenient().when(userRepository.findByUsername(Mockito.any())).thenReturn(new User());
 
-        Assertions.assertThrows(UserAccountException.DuplicateAccountException.class, () -> {
-            userService.register("test@exemple.com", "testUser", "pwd");
-        });
-    }
+    Assertions.assertThrows(UserAccountException.DuplicateAccountException.class, () -> {
+      userService.register("test@exemple.com", "testUser", "pwd");
+    });
+  }
 }
