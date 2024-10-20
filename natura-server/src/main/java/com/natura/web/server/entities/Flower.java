@@ -8,9 +8,11 @@ import java.util.Date;
 @DiscriminatorValue("FLOWER")
 public class Flower extends Entry {
 
-    public Flower() { super(); }
+  public Flower() {
+    super();
+  }
 
-    public Flower(String name, Date date, String description, String location) {
-        super(name, date, description, location);
-    }
+  public Flower(String name, Date date, String description, String location) {
+    super(name, date, description, location);
+  }
 }

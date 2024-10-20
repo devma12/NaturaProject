@@ -19,30 +19,30 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private AppAuthenticationEntryPoint authenticationEntryPoint;
+  @Autowired
+  private AppAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Lazy
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+  @Lazy
+  @Autowired
+  private JwtRequestFilter jwtRequestFilter;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                .requestMatchers("/natura-api/user/register").permitAll()
-                .requestMatchers("/natura-api/user/login").permitAll()
-                .requestMatchers("/natura-api/user/logout").permitAll()
-                .requestMatchers("/natura-api/user/authenticate").permitAll()
-                .anyRequest().authenticated()).httpBasic(Customizer.withDefaults())
-            .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
-                .authenticationEntryPoint(authenticationEntryPoint))
-            .sessionManagement(sessionManagement -> sessionManagement
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+            .requestMatchers("/natura-api/user/register").permitAll()
+            .requestMatchers("/natura-api/user/login").permitAll()
+            .requestMatchers("/natura-api/user/logout").permitAll()
+            .requestMatchers("/natura-api/user/authenticate").permitAll()
+            .anyRequest().authenticated()).httpBasic(Customizer.withDefaults())
+        .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
+            .authenticationEntryPoint(authenticationEntryPoint))
+        .sessionManagement(sessionManagement -> sessionManagement
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    return http.build();
+  }
 }

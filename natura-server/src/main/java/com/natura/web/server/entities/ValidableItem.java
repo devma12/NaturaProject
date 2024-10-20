@@ -8,6 +8,6 @@ import lombok.Data;
 @MappedSuperclass
 public abstract class ValidableItem {
 
-    @Column(name="validated", nullable = false)
-    private boolean isValidated = false;
+  @Column(name = "validated", nullable = false)
+  private boolean isValidated = false;
 }

@@ -8,10 +8,12 @@ import java.util.Date;
 @DiscriminatorValue("INSECT")
 public class Insect extends Entry {
 
-    public Insect() { super(); }
+  public Insect() {
+    super();
+  }
 
-    public Insect(String name, Date date, String description, String location) {
+  public Insect(String name, Date date, String description, String location) {
 
-        super(name, date, description, location);
-    }
+    super(name, date, description, location);
+  }
 }

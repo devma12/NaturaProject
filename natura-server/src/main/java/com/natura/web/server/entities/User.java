@@ -1,102 +1,106 @@
 package com.natura.web.server.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import java.util.Set;
 
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(unique=true, nullable = false)
-    private String email;
+  @Column(unique = true, nullable = false)
+  private String email;
 
-    @Column(unique=true, nullable = false)
-    private String username;
+  @Column(unique = true, nullable = false)
+  private String username;
 
-    @Column(nullable = false)
-    private String password;
+  @Column(nullable = false)
+  private String password;
 
-    @Column(unique=true, columnDefinition="VARCHAR(500)")
-    private String token;
+  @Column(unique = true, columnDefinition = "VARCHAR(500)")
+  private String token;
 
-    @Column(name = "flower_validator")
-    private boolean flowerValidator;
+  @Column(name = "flower_validator")
+  private boolean flowerValidator;
 
-    @Column(name = "insect_validator")
-    private boolean insectValidator;
+  @Column(name = "insect_validator")
+  private boolean insectValidator;
 
-    @ManyToMany(mappedBy = "likes")
-    @JsonIgnore
-    private Set<Identification> liked;
+  @ManyToMany(mappedBy = "likes")
+  @JsonIgnore
+  private Set<Identification> liked;
 
-    public User() {
-        this.flowerValidator = false;
-        this.insectValidator = false;
-    }
+  public User() {
+    this.flowerValidator = false;
+    this.insectValidator = false;
+  }
 
-    public User(String username) {
-        this();
-        this.username = username;
-    }
+  public User(String username) {
+    this();
+    this.username = username;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getToken() {
-        return token;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+  public void setToken(String token) {
+    this.token = token;
+  }
 
-    public boolean isFlowerValidator() {
-        return flowerValidator;
-    }
+  public boolean isFlowerValidator() {
+    return flowerValidator;
+  }
 
-    public void setFlowerValidator(boolean flowerValidator) {
-        this.flowerValidator = flowerValidator;
-    }
+  public void setFlowerValidator(boolean flowerValidator) {
+    this.flowerValidator = flowerValidator;
+  }
 
-    public boolean isInsectValidator() {
-        return insectValidator;
-    }
+  public boolean isInsectValidator() {
+    return insectValidator;
+  }
 
-    public void setInsectValidator(boolean insectValidator) {
-        this.insectValidator = insectValidator;
-    }
+  public void setInsectValidator(boolean insectValidator) {
+    this.insectValidator = insectValidator;
+  }
 }
