@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Species } from 'src/app/core/models/species.model';
 
 @Component({
@@ -14,13 +14,13 @@ export class NewEntryComponent implements OnInit {
 
   @Output() entry = new EventEmitter<any>(); 
 
-  entryForm: FormGroup;
+  entryForm: UntypedFormGroup;
 
   selectedFile: File;
 
   maxDate: Date = new Date();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this.initForm();

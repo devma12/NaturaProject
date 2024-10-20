@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CustomErrorStateMatcher } from 'src/app/core/matchers/error-state.matcher';
 
@@ -10,14 +10,14 @@ import { CustomErrorStateMatcher } from 'src/app/core/matchers/error-state.match
 })
 export class ChangeEmailComponent {
 
-  email: FormControl;
+  email: UntypedFormControl;
   matcher: CustomErrorStateMatcher;
 
   constructor(
     public dialogRef: MatDialogRef<ChangeEmailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string) {
     this.matcher = new CustomErrorStateMatcher();
-    this.email =new FormControl(data, [Validators.required, Validators.email]);
+    this.email =new UntypedFormControl(data, [Validators.required, Validators.email]);
   }
 
   onNoClick(): void {

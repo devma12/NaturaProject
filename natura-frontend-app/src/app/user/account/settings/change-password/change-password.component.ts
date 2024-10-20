@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CrossFieldErrorMatcher } from 'src/app/core/matchers/cross-field-error.matcher';
 import { matchValidator } from 'src/app/core/validators/match.validator';
@@ -14,10 +14,10 @@ export class ChangePasswordComponent implements OnInit {
   matcher: CrossFieldErrorMatcher;
 
   passwords: any = {};
-  passwordForm: FormGroup;
+  passwordForm: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<ChangePasswordComponent>) {
     this.matcher = new CrossFieldErrorMatcher();
   }

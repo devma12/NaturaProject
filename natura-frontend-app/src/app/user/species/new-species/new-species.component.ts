@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Phenology } from 'src/app/core/models/phenology.model';
 import { Species } from 'src/app/core/models/species.model';
@@ -16,11 +16,11 @@ export class NewSpeciesComponent implements OnInit, OnDestroy {
 
   public SpeciesType = SpeciesType;
 
-  speciesForm: FormGroup;
+  speciesForm: UntypedFormGroup;
 
   ranges: any[] = [{start: 1, end: 1}];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private router: Router,
               private loadingService: LoadingFromServerService,
               private speciesService: SpeciesService) { }

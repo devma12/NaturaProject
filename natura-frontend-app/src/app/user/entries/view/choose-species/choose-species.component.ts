@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { Species } from 'src/app/core/models/species.model';
 export class ChooseSpeciesComponent implements OnInit {
 
   selected: Species;
-  selectControl = new FormControl();
+  selectControl = new UntypedFormControl();
   options: Species[];
   filteredOptions: Observable<Species[]>;
 
