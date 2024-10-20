@@ -122,8 +122,7 @@ public class UserService {
     private User getUserFromAuthentication(Authentication auth, boolean withPassword)
         throws UserAccountException.AuthenticationException, UserAccountException.InvalidAccountDataException {
 
-        if (auth.getPrincipal() != null && auth.getPrincipal() instanceof UserDetails) {
-            UserDetails details = (UserDetails) auth.getPrincipal();
+        if (auth.getPrincipal() instanceof UserDetails details) {
             User user = new User(details.getUsername());
             this.getInternalUserData(user, withPassword);
             return user;
@@ -173,9 +172,7 @@ public class UserService {
         User logged = getUserFromAuthentication(auth, true);
 
         // default spring logout call
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
+        new SecurityContextLogoutHandler().logout(request, response, auth);
 
         // reset token in db
         logged.setToken(null);

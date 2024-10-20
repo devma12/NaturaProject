@@ -97,7 +97,7 @@ class IdentificationTest {
             species = new Species();
             species.setCommonName(speciesName);
             species.setScientificName("scientificName");
-            species.setType(Species.Type.Flower);
+            species.setType(Species.Type.FLOWER);
             species = speciesRepository.save(species);
         }
         this.speciesId = species.getId();
@@ -144,7 +144,7 @@ class IdentificationTest {
         Species species = new Species();
         species.setCommonName("Azuré bleu céleste");
         species.setScientificName("Lysandra bellargus");
-        species.setType(Species.Type.Insect);
+        species.setType(Species.Type.INSECT);
         species = speciesRepository.save(species);
         // create an entry
         Insect entry = new Insect("testButterfly", new Date(), "description", "location");
@@ -161,9 +161,9 @@ class IdentificationTest {
 
     private Identification createIdentification(Species.Type type, String entryName, User user, String speciesName, boolean isValidated) {
         Entry entry = null;
-        if (type == Species.Type.Flower) {
+        if (type == Species.Type.FLOWER) {
             entry = new Flower();
-        } else if (type == Species.Type.Insect) {
+        } else if (type == Species.Type.INSECT) {
             entry = new Insect();
         }
 
@@ -196,9 +196,9 @@ class IdentificationTest {
         user.setPassword("pwd");
         user = userRepository.save(user);
 
-        createIdentification(Species.Type.Flower, "item1", user, "species_flower1", true);
-        createIdentification(Species.Type.Insect, "item2", user, "species_insect1", true);
-        createIdentification(Species.Type.Flower, "item3", user, "species_flower2", false);
+        createIdentification(Species.Type.FLOWER, "item1", user, "species_flower1", true);
+        createIdentification(Species.Type.INSECT, "item2", user, "species_insect1", true);
+        createIdentification(Species.Type.FLOWER, "item3", user, "species_flower2", false);
 
         List<Identification> identifications = identificationRepository.findBySuggestedBy(user);
         Assertions.assertTrue(identifications != null && identifications.size() == 3);
@@ -213,10 +213,10 @@ class IdentificationTest {
         user.setPassword("pwd");
         user = userRepository.save(user);
 
-        createIdentification(Species.Type.Flower, "element1", user, "flower1", true);
-        createIdentification(Species.Type.Insect, "element2", user, "insect1", true);
-        createIdentification(Species.Type.Flower, "element3", user, "flower2", true);
-        createIdentification(Species.Type.Flower, "element4", user, "flower3", false);
+        createIdentification(Species.Type.FLOWER, "element1", user, "flower1", true);
+        createIdentification(Species.Type.INSECT, "element2", user, "insect1", true);
+        createIdentification(Species.Type.FLOWER, "element3", user, "flower2", true);
+        createIdentification(Species.Type.FLOWER, "element4", user, "flower3", false);
 
 
         identificationService.giveValidatorRights(user);
@@ -233,9 +233,9 @@ class IdentificationTest {
         user.setPassword("pwd");
         user = userRepository.save(user);
 
-        createIdentification(Species.Type.Flower, "el1", user, "plant1", true);
-        createIdentification(Species.Type.Flower, "el2", user, "plant2", true);
-        createIdentification(Species.Type.Flower, "el3", user, "plant3", true);
+        createIdentification(Species.Type.FLOWER, "el1", user, "plant1", true);
+        createIdentification(Species.Type.FLOWER, "el2", user, "plant2", true);
+        createIdentification(Species.Type.FLOWER, "el3", user, "plant3", true);
 
         identificationService.giveValidatorRights(user);
         user = userRepository.findByUsername(username);
@@ -250,7 +250,7 @@ class IdentificationTest {
         user.setPassword("pwd");
         user = userRepository.save(user);
 
-        Identification created = createIdentification(Species.Type.Flower, "red_flower", user, "Rosaceae", false);
+        Identification created = createIdentification(Species.Type.FLOWER, "red_flower", user, "Rosaceae", false);
         Long speciesId = created.getSpecies().getId();
         Long entryId = created.getEntry().getId();
 
@@ -269,7 +269,7 @@ class IdentificationTest {
         user.setPassword("pwd");
         user = userRepository.save(user);
 
-        Identification created = createIdentification(Species.Type.Flower, "blue_flower", user, "Cyanus segetum", false);
+        Identification created = createIdentification(Species.Type.FLOWER, "blue_flower", user, "Cyanus segetum", false);
         Long speciesId = created.getSpecies().getId();
         Long entryId = created.getEntry().getId();
 
@@ -289,7 +289,7 @@ class IdentificationTest {
         user.setPassword("pwd");
         user = userRepository.save(user);
 
-        Identification created = createIdentification(Species.Type.Flower, "white_flower", user, "Orchidaceae", false);
+        Identification created = createIdentification(Species.Type.FLOWER, "white_flower", user, "Orchidaceae", false);
         Long speciesId = created.getSpecies().getId();
         Long entryId = created.getEntry().getId();
 

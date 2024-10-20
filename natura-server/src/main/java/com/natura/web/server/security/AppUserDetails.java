@@ -1,27 +1,29 @@
 package com.natura.web.server.security;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
-import java.util.*;
-
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class AppUserDetails extends User {
 
     private String email;
 
     public AppUserDetails(String username, String email, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -60,7 +62,7 @@ public class AppUserDetails extends User {
         }
 
         public AppUserBuilder roles(String... roles) {
-            List<GrantedAuthority> authorities = new ArrayList(roles.length);
+            List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles.length);
             String[] var3 = roles;
             int var4 = roles.length;
 
@@ -69,28 +71,28 @@ public class AppUserDetails extends User {
                 Assert.isTrue(!role.startsWith("ROLE_"), () -> {
                     return role + " cannot start with ROLE_ (it is automatically added)";
                 });
-                authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role));
             }
 
-            return this.authorities((Collection)authorities);
+            return this.authorities(grantedAuthorities);
         }
 
         public AppUserBuilder roles(boolean isFlowerValidator, boolean isInsectValidator) {
-            List<GrantedAuthority> authorities = new ArrayList();
+            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             if (isFlowerValidator)
-                authorities.add(new SimpleGrantedAuthority("ROLE_FLOWER_VALIDATOR"));
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_FLOWER_VALIDATOR"));
             if (isInsectValidator)
-                authorities.add(new SimpleGrantedAuthority("ROLE_INSECT_VALIDATOR"));
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_INSECT_VALIDATOR"));
 
-            return this.authorities((Collection)authorities);
+            return this.authorities(grantedAuthorities);
         }
 
-        public AppUserBuilder authorities(GrantedAuthority... authorities) {
-            return this.authorities((Collection) Arrays.asList(authorities));
+        public AppUserBuilder authorities(GrantedAuthority... grantedAuthorities) {
+            return this.authorities(Arrays.asList(grantedAuthorities));
         }
 
         public AppUserBuilder authorities(Collection<? extends GrantedAuthority> authorities) {
-            this.authorities = new ArrayList(authorities);
+            this.authorities = new ArrayList<>(authorities);
             return this;
         }
 

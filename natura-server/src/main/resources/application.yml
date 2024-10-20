@@ -28,5 +28,3 @@ jwt:
 # custom properties
 validation:
   countNeeded: 10
-
-

@@ -48,10 +48,10 @@ class LikeIdentificationTest {
         Mockito.lenient().when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         Species fSpecies = new Species();
-        fSpecies.setType(Species.Type.Flower);
+        fSpecies.setType(Species.Type.FLOWER);
         Mockito.lenient().when(speciesRepository.findById(1L)).thenReturn(Optional.of(fSpecies));
         Species iSpecies = new Species();
-        iSpecies.setType(Species.Type.Insect);
+        iSpecies.setType(Species.Type.INSECT);
         Mockito.lenient().when(speciesRepository.findById(2L)).thenReturn(Optional.of(iSpecies));
 
         Entry flower = new Flower();

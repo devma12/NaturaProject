@@ -12,6 +12,7 @@ public class WebTokenAuthenticationDetailsSource extends WebAuthenticationDetail
 	 * @return the {@code WebAuthenticationDetails} containing information about the
 	 * current request
 	 */
+	@Override
 	public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
 		return new WebTokenAuthenticationDetails(context);
 	}
