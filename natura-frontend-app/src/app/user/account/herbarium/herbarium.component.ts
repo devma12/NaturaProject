@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs';
 import { Flower } from 'src/app/core/models/entries/flower.model';
 import { Insect } from 'src/app/core/models/entries/insect.model';
 import { SpeciesType } from 'src/app/core/models/type.enum';

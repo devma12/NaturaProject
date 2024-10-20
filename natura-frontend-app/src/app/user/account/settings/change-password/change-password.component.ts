@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { CrossFieldErrorMatcher } from 'src/app/core/matchers/cross-field-error.matcher';
 import { matchValidator } from 'src/app/core/validators/match.validator';
 
