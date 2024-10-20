@@ -72,19 +72,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "natura-frontend-app:build",
-            "proxyConfig": "src/proxy.conf.json"
+            "proxyConfig": "src/proxy.conf.json",
+            "buildTarget": "natura-frontend-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "natura-frontend-app:build:production"
+              "buildTarget": "natura-frontend-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "natura-frontend-app:build"
+            "buildTarget": "natura-frontend-app:build"
           }
         },
         "test": {
