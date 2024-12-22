@@ -4,9 +4,10 @@ import { Month } from 'src/app/core/models/month.enum';
 import { EnumToArrayPipe } from 'src/app/core/pipes/enum-to-array.pipe';
 
 @Component({
-  selector: 'app-month-range-slider',
-  templateUrl: './month-range-slider.component.html',
-  styleUrls: ['./month-range-slider.component.scss']
+    selector: 'app-month-range-slider',
+    templateUrl: './month-range-slider.component.html',
+    styleUrls: ['./month-range-slider.component.scss'],
+    standalone: false
 })
 export class MonthRangeSliderComponent {
 

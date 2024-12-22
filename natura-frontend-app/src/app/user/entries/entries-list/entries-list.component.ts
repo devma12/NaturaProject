@@ -9,9 +9,10 @@ import { InsectService } from 'src/app/core/services/insect.service';
 import { LoadingFromServerService } from 'src/app/core/services/loading-from-server.service';
 
 @Component({
-  selector: 'app-entries-list',
-  templateUrl: './entries-list.component.html',
-  styleUrls: ['./entries-list.component.scss']
+    selector: 'app-entries-list',
+    templateUrl: './entries-list.component.html',
+    styleUrls: ['./entries-list.component.scss'],
+    standalone: false
 })
 export class EntriesListComponent implements OnInit, OnDestroy {
 

@@ -3,9 +3,10 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-main-menu',
-  templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.scss'],
+    selector: 'app-main-menu',
+    templateUrl: './main-menu.component.html',
+    styleUrls: ['./main-menu.component.scss'],
+    standalone: false
 })
 export class MainMenuComponent implements OnInit, OnDestroy {
   

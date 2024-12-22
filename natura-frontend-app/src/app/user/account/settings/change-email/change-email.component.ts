@@ -4,9 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CustomErrorStateMatcher } from 'src/app/core/matchers/error-state.matcher';
 
 @Component({
-  selector: 'app-change-email',
-  templateUrl: './change-email.component.html',
-  styleUrls: ['./change-email.component.scss'],
+    selector: 'app-change-email',
+    templateUrl: './change-email.component.html',
+    styleUrls: ['./change-email.component.scss'],
+    standalone: false
 })
 export class ChangeEmailComponent {
   email: UntypedFormControl;

@@ -11,9 +11,10 @@ import { InsectService } from 'src/app/core/services/insect.service';
 import { LoadingFromServerService } from 'src/app/core/services/loading-from-server.service';
 
 @Component({
-  selector: 'app-herbarium',
-  templateUrl: './herbarium.component.html',
-  styleUrls: ['./herbarium.component.scss'],
+    selector: 'app-herbarium',
+    templateUrl: './herbarium.component.html',
+    styleUrls: ['./herbarium.component.scss'],
+    standalone: false
 })
 export class HerbariumComponent implements OnInit, OnDestroy {
   user: User;

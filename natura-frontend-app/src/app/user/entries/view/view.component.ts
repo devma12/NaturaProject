@@ -23,9 +23,10 @@ import { CommentsComponent } from './comments/comments.component';
 import { LikesComponent } from './likes/likes.component';
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss'],
+    selector: 'app-view',
+    templateUrl: './view.component.html',
+    styleUrls: ['./view.component.scss'],
+    standalone: false
 })
 export class ViewComponent implements OnInit, OnDestroy {
   isRouting: boolean = true;

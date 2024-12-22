@@ -9,9 +9,10 @@ import { CrossFieldErrorMatcher } from 'src/app/core/matchers/cross-field-error.
 import { matchValidator } from 'src/app/core/validators/match.validator';
 
 @Component({
-  selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss'],
+    selector: 'app-change-password',
+    templateUrl: './change-password.component.html',
+    styleUrls: ['./change-password.component.scss'],
+    standalone: false
 })
 export class ChangePasswordComponent implements OnInit {
   matcher: CrossFieldErrorMatcher;

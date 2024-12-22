@@ -6,9 +6,10 @@ import { map, startWith } from 'rxjs/operators';
 import { Species } from 'src/app/core/models/species.model';
 
 @Component({
-  selector: 'app-choose-species',
-  templateUrl: './choose-species.component.html',
-  styleUrls: ['./choose-species.component.scss'],
+    selector: 'app-choose-species',
+    templateUrl: './choose-species.component.html',
+    styleUrls: ['./choose-species.component.scss'],
+    standalone: false
 })
 export class ChooseSpeciesComponent implements OnInit {
   selected: Species;

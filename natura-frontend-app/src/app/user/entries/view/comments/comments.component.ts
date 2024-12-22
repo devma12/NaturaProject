@@ -3,9 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Comment } from 'src/app/core/models/comment.model';
 
 @Component({
-  selector: 'app-comments',
-  templateUrl: './comments.component.html',
-  styleUrls: ['./comments.component.scss'],
+    selector: 'app-comments',
+    templateUrl: './comments.component.html',
+    styleUrls: ['./comments.component.scss'],
+    standalone: false
 })
 export class CommentsComponent {
   comments: Comment[] = [];

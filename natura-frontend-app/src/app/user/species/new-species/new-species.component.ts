@@ -8,9 +8,10 @@ import { LoadingFromServerService } from 'src/app/core/services/loading-from-ser
 import { SpeciesService } from 'src/app/core/services/species.service';
 
 @Component({
-  selector: 'app-new-species',
-  templateUrl: './new-species.component.html',
-  styleUrls: ['./new-species.component.scss']
+    selector: 'app-new-species',
+    templateUrl: './new-species.component.html',
+    styleUrls: ['./new-species.component.scss'],
+    standalone: false
 })
 export class NewSpeciesComponent implements OnInit, OnDestroy {
 

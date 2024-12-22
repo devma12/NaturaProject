@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-field-list-item',
-  templateUrl: './field-list-item.component.html',
-  styleUrls: ['./field-list-item.component.scss']
+    selector: 'app-field-list-item',
+    templateUrl: './field-list-item.component.html',
+    styleUrls: ['./field-list-item.component.scss'],
+    standalone: false
 })
 export class FieldListItemComponent implements OnInit {
 

@@ -6,9 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SpeciesType } from 'src/app/core/models/type.enum';
 
 @Component({
-  selector: 'app-entry-card',
-  templateUrl: './entry-card.component.html',
-  styleUrls: ['./entry-card.component.scss']
+    selector: 'app-entry-card',
+    templateUrl: './entry-card.component.html',
+    styleUrls: ['./entry-card.component.scss'],
+    standalone: false
 })
 export class EntryCardComponent implements OnInit {
 

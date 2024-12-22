@@ -11,9 +11,10 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.scss'],
+    standalone: false
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   user: User;

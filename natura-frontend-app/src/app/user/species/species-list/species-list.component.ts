@@ -9,9 +9,10 @@ import { SpeciesService } from 'src/app/core/services/species.service';
 import { LoadingFromServerService } from 'src/app/core/services/loading-from-server.service';
 
 @Component({
-  selector: 'app-species-list',
-  templateUrl: './species-list.component.html',
-  styleUrls: ['./species-list.component.scss'],
+    selector: 'app-species-list',
+    templateUrl: './species-list.component.html',
+    styleUrls: ['./species-list.component.scss'],
+    standalone: false
 })
 export class SpeciesListComponent implements OnInit, OnDestroy {
   species: Species[];

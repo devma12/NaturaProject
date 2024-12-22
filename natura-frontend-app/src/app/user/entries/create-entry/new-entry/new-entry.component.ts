@@ -7,9 +7,10 @@ import {
 import { Species } from 'src/app/core/models/species.model';
 
 @Component({
-  selector: 'app-new-entry',
-  templateUrl: './new-entry.component.html',
-  styleUrls: ['./new-entry.component.scss'],
+    selector: 'app-new-entry',
+    templateUrl: './new-entry.component.html',
+    styleUrls: ['./new-entry.component.scss'],
+    standalone: false
 })
 export class NewEntryComponent implements OnInit {
   @Input() type: string;

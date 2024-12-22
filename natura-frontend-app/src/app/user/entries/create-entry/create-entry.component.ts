@@ -11,9 +11,10 @@ import { LoadingFromServerService } from 'src/app/core/services/loading-from-ser
 import { SpeciesService } from 'src/app/core/services/species.service';
 
 @Component({
-  selector: 'app-create-entry',
-  templateUrl: './create-entry.component.html',
-  styleUrls: ['./create-entry.component.scss']
+    selector: 'app-create-entry',
+    templateUrl: './create-entry.component.html',
+    styleUrls: ['./create-entry.component.scss'],
+    standalone: false
 })
 export class CreateEntryComponent implements OnInit, OnDestroy {
 

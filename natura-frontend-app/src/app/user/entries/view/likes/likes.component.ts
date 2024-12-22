@@ -3,9 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/core/models/user.model';
 
 @Component({
-  selector: 'app-likes',
-  templateUrl: './likes.component.html',
-  styleUrls: ['./likes.component.scss'],
+    selector: 'app-likes',
+    templateUrl: './likes.component.html',
+    styleUrls: ['./likes.component.scss'],
+    standalone: false
 })
 export class LikesComponent {
   likes: User[] = [];
