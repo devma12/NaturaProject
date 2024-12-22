@@ -8,10 +8,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AlertService } from 'src/app/core/services/alert.service';
-import {
-  MatLegacySnackBarRef as MatSnackBarRef,
-  LegacySimpleSnackBar as SimpleSnackBar,
-} from '@angular/material/legacy-snack-bar';
+import { MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-settings',
