@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
-@import '@angular/material/theming';
-@import './styles/app-material-theme';
+//@use '@angular/material/theming' as mat-theming;
+@use './styles/app-material-theme' as app-theme;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -103,9 +103,6 @@ $success:  mat.m2-define-palette(mat.$m2-green-palette);
     color: mat.m2-get-color-from-palette($primary, 500);
     white-space: pre-line;
 }
-
-/** Text styles **/
-@include mat.legacy-typography-hierarchy($custom-typography);
 
 .text-uppercase {
     text-transform: uppercase;
