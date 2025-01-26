@@ -19,7 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class UserService {
   private AuthenticationManager authenticationManager;
 
   @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private PasswordEncoder passwordEncoder;
 
   @Autowired
   JwtTokenUtil jwtTokenUtil;
@@ -66,7 +66,7 @@ public class UserService {
     User user = new User();
     user.setEmail(email);
     user.setUsername(username);
-    user.setPassword(bCryptPasswordEncoder.encode(password));
+    user.setPassword(passwordEncoder.encode(password));
 
     // save user in db
     user = userRepository.save(user);
@@ -218,11 +218,11 @@ public class UserService {
       }
 
     // Check old password is correct
-    boolean authenticate = bCryptPasswordEncoder.matches(oldPassword, user.getPassword());
+    boolean authenticate = passwordEncoder.matches(oldPassword, user.getPassword());
 
     if (authenticate) {
       // update password and save user
-      String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
+      String encryptedPassword = passwordEncoder.encode(newPassword);
       user.setPassword(encryptedPassword);
       return userRepository.save(user);
     } else {

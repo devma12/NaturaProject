@@ -5,12 +5,13 @@ server:
 # database properties
 spring:
   jpa:
-  hibernate:
-    ddl-auto: update
-  datasource:
-    initialization-mode: always
-    continue-on-error: true
-    data: classpath:/data-mysql.sql
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+      data-locations: classpath:/data-mysql.sql
 
   # multipart file settings
   servlet:
