@@ -1,46 +1,53 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Species } from 'src/app/core/models/species.model';
 
 @Component({
-  selector: 'app-new-entry',
-  templateUrl: './new-entry.component.html',
-  styleUrls: ['./new-entry.component.scss']
+    selector: 'app-new-entry',
+    templateUrl: './new-entry.component.html',
+    styleUrls: ['./new-entry.component.scss'],
+    standalone: false
 })
 export class NewEntryComponent implements OnInit {
-
   @Input() type: string;
   @Input() species: Species[];
 
-  @Output() entry = new EventEmitter<any>(); 
+  @Output() entry = new EventEmitter<any>();
 
-  entryForm: FormGroup;
+  entryForm: UntypedFormGroup;
 
   selectedFile: File;
 
   maxDate: Date = new Date();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.initForm();
   }
 
   initForm() {
-
     this.entryForm = this.formBuilder.group({
       name: ['', Validators.required],
       file: ['', Validators.required],
       date: ['', Validators.required],
       description: [''],
       location: [''],
-      suggestion: ['']
+      suggestion: [''],
     });
-
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      console.log(file);
+      this.selectedFile = file;
+    }
   }
 
   createEntry() {
@@ -52,9 +59,8 @@ export class NewEntryComponent implements OnInit {
       date: formValue['date'],
       description: formValue['description'],
       location: formValue['location'],
-      species: formValue['suggestion']
-    }
+      species: formValue['suggestion'],
+    };
     this.entry.emit(infos);
   }
-
 }

@@ -4,9 +4,10 @@ import { EntryService } from 'src/app/core/services/entry.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-entry',
-  templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.scss']
+    selector: 'app-entry',
+    templateUrl: './entry.component.html',
+    styleUrls: ['./entry.component.scss'],
+    standalone: false
 })
 export class EntryComponent implements OnInit, OnDestroy {
 

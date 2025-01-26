@@ -9,24 +9,32 @@ import { SpeciesService } from 'src/app/core/services/species.service';
 import { LoadingFromServerService } from 'src/app/core/services/loading-from-server.service';
 
 @Component({
-  selector: 'app-species-list',
-  templateUrl: './species-list.component.html',
-  styleUrls: ['./species-list.component.scss']
+    selector: 'app-species-list',
+    templateUrl: './species-list.component.html',
+    styleUrls: ['./species-list.component.scss'],
+    standalone: false
 })
 export class SpeciesListComponent implements OnInit, OnDestroy {
-
   species: Species[];
   species$: Subject<Species[]> = new BehaviorSubject<Species[]>([]);
   speciesSubscription: Subscription;
 
-  displayedColumns: string[] = ['type', 'commonName', 'scientificName', 'family', 'order'];
+  displayedColumns: string[] = [
+    'type',
+    'commonName',
+    'scientificName',
+    'family',
+    'order',
+  ];
   dataSource: MatTableDataSource<Species> = new MatTableDataSource<Species>([]);
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(public loadingService: LoadingFromServerService,
-              private speciesService: SpeciesService) { 
+  constructor(
+    public loadingService: LoadingFromServerService,
+    private speciesService: SpeciesService
+  ) {
     this.loadingService.loading();
   }
 
@@ -36,18 +44,18 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
 
     // subscribe to species$ subject to update data table
-    this.speciesSubscription = this.species$.subscribe(values => {
+    this.speciesSubscription = this.species$.subscribe((values) => {
       this.dataSource.data = values;
     });
 
     // Get all species from db
     this.speciesService.getAll().subscribe(
-      data => {
+      (data) => {
         this.species = data;
         this.species$.next(data);
         this.loadingService.loaded();
       },
-      error => {
+      (error) => {
         this.loadingService.error('Failed to load species !');
       }
     );
@@ -61,9 +69,9 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
   public onTypeChange(val: string) {
     let data: Species[];
     if (val === 'flower') {
-      data = this.species.filter(s => s.type === SpeciesType.Flower);
+      data = this.species.filter((s) => s.type === SpeciesType.Flower);
     } else if (val === 'insect') {
-      data = this.species.filter(s => s.type === SpeciesType.Insect);
+      data = this.species.filter((s) => s.type === SpeciesType.Insect);
     } else if (val === 'all') {
       data = this.species;
     }
@@ -74,5 +82,4 @@ export class SpeciesListComponent implements OnInit, OnDestroy {
     this.speciesSubscription.unsubscribe();
     this.loadingService.reset();
   }
-
 }

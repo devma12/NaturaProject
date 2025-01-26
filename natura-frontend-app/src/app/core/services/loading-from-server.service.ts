@@ -4,44 +4,41 @@ import { AlertService } from './alert.service';
 import { LoadingService } from './loading.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoadingFromServerService {
-    
-    errorAlert: MatSnackBarRef<SimpleSnackBar>;
-    
-    constructor(public loader: LoadingService,
-                public alert: AlertService) { }
-  
-    loading() {
-        this.resetErrorAlert();
-        this.loader.startLoading();
-    }
-  
-    loaded() {
-        this.loader.stopLoading();
-    }
+  errorAlert: MatSnackBarRef<SimpleSnackBar>;
 
-    error(msg: string) {
-        this.loader.stopLoading();
-        this.openErrorAlert(msg);
-    }
+  constructor(public loader: LoadingService, public alert: AlertService) {}
 
-    reset() {
-        this.resetErrorAlert();
-        this.loader.stopLoading();
-    }
+  loading() {
+    this.resetErrorAlert();
+    this.loader.startLoading();
+  }
 
-    openErrorAlert(msg: string) {
-        console.error(msg);
-        this.errorAlert = this.alert.openAlert(msg, 'X', 'error');
-    }
+  loaded() {
+    this.loader.stopLoading();
+  }
 
-    private resetErrorAlert() {
-        if (this.errorAlert) {
-            this.errorAlert.dismiss();
-            this.errorAlert = null;
-        }
-    }
+  error(msg: string) {
+    this.loader.stopLoading();
+    this.openErrorAlert(msg);
+  }
 
+  reset() {
+    this.resetErrorAlert();
+    this.loader.stopLoading();
+  }
+
+  openErrorAlert(msg: string) {
+    console.error(msg);
+    this.errorAlert = this.alert.openAlert(msg, 'X', 'error');
+  }
+
+  private resetErrorAlert() {
+    if (this.errorAlert) {
+      this.errorAlert.dismiss();
+      this.errorAlert = null;
+    }
+  }
 }

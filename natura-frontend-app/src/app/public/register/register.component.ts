@@ -1,23 +1,24 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CustomErrorStateMatcher } from 'src/app/core/matchers/error-state.matcher';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LoadingFromServerService } from 'src/app/core/services/loading-from-server.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    standalone: false
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
   matcher: CustomErrorStateMatcher;
 
-  registerForm: FormGroup;
-  email: FormControl;
+  registerForm: UntypedFormGroup;
+  email: UntypedFormControl;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authService: AuthService,
     public loadingService: LoadingFromServerService) {
     this.matcher = new CustomErrorStateMatcher();
@@ -35,7 +36,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       password: ['', Validators.required]
     });
 
-    this.email = this.registerForm.controls['email'] as FormControl;
+    this.email = this.registerForm.controls['email'] as UntypedFormControl;
   }
 
   onSubmitForm() {

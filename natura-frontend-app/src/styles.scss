@@ -1,15 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
-@import '@angular/material/theming';
-@import './styles/app-material-theme';
+//@use '@angular/material/theming' as mat-theming;
+@use './styles/app-material-theme' as app-theme;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-$primary:  mat.define-palette(mat.$deep-purple-palette);
-$accent:  mat.define-palette(mat.$amber-palette);
-$warn:  mat.define-palette(mat.$deep-orange-palette);
-$success:  mat.define-palette(mat.$green-palette);
+$primary:  mat.m2-define-palette(mat.$m2-deep-purple-palette);
+$accent:  mat.m2-define-palette(mat.$m2-amber-palette);
+$warn:  mat.m2-define-palette(mat.$m2-deep-orange-palette);
+$success:  mat.m2-define-palette(mat.$m2-green-palette);
 
 /** global container styles **/
 
@@ -34,7 +34,7 @@ $success:  mat.define-palette(mat.$green-palette);
     flex-direction: column;
     justify-content: center;
     color: white;
-    background:mat.get-color-from-palette($primary);
+    background:mat.m2-get-color-from-palette($primary);
     padding-left: 20px;
 }
 
@@ -69,43 +69,40 @@ $success:  mat.define-palette(mat.$green-palette);
 /** Color **/
 
 .text-color-primary-800 {
-   color: mat.get-color-from-palette($primary, 800);
+   color: mat.m2-get-color-from-palette($primary, 800);
 }
 
 .text-color-primary-600 {
-    color: mat.get-color-from-palette($primary, 600);
+    color: mat.m2-get-color-from-palette($primary, 600);
  }
 
 .text-color-accent-800 {
-    color: mat.get-color-from-palette($accent, 800);
+    color: mat.m2-get-color-from-palette($accent, 800);
  }
 
 .alert-error {
     background: #ffffff;
-    color: mat.get-color-from-palette($warn, 500);
+    color: mat.m2-get-color-from-palette($warn, 500);
     white-space: pre-line;
 }
 
 .alert-warning {
     background: #ffffff;
-    color: mat.get-color-from-palette($accent, 500);
+    color: mat.m2-get-color-from-palette($accent, 500);
     white-space: pre-line;
 }
 
 .alert-success {
     background: #ffffff;
-    color: mat.get-color-from-palette($success, 500);
+    color: mat.m2-get-color-from-palette($success, 500);
     white-space: pre-line;
 }
 
 .alert-info {
     background: #ffffff;
-    color: mat.get-color-from-palette($primary, 500);
+    color: mat.m2-get-color-from-palette($primary, 500);
     white-space: pre-line;
 }
-
-/** Text styles **/
-@include mat.typography-hierarchy($custom-typography);
 
 .text-uppercase {
     text-transform: uppercase;
@@ -118,12 +115,12 @@ $success:  mat.define-palette(mat.$green-palette);
 /** Slider styles **/
 
 .custom-slider .ng5-slider .ng5-slider-bar {
-    background: mat.get-color-from-palette($primary, 200);
+    background: mat.m2-get-color-from-palette($primary, 200);
     height: 2px;
 }
 
 .custom-slider .ng5-slider .ng5-slider-selection {
-    background: mat.get-color-from-palette($primary, 800);
+    background: mat.m2-get-color-from-palette($primary, 800);
 }
   
 .custom-slider .ng5-slider .ng5-slider-pointer {
@@ -131,7 +128,7 @@ $success:  mat.define-palette(mat.$green-palette);
     height: 14px;
     top: auto; /* to remove the default positioning */
     bottom: -3.5px;
-    background-color: mat.get-color-from-palette($primary, 800);
+    background-color: mat.m2-get-color-from-palette($primary, 800);
     border-radius: 7px;
 }
   
@@ -146,7 +143,7 @@ $success:  mat.define-palette(mat.$green-palette);
   
 .custom-slider .ng5-slider .ng5-slider-limit {
     font-weight: bold;
-    color: mat.get-color-from-palette($primary, 800);
+    color: mat.m2-get-color-from-palette($primary, 800);
 }
   
 .custom-slider .ng5-slider .ng5-slider-tick {
@@ -154,10 +151,10 @@ $success:  mat.define-palette(mat.$green-palette);
     height: 8px;
     margin-left: 4px;
     border-radius: 0;
-    background:mat.get-color-from-palette($primary, 200);
+    background:mat.m2-get-color-from-palette($primary, 200);
     top: -0.5px;
 }
   
 .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
-    background: mat.get-color-from-palette($primary, 800);
+    background: mat.m2-get-color-from-palette($primary, 800);
 }

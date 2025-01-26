@@ -1,33 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CrossFieldErrorMatcher } from 'src/app/core/matchers/cross-field-error.matcher';
 import { matchValidator } from 'src/app/core/validators/match.validator';
 
 @Component({
-  selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+    selector: 'app-change-password',
+    templateUrl: './change-password.component.html',
+    styleUrls: ['./change-password.component.scss'],
+    standalone: false
 })
 export class ChangePasswordComponent implements OnInit {
-
   matcher: CrossFieldErrorMatcher;
 
   passwords: any = {};
-  passwordForm: FormGroup;
+  passwordForm: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<ChangePasswordComponent>) {
+    private formBuilder: UntypedFormBuilder,
+    public dialogRef: MatDialogRef<ChangePasswordComponent>
+  ) {
     this.matcher = new CrossFieldErrorMatcher();
   }
 
   ngOnInit(): void {
-    this.passwordForm = this.formBuilder.group({
-      old: ['', Validators.required],
-      new: ['', Validators.required],
-      confirm: ['', Validators.required]
-    }, { validator: matchValidator });
+    this.passwordForm = this.formBuilder.group(
+      {
+        old: ['', Validators.required],
+        new: ['', Validators.required],
+        confirm: ['', Validators.required],
+      },
+      { validator: matchValidator }
+    );
   }
 
   onChange() {
@@ -35,8 +43,8 @@ export class ChangePasswordComponent implements OnInit {
 
     this.passwords = {
       old: formValue['old'],
-      new: formValue['new']
-    }
+      new: formValue['new'],
+    };
 
     this.dialogRef.close(this.passwords);
   }
@@ -44,5 +52,4 @@ export class ChangePasswordComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

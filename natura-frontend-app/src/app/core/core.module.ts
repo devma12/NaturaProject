@@ -1,4 +1,8 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,26 +12,18 @@ import { UserModule } from '../user/user.module';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
-
 @NgModule({
-  declarations: [
-    MainMenuComponent,
-    SpinnerComponent
-  ],
-  imports: [
-    SharedModule,
-    PublicModule,
-    UserModule
-  ],
+  declarations: [MainMenuComponent, SpinnerComponent],
+  imports: [SharedModule, PublicModule, UserModule],
   exports: [
     MainMenuComponent,
     SpinnerComponent,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+  ],
 })
-export class CoreModule { 
+export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded.');
